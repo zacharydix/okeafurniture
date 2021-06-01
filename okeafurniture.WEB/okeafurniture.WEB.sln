@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "okeafurniture.WEB", "okeafurniture.WEB\okeafurniture.WEB.csproj", "{D2830C2F-3FE7-4BF4-8033-8F56E873EA51}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "okeafurniture.WEB", "okeafurniture.WEB\okeafurniture.WEB.csproj", "{D2830C2F-3FE7-4BF4-8033-8F56E873EA51}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "okeafurniture.CORE", "..\okeafurniture.CORE\okeafurniture.CORE.csproj", "{AEEB0F88-2A00-429C-8027-F6D76F7027AA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{D2830C2F-3FE7-4BF4-8033-8F56E873EA51}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2830C2F-3FE7-4BF4-8033-8F56E873EA51}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2830C2F-3FE7-4BF4-8033-8F56E873EA51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AEEB0F88-2A00-429C-8027-F6D76F7027AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEEB0F88-2A00-429C-8027-F6D76F7027AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEEB0F88-2A00-429C-8027-F6D76F7027AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEEB0F88-2A00-429C-8027-F6D76F7027AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
