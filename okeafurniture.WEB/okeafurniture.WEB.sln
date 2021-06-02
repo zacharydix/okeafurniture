@@ -5,7 +5,11 @@ VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "okeafurniture.WEB", "okeafurniture.WEB\okeafurniture.WEB.csproj", "{D2830C2F-3FE7-4BF4-8033-8F56E873EA51}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "okeafurniture.CORE", "..\okeafurniture.CORE\okeafurniture.CORE.csproj", "{AEEB0F88-2A00-429C-8027-F6D76F7027AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "okeafurniture.CORE", "..\okeafurniture.CORE\okeafurniture.CORE.csproj", "{AEEB0F88-2A00-429C-8027-F6D76F7027AA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "okeafurniture.DAL", "..\okeafurniture.DAL\okeafurniture.DAL.csproj", "{E6288634-21C5-44F6-910D-C93FCB19BCDA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "okeafurniture.DAL.Tests", "okeafurniture.DAL.Tests\okeafurniture.DAL.Tests.csproj", "{A785FC31-6E49-4F3E-9221-34D3449D926A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{AEEB0F88-2A00-429C-8027-F6D76F7027AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AEEB0F88-2A00-429C-8027-F6D76F7027AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AEEB0F88-2A00-429C-8027-F6D76F7027AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6288634-21C5-44F6-910D-C93FCB19BCDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6288634-21C5-44F6-910D-C93FCB19BCDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6288634-21C5-44F6-910D-C93FCB19BCDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6288634-21C5-44F6-910D-C93FCB19BCDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A785FC31-6E49-4F3E-9221-34D3449D926A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A785FC31-6E49-4F3E-9221-34D3449D926A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A785FC31-6E49-4F3E-9221-34D3449D926A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A785FC31-6E49-4F3E-9221-34D3449D926A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
