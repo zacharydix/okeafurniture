@@ -20,7 +20,7 @@ namespace okeafurniture.DAL.Tests
         public void SetUp()
         {
             var options = new DbContextOptionsBuilder<OkeaFurnitureContext>()
-                .UseInMemoryDatabase(databaseName: "FieldAgent").Options;
+                .UseInMemoryDatabase(databaseName: "okea").Options;
             _context = new OkeaFurnitureContext(options);
             _context.Database.EnsureDeleted();
             _context.Database.EnsureCreated();
@@ -42,7 +42,7 @@ namespace okeafurniture.DAL.Tests
             _context.SaveChanges();
 
             var response = _repository.Get(item1.ItemId, cat1.CategoryId);
-            
+
 
             Assert.IsTrue(response.Success);
             Assert.NotNull(response.Data);
@@ -55,6 +55,7 @@ namespace okeafurniture.DAL.Tests
 
             Assert.IsFalse(response.Success);
             Assert.IsNull(response.Data);
+            Assert.AreEqual(response.Message, "ItemCategory not found. ");
         }
 
         [Test]
@@ -80,6 +81,30 @@ namespace okeafurniture.DAL.Tests
             Assert.IsTrue(response.Success);
             Assert.AreEqual(response.Data.Count, 2);
         }
+
+        [Test]
+        public void ShouldNotFindByCategoryIfNoneFound()
+        {
+            var response = _repository.GetAllByCategory(9);
+
+            Assert.IsFalse(response.Success);
+            Assert.IsNull(response.Data);
+            Assert.AreEqual(response.Message, "No ItemCategories found for that category. ");
+        }
+
+        [Test]
+        public void ShouldGetAllByItem()
+        {
+            var item1 = MakeItemDesk();
+            var cat1 = MakeCategoryDesk();
+            var cat2 = MakeCategoryOffice();
+
+            _context.Items.Add(item1);
+            _context.Categories.Add(cat1);
+            _context.SaveChanges();
+        }
+
+
 
         public ItemCategory MakeItemCategory(int itemId, int categoryId)
         {

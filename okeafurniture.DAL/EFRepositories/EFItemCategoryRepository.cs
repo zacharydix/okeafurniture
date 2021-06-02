@@ -42,12 +42,26 @@ namespace okeafurniture.DAL.EFRepositories
         {
             var response = new Response<List<ItemCategory>>();
 
-            response.Data = _context.ItemCategories
+            var itemCategories = _context.ItemCategories
                 .Where(i => i.CategoryId == categoryId)
                 .ToList();
 
-            response.Success = true;
+            if (itemCategories == null || itemCategories.Count == 0)
+            {
+                response.Success = false;
+                response.Message = "No ItemCategories found for that category. ";
+            }
+            else
+            {
+                response.Success = true;
+                response.Data = itemCategories;
+            }
             return response;
+        }
+
+        public Response<List<ItemCategory>> GetCategoriesByItem(int itemId)
+        {
+            throw new NotImplementedException();
         }
 
         public Response<ItemCategory> Add(ItemCategory itemCategory)
