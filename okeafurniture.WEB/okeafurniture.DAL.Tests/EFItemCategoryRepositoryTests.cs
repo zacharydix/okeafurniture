@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using okeafurniture.CORE.Interfaces;
+using okeafurniture.DAL.EFRepositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,8 +22,15 @@ namespace okeafurniture.DAL.Tests
             var context = new OkeaFurnitureContext(options);
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
-            repository = new EFAgentRepository(context);
-            mission = new Mission()
+            repository = new EFItemCategoryRepository(context);
         }
+
+        [Test]
+        public void ShouldGetItemCategory()
+        {
+
+        }
+
+        public 
     }
 }

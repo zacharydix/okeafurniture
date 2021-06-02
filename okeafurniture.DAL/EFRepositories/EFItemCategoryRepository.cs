@@ -10,7 +10,14 @@ namespace okeafurniture.DAL.EFRepositories
 {
     public class EFItemCategoryRepository : IItemCategoryRepository
     {
-        public Response<ItemCategory> Get(int id)
+        OkeaFurnitureContext _context;
+
+        public EFItemCategoryRepository(OkeaFurnitureContext context)
+        {
+            _context = context;
+        }
+
+        public Response<ItemCategory> Get(int itemId, int categoryId)
         {
             throw new NotImplementedException();
         }
