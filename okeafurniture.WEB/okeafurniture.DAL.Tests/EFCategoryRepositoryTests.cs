@@ -77,6 +77,52 @@ namespace okeafurniture.DAL.Tests
             Assert.AreEqual(response.Message, "No categories found. ");
         }
 
+        [Test]
+        public void ShouldAddCategory()
+        {
+            var category = MakeCategoryOffice();
+
+            var response = _repository.Add(category);
+
+            Assert.IsTrue(response.Success);
+            Assert.AreEqual(response.Data.CategoryId, 1);
+        }
+
+        //[Test]
+        //public void ShouldNotAddDuplicateCategory()
+        //{
+        //    var cat1 = MakeCategoryDesk();
+        //    var cat2 = MakeCategoryDesk();
+
+        //    _context.Categories.Add(cat1);
+        //    _context.SaveChanges();
+
+        //    var response = _repository.Add(cat2);
+
+        //    Assert.AreEqual(response.Data.CategoryId, 2);
+        //    //where should duplicate category be checked? scan for that name matches?
+        //    Assert.IsTrue(false);
+        //}
+
+        [Test]
+        public void ShouldUpdateCategory()
+        {
+            var category = MakeCategoryChair();
+
+            _context.Categories.Add(category);
+            _context.SaveChanges();
+
+            var existingCategory = _repository.Get(category.CategoryId).Data;
+            existingCategory.CategoryName = "Ottoman";
+
+            var response = _repository.Update(existingCategory);
+            var readResponse = _repository.Get(existingCategory.CategoryId);
+
+            Assert.IsTrue(response.Success);
+            Assert.AreEqual(readResponse.Data.CategoryName, "Ottoman");
+        }
+
+
 
 
         public Category MakeCategoryDesk()

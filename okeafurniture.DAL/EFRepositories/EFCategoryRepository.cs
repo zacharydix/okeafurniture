@@ -56,12 +56,25 @@ namespace okeafurniture.DAL.EFRepositories
 
         public Response<Category> Add(Category category)
         {
-            throw new NotImplementedException();
+            var response = new Response<Category>();
+
+            _context.Add(category);
+            _context.SaveChanges();
+
+            response.Success = true;
+            response.Data = category;
+            return response;
         }
 
         public Response Update(Category category)
         {
-            throw new NotImplementedException();
+            var response = new Response();
+
+            _context.Categories.Update(category);
+            _context.SaveChanges();
+
+            response.Success = true;
+            return response;
         }
         public Response Delete(int id)
         {
