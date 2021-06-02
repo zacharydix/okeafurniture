@@ -49,6 +49,15 @@ namespace okeafurniture.DAL.Tests
         }
 
         [Test]
+        public void ShouldNotFindItemCategoryIfNonexistant()
+        {
+            var response = _repository.Get(5, 5);
+
+            Assert.IsFalse(response.Success);
+            Assert.IsNull(response.Data);
+        }
+
+        [Test]
         public void ShouldGetAllByCategory()
         {
             var item1 = MakeItemChair();

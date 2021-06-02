@@ -21,10 +21,20 @@ namespace okeafurniture.DAL.EFRepositories
         {
             var response = new Response<ItemCategory>();
 
-            response.Data = _context.ItemCategories
+            var itemCategory = _context.ItemCategories
                 .SingleOrDefault(i => i.ItemId == itemId && i.CategoryId == categoryId);
 
-            response.Success = true;
+            if (itemCategory == null)
+            {
+                response.Success = false;
+                response.Message = "ItemCategory not found. ";
+            }
+            else
+            {
+                response.Data = itemCategory;
+                response.Success = true;
+            }
+
             return response;
         }
 
