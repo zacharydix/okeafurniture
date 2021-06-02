@@ -9,12 +9,10 @@ namespace okeafurniture.CORE.Interfaces
 {
     public interface ICartItemRepository
     {
-        public Response<Cart> Get(int id);
-        public Response<Cart> GetActive(int accountId);
-        public Response<List<Cart>> GetAll();
-        public Response<List<Cart>> GetAllByAccount(int accountId);
-        public Response<List<Cart>> GetAllByStatus(bool CheckedOut);
-        public Response<Cart> Add(int accountId);
-        public Response Update(int accountId);
+        public Response<CartItem> Get(int cartId, int itemId);
+        public Response<List<CartItem>> GetByCart(int cartId);
+        public Response<CartItem> Add(int cartId, int itemId);
+        public Response Update(int cartId, int itemId);
+        public Response Delete(int cartId, int itemId);
     }
 }
