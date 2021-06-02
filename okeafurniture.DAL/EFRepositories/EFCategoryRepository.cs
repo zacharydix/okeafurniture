@@ -1,4 +1,5 @@
-﻿using okeafurniture.CORE.Entites;
+﻿using Microsoft.EntityFrameworkCore;
+using okeafurniture.CORE.Entites;
 using okeafurniture.CORE.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -21,8 +22,10 @@ namespace okeafurniture.DAL.EFRepositories
         {
             var response = new Response<Category>();
 
+            var category = _context.Categories
+                .Include(c => c.Items)
+                .SingleOrDefault(c => c.CategoryId == id);
 
-            var category = _context.Categories.Find(id);
             if (category == null)
             {
                 response.Success = false;
@@ -40,7 +43,10 @@ namespace okeafurniture.DAL.EFRepositories
         {
             var response = new Response<List<Category>>();
 
-            var categories = _context.Categories.ToList();
+            var categories = _context.Categories
+                .Include(c => c.Items)
+                .ToList();
+
             if (categories == null || categories.Count == 0)
             {
                 response.Success = false;

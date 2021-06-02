@@ -12,11 +12,11 @@ namespace okeafurniture.CORE.Entites
         public string ItemDescription { get; set; }
         public decimal UnitPrice {get;set;}
 
-        public List<ItemCategory> ItemCategory { get;set; }
+        public List<Category> Categories { get;set; }
 
         public Item()
         {
-            ItemCategory = new List<ItemCategory>();
+            Categories = new List<Category>();
         }
 
     }
