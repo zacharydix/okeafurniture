@@ -42,7 +42,7 @@ namespace okeafurniture.DAL.Tests
                 DateOfBirth = new DateTime(1992, 01, 01),
                 IsAdmin = false
             };
-            context.Add(account1);
+            context.Accounts.Add(account1);
             context.SaveChanges();
 
 
@@ -72,7 +72,7 @@ namespace okeafurniture.DAL.Tests
         [Test]
         public void ShouldGetAllAccounts()
         {
-            context.Add(account2);
+            context.Accounts.Add(account2);
             context.SaveChanges();
             Response<List<Account>> expected = new Response<List<Account>>()
             {
