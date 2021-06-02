@@ -152,5 +152,21 @@ namespace okeafurniture.DAL.Tests
             Assert.AreEqual(account1.DateOfBirth, temp.DateOfBirth);
             Assert.AreEqual(account1.IsAdmin, temp.IsAdmin);
         }
+
+        [Test]
+        public void ShouldDeleteAccount()
+        {
+            Response expected = new Response()
+            {
+                Success = true,
+                Message = "Successfully deleted account."
+            };
+            Response actual = repository.Delete(account1.AccountId);
+            Assert.IsTrue(actual.Success);
+            Assert.AreEqual(expected.Message, actual.Message);
+
+            Assert.AreEqual(0, context.Accounts.ToList().Count);
+
+        }
     }
 }
