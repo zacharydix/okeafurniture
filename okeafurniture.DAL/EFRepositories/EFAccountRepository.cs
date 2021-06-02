@@ -7,6 +7,11 @@ namespace okeafurniture.DAL
 {
     public class EFAccountRepository : IAccountRepository
     {
+        OkeaFurnitureContext context;
+        public EFAccountRepository(OkeaFurnitureContext context)
+        {
+            this.context = context;
+        }
         public Response<Account> Add(Account account)
         {
             throw new NotImplementedException();
