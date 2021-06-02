@@ -8,12 +8,14 @@ using okeafurniture.CORE;
 
 namespace okeafurniture.CORE.Interfaces
 {
-    public class IItemRepository
+    public class Response
     {
-        Response<Item> Insert(Item item);
-        Response Update(Item item);
-        Response Delete(int itemId);
-        Response<Item> Get(int itemId);
-        Response<List<Item>> GetByCategory(int categoryId);
+        public bool Success { get; set; }
+        public string Message { get; set; }
+    }
+
+    public class Response<T> : Response
+    {
+        public T Data { get; set; }
     }
 }
