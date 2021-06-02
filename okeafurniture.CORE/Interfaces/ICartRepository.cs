@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace okeafurniture.CORE.Interfaces
 {
-    interface ICartRepository
+    public interface ICartRepository
     {
         public Response<Cart> Get(int id);
         public Response<Cart> GetActive(int accountId);
