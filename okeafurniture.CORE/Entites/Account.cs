@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace okeafurniture.CORE.Entites
 {
-    public class User
+    public class Account
     {
-        public int UserId { get; set; }
+        public int AccountId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
@@ -19,5 +19,11 @@ namespace okeafurniture.CORE.Entites
         //Navigational Properties
         public List<PaymentMethod> PaymentMethods { get; set; }
         public List<Cart> Carts { get; set; }
+
+        public Account()
+        {
+            PaymentMethods = new List<PaymentMethod>();
+            Carts = new List<Cart>();
+        }
     }
 }
