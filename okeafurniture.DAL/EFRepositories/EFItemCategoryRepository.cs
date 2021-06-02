@@ -21,7 +21,8 @@ namespace okeafurniture.DAL.EFRepositories
         {
             var response = new Response<ItemCategory>();
 
-            response.Data = _context.ItemCategories.SingleOrDefault(i => i.ItemId == itemId && i.CategoryId == categoryId);
+            response.Data = _context.ItemCategories
+                .SingleOrDefault(i => i.ItemId == itemId && i.CategoryId == categoryId);
 
             response.Success = true;
             return response;
@@ -29,7 +30,14 @@ namespace okeafurniture.DAL.EFRepositories
 
         public Response<List<ItemCategory>> GetAllByCategory(int categoryId)
         {
-            throw new NotImplementedException();
+            var response = new Response<List<ItemCategory>>();
+
+            response.Data = _context.ItemCategories
+                .Where(i => i.CategoryId == categoryId)
+                .ToList();
+
+            response.Success = true;
+            return response;
         }
 
         public Response<ItemCategory> Add(ItemCategory itemCategory)

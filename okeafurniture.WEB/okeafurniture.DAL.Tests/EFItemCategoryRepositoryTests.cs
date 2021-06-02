@@ -48,6 +48,30 @@ namespace okeafurniture.DAL.Tests
             Assert.NotNull(response.Data);
         }
 
+        [Test]
+        public void ShouldGetAllByCategory()
+        {
+            var item1 = MakeItemChair();
+            var item2 = MakeItemDesk();
+            var cat1 = MakeCategoryOffice();
+
+            _context.Items.Add(item1);
+            _context.Items.Add(item2);
+            _context.Categories.Add(cat1);
+            _context.SaveChanges();
+
+            var itemCategory1 = MakeItemCategory(item1.ItemId, cat1.CategoryId);
+            var itemCategory2 = MakeItemCategory(item2.ItemId, cat1.CategoryId);
+            _context.ItemCategories.Add(itemCategory1);
+            _context.ItemCategories.Add(itemCategory2);
+            _context.SaveChanges();
+
+            var response = _repository.GetAllByCategory(cat1.CategoryId);
+
+            Assert.IsTrue(response.Success);
+            Assert.AreEqual(response.Data.Count, 2);
+        }
+
         public ItemCategory MakeItemCategory(int itemId, int categoryId)
         {
             return new ItemCategory()
