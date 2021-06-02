@@ -15,6 +15,6 @@ namespace okeafurniture.CORE.Interfaces
         public Response<List<Cart>> GetAllByAccount(int accountId);
         public Response<List<Cart>> GetAllByStatus(bool CheckedOut);
         public Response<Cart> Add(int accountId);
-        public Response Update(int accountId);
+        public Response Update(Cart cart);
     }
 }
