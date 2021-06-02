@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using okeafurniture.CORE.Entites;
+using okeafurniture.CORE;
 
-namespace okeafurniture.CORE
+namespace okeafurniture.CORE.Interfaces
 {
     public class Response
     {
