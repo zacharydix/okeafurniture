@@ -11,6 +11,7 @@ namespace okeafurniture.CORE.Entites
         public string ItemName { get; set; }
 
         public int CategoryId { get; set; }
+        public string ItemDescription { get; set; }
 
         public decimal UnitPrice {get;set;}
 

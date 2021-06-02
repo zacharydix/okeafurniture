@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+	<UserSecretsId>e389eba4-11c7-4723-a2fa-fa6850bfa30b</UserSecretsId>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NUnit" Version="3.12.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.16.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\okeafurniture.CORE\okeafurniture.CORE.csproj" />
+    <ProjectReference Include="..\..\okeafurniture.DAL\okeafurniture.DAL.csproj" />
+  </ItemGroup>
+
+</Project>
