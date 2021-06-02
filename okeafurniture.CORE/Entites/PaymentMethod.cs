@@ -10,7 +10,8 @@ namespace okeafurniture.CORE.Entites
     {
         public int PaymentMethodId { get; set; }
         public int AccountId { get; set; }
-        public string CardHolderName { get; set; }
+        public string CardHolderFirstName { get; set; }
+        public string CardHolderLastName { get; set; }
         public string CardNumber { get; set; }
         public DateTime CardExpiration { get; set; }
         public string CardCVV { get; set; }
