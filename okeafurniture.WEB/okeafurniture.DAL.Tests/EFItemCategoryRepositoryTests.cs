@@ -38,10 +38,14 @@ namespace okeafurniture.DAL.Tests
             _context.SaveChanges();
 
             var itemCategory = MakeItemCategory(item1.ItemId, cat1.CategoryId);
-            var response = _repository.Add(itemCategory);
+            _context.ItemCategories.Add(itemCategory);
+            _context.SaveChanges();
+
+            var response = _repository.Get(item1.ItemId, cat1.CategoryId);
+            
 
             Assert.IsTrue(response.Success);
-            //Assert.AreEqual(response.Data.Count, 1);
+            Assert.NotNull(response.Data);
         }
 
         public ItemCategory MakeItemCategory(int itemId, int categoryId)

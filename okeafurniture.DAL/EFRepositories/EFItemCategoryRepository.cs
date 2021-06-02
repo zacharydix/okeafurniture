@@ -19,7 +19,12 @@ namespace okeafurniture.DAL.EFRepositories
 
         public Response<ItemCategory> Get(int itemId, int categoryId)
         {
-            throw new NotImplementedException();
+            var response = new Response<ItemCategory>();
+
+            response.Data = _context.ItemCategories.SingleOrDefault(i => i.ItemId == itemId && i.CategoryId == categoryId);
+
+            response.Success = true;
+            return response;
         }
 
         public Response<List<ItemCategory>> GetAllByCategory(int categoryId)
