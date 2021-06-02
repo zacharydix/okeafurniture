@@ -122,7 +122,41 @@ namespace okeafurniture.DAL.Tests
             Assert.AreEqual(readResponse.Data.CategoryName, "Ottoman");
         }
 
+        [Test]
+        public void ShouldNotUpdateIfCategoryNotFound()
+        {
+            var category = MakeCategoryDesk();
 
+            var response = _repository.Update(category);
+            var readResponse = _repository.Get(category.CategoryId);
+
+            Assert.IsFalse(response.Success);
+            Assert.IsFalse(readResponse.Success);
+        }
+
+        [Test]
+        public void ShouldDelete()
+        {
+            var category = MakeCategoryOffice();
+
+            _context.Categories.Add(category);
+            _context.SaveChanges();
+
+            var response = _repository.Delete(category.CategoryId);
+            var readResponse = _repository.Get(category.CategoryId);
+
+            Assert.IsTrue(response.Success);
+            Assert.IsFalse(readResponse.Success);
+        }
+
+        [Test]
+        public void ShouldNotDeleteIfNotFound()
+        {
+            var response = _repository.Delete(88);
+
+            Assert.IsFalse(response.Success);
+            Assert.AreEqual(response.Message, "Category not found. ");
+        }
 
 
         public Category MakeCategoryDesk()

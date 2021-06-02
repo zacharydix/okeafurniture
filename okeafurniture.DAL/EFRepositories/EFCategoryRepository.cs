@@ -70,15 +70,38 @@ namespace okeafurniture.DAL.EFRepositories
         {
             var response = new Response();
 
-            _context.Categories.Update(category);
-            _context.SaveChanges();
+            if (!Get(category.CategoryId).Success)
+            {
+                response.Success = false;
+                response.Message = "Category not found. ";
+            }
+            else
+            {
+                _context.Categories.Update(category);
+                _context.SaveChanges();
 
-            response.Success = true;
+                response.Success = true;
+            }
             return response;
         }
         public Response Delete(int id)
         {
-            throw new NotImplementedException();
+            var response = new Response();
+
+            var category = Get(id).Data;
+            if (category == null)
+            {
+                response.Success = false;
+                response.Message = "Category not found. ";
+            }
+            else
+            {
+                _context.Categories.Remove(category);
+                _context.SaveChanges();
+
+                response.Success = true;
+            }
+            return response;
         }
     }
 }
