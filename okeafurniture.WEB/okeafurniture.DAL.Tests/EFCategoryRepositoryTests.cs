@@ -67,6 +67,16 @@ namespace okeafurniture.DAL.Tests
             Assert.AreEqual(response.Data.Count, 3);
         }
 
+        [Test]
+        public void ShouldNotGetCategoriesIfNoneStored()
+        {
+            var response = _repository.GetAll();
+
+            Assert.IsFalse(response.Success);
+            Assert.IsNull(response.Data);
+            Assert.AreEqual(response.Message, "No categories found. ");
+        }
+
 
 
         public Category MakeCategoryDesk()
