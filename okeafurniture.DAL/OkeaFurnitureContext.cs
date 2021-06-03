@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using okeafurniture.CORE.Entites;
 using System;
 using System.Collections.Generic;
@@ -16,19 +17,36 @@ namespace okeafurniture.DAL
         public DbSet<Item> Items { get; set; }
         public DbSet<PaymentMethod> PaymentMethods { get; set; }
         
-        //bridge tables
+        //bridge table
         public DbSet<CartItem> CartItems { get; set; }
-        public DbSet<ItemCategory> ItemCategories { get; set; }
+
+        public OkeaFurnitureContext() : base()
+        {
+
+        }
 
         public OkeaFurnitureContext(DbContextOptions options) : base(options)
         {
 
         }
 
+        public static OkeaFurnitureContext GetDbContext()
+        {
+            var builder = new ConfigurationBuilder();
+            builder.AddUserSecrets<OkeaFurnitureContext>();
+            var config = builder.Build();
+            var connectionString = config["ConnectionStrings:OkeaFurniture"];
+
+            var options = new DbContextOptionsBuilder<OkeaFurnitureContext>()
+                .UseSqlServer(connectionString)
+                .Options;
+
+            return new OkeaFurnitureContext(options);
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<CartItem>().HasKey(ci => new { ci.CartId, ci.ItemId });
-            modelBuilder.Entity<ItemCategory>().HasKey(ic => new { ic.ItemId, ic.CategoryId });
         }
     }
 }
