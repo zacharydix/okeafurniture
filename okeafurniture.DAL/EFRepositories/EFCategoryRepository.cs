@@ -3,6 +3,7 @@ using okeafurniture.CORE.Entites;
 using okeafurniture.CORE.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,20 +22,27 @@ namespace okeafurniture.DAL.EFRepositories
         public Response<Category> Get(int id)
         {
             var response = new Response<Category>();
+            try
+            {
+                var category = _context.Categories
+                    .Include(c => c.Items)
+                    .SingleOrDefault(c => c.CategoryId == id);
 
-            var category = _context.Categories
-                .Include(c => c.Items)
-                .SingleOrDefault(c => c.CategoryId == id);
-
-            if (category == null)
+                if (category == null)
+                {
+                    response.Success = false;
+                    response.Message = "Category not found. ";
+                }
+                else
+                {
+                    response.Success = true;
+                    response.Data = category;
+                }
+            }
+            catch (Exception)
             {
                 response.Success = false;
-                response.Message = "Category not found. ";
-            }
-            else
-            {
-                response.Success = true;
-                response.Data = category;
+                response.Message = "Could not locate selected record. ";                
             }
             return response;
         }
@@ -42,70 +50,110 @@ namespace okeafurniture.DAL.EFRepositories
         public Response<List<Category>> GetAll()
         {
             var response = new Response<List<Category>>();
+            try
+            {
+                var categories = _context.Categories
+                    .Include(c => c.Items)
+                    .ToList();
 
-            var categories = _context.Categories
-                .Include(c => c.Items)
-                .ToList();
-
-            if (categories == null || categories.Count == 0)
+                if (categories == null || categories.Count == 0)
+                {
+                    response.Success = false;
+                    response.Message = "No categories found. ";
+                }
+                else
+                {
+                    response.Success = true;
+                    response.Data = categories;
+                }
+            }
+            catch (Exception)
             {
                 response.Success = false;
-                response.Message = "No categories found. ";
-            }
-            else
-            {
-                response.Success = true;
-                response.Data = categories;
+                response.Message = "Could not locate selected records. ";
             }
             return response;
         }
 
         public Response<Category> Add(Category category)
         {
+            //data argument
             var response = new Response<Category>();
+            try
+            {
+                _context.Add(category);
+                _context.SaveChanges();
 
-            _context.Add(category);
-            _context.SaveChanges();
-
-            response.Success = true;
-            response.Data = category;
+                response.Success = true;
+                response.Data = category;
+            }
+            catch (DataException)
+            {
+                response.Success = false;
+                response.Message = "Could not add record. ";
+            }
+            catch (ArgumentException)
+            {
+                response.Success = false;
+                response.Message = "Could not add record. ";
+            }
             return response;
         }
 
         public Response Update(Category category)
         {
             var response = new Response();
+            try
+            {
+                if (!Get(category.CategoryId).Success)
+                {
+                    response.Success = false;
+                    response.Message = "Category not found. ";
+                }
+                else
+                {
+                    _context.Categories.Update(category);
+                    _context.SaveChanges();
 
-            if (!Get(category.CategoryId).Success)
+                    response.Success = true;
+                }
+            }
+            catch (DbUpdateException)
             {
                 response.Success = false;
-                response.Message = "Category not found. ";
-            }
-            else
-            {
-                _context.Categories.Update(category);
-                _context.SaveChanges();
-
-                response.Success = true;
+                response.Message = "Could not update selected record. ";
             }
             return response;
         }
         public Response Delete(int id)
         {
             var response = new Response();
-
             var category = Get(id).Data;
-            if (category == null)
+
+            try
+            {
+                if (category == null)
+                {
+                    response.Success = false;
+                    response.Message = "Category not found. ";
+                }
+                else
+                {
+                    _context.Categories.Remove(category);
+                    _context.SaveChanges();
+
+                    response.Success = true;
+                }
+            }
+            catch (ArgumentNullException)
             {
                 response.Success = false;
-                response.Message = "Category not found. ";
+                response.Message = "Could not locate selected record. ";
             }
-            else
+            catch (DataException)
             {
-                _context.Categories.Remove(category);
-                _context.SaveChanges();
-
-                response.Success = true;
+                response.Success = false;
+                response.Message = "Could not delete selected record. ";
             }
             return response;
         }

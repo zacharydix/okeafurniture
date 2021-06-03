@@ -157,6 +157,20 @@ namespace okeafurniture.DAL.Tests
         //}
 
         [Test]
+        public void ShouldAlertUserIfInsertFailed()
+        {
+            var category = MakeCategoryChair();
+
+            _context.Categories.Add(category);
+            _context.SaveChanges();
+
+            var response = _repository.Add(category);
+
+            Assert.IsFalse(response.Success);
+            Assert.AreEqual(response.Message, "Could not add record. ");
+        }
+
+        [Test]
         public void ShouldUpdateCategory()
         {
             var category = MakeCategoryChair();
