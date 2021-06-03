@@ -12,7 +12,7 @@ namespace okeafurniture.CORE.Interfaces
         public Response<CartItem> Get(int cartId, int itemId);
         public Response<List<CartItem>> GetByCart(int cartId);
         public Response<CartItem> Add(int cartId, int itemId);
-        public Response Update(int cartId, int itemId);
+        public Response Update(CartItem cartItem);
         public Response Delete(int cartId, int itemId);
     }
 }
