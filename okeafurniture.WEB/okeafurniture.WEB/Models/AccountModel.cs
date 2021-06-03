@@ -16,6 +16,6 @@ namespace okeafurniture.WEB.Models
         public DateTime DateOfBirth { get; set; }
         public bool IsAdmin { get; set; }
         public List<PaymentMethod> PaymentMethods { get; set; }
-        public List<CartModel> CartModels { get; set; }
+        public List<Cart> Carts { get; set; }
     }
 }
