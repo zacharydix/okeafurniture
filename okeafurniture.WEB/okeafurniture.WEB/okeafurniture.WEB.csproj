@@ -5,4 +5,13 @@
 	<UserSecretsId>e389eba4-11c7-4723-a2fa-fa6850bfa30b</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\okeafurniture.CORE\okeafurniture.CORE.csproj" />
+  </ItemGroup>
+
 </Project>
