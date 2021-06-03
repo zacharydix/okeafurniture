@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 namespace okeafurniture.DAL.Tests
 {
-    public class ItemRepository
+    public class EFItemRepositoryTests
     {
         private OkeaFurnitureContext db;
         private IItemRepository itemRepo;
