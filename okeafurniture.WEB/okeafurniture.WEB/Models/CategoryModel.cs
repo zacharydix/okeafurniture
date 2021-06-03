@@ -10,6 +10,6 @@ namespace okeafurniture.WEB.Models
     {
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
-        public List<ItemModel> ItemModels { get; set; }
+        public List<Item> Items { get; set; }
     }
 }

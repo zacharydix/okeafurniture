@@ -10,16 +10,11 @@ namespace okeafurniture.WEB.Models
     {
         public static Category MapToCategory(this CategoryModel model)
         {
-            var items = new List<Item>();
-            foreach (var itemModel in model.ItemModels) 
-            {
-
-            }
             return new Category()
             {
                 CategoryId = model.CategoryId,
                 CategoryName = model.CategoryName,
-                Items = model.ItemModels;
+                Items = model.Items
             };
         }
 
@@ -28,7 +23,8 @@ namespace okeafurniture.WEB.Models
             return new CategoryModel()
             {
                 CategoryId = category.CategoryId,
-                CategoryName = category.CategoryName
+                CategoryName = category.CategoryName,
+                Items = category.Items
             };
         }
 
@@ -42,7 +38,8 @@ namespace okeafurniture.WEB.Models
                     new CategoryModel()
                     {
                         CategoryId = c.CategoryId,
-                        CategoryName = c.CategoryName
+                        CategoryName = c.CategoryName,
+                        Items = c.Items
                     });
             };
             return categoryModels;
