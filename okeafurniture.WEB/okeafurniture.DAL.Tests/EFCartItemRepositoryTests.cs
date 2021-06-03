@@ -34,7 +34,6 @@ namespace okeafurniture.DAL.Tests
 
             account = new Account()
             {
-                AccountId = 1,
                 FirstName = "first1",
                 LastName = "last1",
                 Email = "test@email.com",
@@ -45,14 +44,12 @@ namespace okeafurniture.DAL.Tests
             context.Accounts.Add(account);
             cart1 = new Cart()
             {
-                CartId = 1,
                 AccountId = 1,
                 OrderTotal = 2M,
                 CheckedOut = false
             };
             cart2 = new Cart()
             {
-                CartId = 2,
                 AccountId = 1,
                 OrderTotal = 2M,
                 CheckedOut = true
@@ -61,14 +58,12 @@ namespace okeafurniture.DAL.Tests
             context.Carts.Add(cart2);
             item1 = new Item()
             {
-                ItemId = 1,
                 ItemName = "test item 1",
                 ItemDescription = "item 1 desc",
                 UnitPrice = 2M
             };
             item2 = new Item()
             {
-                ItemId = 2,
                 ItemName = "test item 2",
                 ItemDescription = "item 2 desc",
                 UnitPrice = 2M
