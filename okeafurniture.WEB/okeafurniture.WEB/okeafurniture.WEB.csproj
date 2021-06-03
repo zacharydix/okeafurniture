@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\okeafurniture.CORE\okeafurniture.CORE.csproj" />
+    <ProjectReference Include="..\..\okeafurniture.DAL\okeafurniture.DAL.csproj" />
   </ItemGroup>
 
 </Project>

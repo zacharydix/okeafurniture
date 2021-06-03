@@ -104,26 +104,23 @@ namespace okeafurniture.DAL.Tests
         }
 
         [Test]
-        public void ShouldGetAccountsByEmail()
+        public void ShouldGetAccountByEmail()
         {
-            Response<List<Account>> expected = new Response<List<Account>>()
+            Response<Account> expected = new Response<Account>()
             {
-                Data = new List<Account>()
-                {
-                    account1
-                },
+                Data = account1,
                 Success = true,
-                Message = "Successfully retrieved accounts."
+                Message = "Successfully retrieved account."
             };
-            Response<List<Account>> actual = repository.GetByEmail(account1.Email);
+            Response<Account> actual = repository.GetByEmail(account1.Email);
             Assert.IsTrue(actual.Success);
-            Assert.AreEqual(expected.Data[0].AccountId, actual.Data[0].AccountId);
-            Assert.AreEqual(expected.Data[0].FirstName, actual.Data[0].FirstName);
-            Assert.AreEqual(expected.Data[0].LastName, actual.Data[0].LastName);
-            Assert.AreEqual(expected.Data[0].Email, actual.Data[0].Email);
-            Assert.AreEqual(expected.Data[0].Password, actual.Data[0].Password);
-            Assert.AreEqual(expected.Data[0].DateOfBirth, actual.Data[0].DateOfBirth);
-            Assert.AreEqual(expected.Data[0].IsAdmin, actual.Data[0].IsAdmin);
+            Assert.AreEqual(expected.Data.AccountId, actual.Data.AccountId);
+            Assert.AreEqual(expected.Data.FirstName, actual.Data.FirstName);
+            Assert.AreEqual(expected.Data.LastName, actual.Data.LastName);
+            Assert.AreEqual(expected.Data.Email, actual.Data.Email);
+            Assert.AreEqual(expected.Data.Password, actual.Data.Password);
+            Assert.AreEqual(expected.Data.DateOfBirth, actual.Data.DateOfBirth);
+            Assert.AreEqual(expected.Data.IsAdmin, actual.Data.IsAdmin);
             Assert.AreEqual(expected.Message, actual.Message);
         }
 
