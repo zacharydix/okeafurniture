@@ -22,24 +22,31 @@ namespace okeafurniture.DAL.EFRepositories
             Response<Cart> response = new Response<Cart>();
             try
             {
-                Cart cart = new Cart()
+                using (context = new OkeaFurnitureContext(context.Options))
                 {
-                    // cart ID will be handled when added to db
-                    AccountId = accountId,
-                    PaymentMethodId = null,
-                    OrderTotal = 0M,
-                    CheckedOut = false
-                };
-                response.Data = context.Carts.Add(cart).Entity;
-                if (response.Data != null)
-                {
-                    response.Success = true;
-                    response.Message = $"Successfully created new cart for Account #{accountId}";
-                }
-                else
-                {
-                    response.Success = false;
-                    response.Message = "Please enter a valid Account ID";
+                    var accountExists = context.Accounts.Any(a => a.AccountId == accountId);
+                    if (accountExists)
+                    {
+                        Cart cart = new Cart()
+                        {
+                            // cart ID will be handled when added to db
+                            AccountId = accountId,
+                            PaymentMethodId = null,
+                            OrderTotal = 0M,
+                            CheckedOut = false
+                        };
+                        response.Data = context.Carts.Add(cart).Entity;
+                        if (response.Data != null)
+                        {
+                            response.Success = true;
+                            response.Message = $"Successfully created new cart for Account #{accountId}";
+                        }
+                    }
+                    else
+                    {
+                        response.Success = false;
+                        response.Message = "Please enter a valid Account ID";
+                    }
                 }
             }
             catch (Exception ex)
@@ -55,9 +62,9 @@ namespace okeafurniture.DAL.EFRepositories
             Response<Cart> response = new Response<Cart>();
             try
             {
-                using (var context = OkeaFurnitureContext.GetDbContext())
+                using (context = new OkeaFurnitureContext(context.Options))
                 {
-                    response.Data = context.Carts.FirstOrDefault(c => c.CartId == id);
+                    response.Data = context.Carts.SingleOrDefault(c => c.CartId == id);
                     if (response.Data != null)
                     {
                         response.Success = true;
@@ -85,7 +92,7 @@ namespace okeafurniture.DAL.EFRepositories
             {
                 using (context = new OkeaFurnitureContext(context.Options))
                 {
-                    response.Data = context.Carts.FirstOrDefault(c => c.AccountId == accountId && c.CheckedOut == false);
+                    response.Data = context.Carts.SingleOrDefault(c => c.AccountId == accountId && c.CheckedOut == false);
                     if (response.Data != null)
                     {
                         response.Success = true;
@@ -96,6 +103,7 @@ namespace okeafurniture.DAL.EFRepositories
                         response.Success = false;
                         response.Message = "No active cart found";
                     }
+
                 }
             }
             catch (Exception ex)
@@ -111,7 +119,7 @@ namespace okeafurniture.DAL.EFRepositories
             Response<List<Cart>> response = new Response<List<Cart>>();
             try
             {
-                using (var context = OkeaFurnitureContext.GetDbContext())
+                using (context = new OkeaFurnitureContext(context.Options))
                 {
                     response.Data = context.Carts.ToList();
                     if (response.Data != null)
@@ -139,13 +147,49 @@ namespace okeafurniture.DAL.EFRepositories
             Response<List<Cart>> response = new Response<List<Cart>>();
             try
             {
-                using (var context = OkeaFurnitureContext.GetDbContext())
+                using (context = new OkeaFurnitureContext(context.Options))
                 {
                     response.Data = context.Carts.Where(c => c.AccountId == accountId).ToList();
                     if (response.Data != null)
                     {
                         response.Success = true;
                         response.Message = $"Successfully retrieved all carts from Account {accountId}";
+                    }
+                    else
+                    {
+                        response.Success = false;
+                        response.Message = "No carts found";
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = ex.Message;
+            }
+            return response;
+        }
+
+        public Response<List<Cart>> GetAllByStatus(bool CheckedOut)
+        {
+            Response<List<Cart>> response = new Response<List<Cart>>();
+            try
+            {
+                using (context = new OkeaFurnitureContext(context.Options))
+                {
+                    response.Data = context.Carts.Where(c => c.CheckedOut == CheckedOut).ToList();
+                    if (response.Data != null)
+                    {
+                        response.Success = true;
+                        if (CheckedOut)
+                        {
+                            response.Message = $"Successfully retrieved all checked out carts";
+                        }
+                        else
+                        {
+                            response.Message = $"Successfully retrieved all active carts";
+                        }
                     }
                     else
                     {
@@ -162,47 +206,12 @@ namespace okeafurniture.DAL.EFRepositories
             return response;
         }
 
-        public Response<List<Cart>> GetAllByStatus(bool CheckedOut)
-        {
-            Response<List<Cart>> response = new Response<List<Cart>>();
-            try
-            {
-                using (var context = OkeaFurnitureContext.GetDbContext())
-                {
-                response.Data = context.Carts.Where(c => c.CheckedOut == CheckedOut).ToList();
-                if (response.Data != null)
-                {
-                    response.Success = true;
-                    if (CheckedOut)
-                    {
-                        response.Message = $"Successfully retrieved all checked out carts";
-                    }
-                    else
-                    {
-                        response.Message = $"Successfully retrieved all active carts";
-                    }
-                }
-                else
-                {
-                    response.Success = false;
-                    response.Message = "No carts found";
-                }
-            }
-        }
-            catch (Exception ex)
-            {
-                response.Success = false;
-                response.Message = ex.Message;
-            }
-            return response;
-        }
-
         public Response Update(Cart cart)
         {
             Response response = new Response();
             try
             {
-                using (var context = OkeaFurnitureContext.GetDbContext())
+                using (context = new OkeaFurnitureContext(context.Options))
                 {
                     context.Carts.Update(cart);
                     context.SaveChanges();

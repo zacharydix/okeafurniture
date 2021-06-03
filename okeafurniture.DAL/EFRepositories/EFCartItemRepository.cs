@@ -18,27 +18,133 @@ namespace okeafurniture.DAL.EFRepositories
         }
         public Response<CartItem> Add(int cartId, int itemId)
         {
-            throw new NotImplementedException();
+            CartItem cartItem = new CartItem();
+            cartItem.CartId = cartId;
+            cartItem.ItemId = itemId;
+            cartItem.Quantity = 1;
+
+            Response<CartItem> response = new Response<CartItem>();
+            try
+            {
+                response.Data = context.Add(cartItem).Entity;
+                response.Success = true;
+                response.Message = $"Successfully added new cart-item relationship {cartId}-{itemId}";
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = ex.Message;
+            }
+            return response;
         }
 
         public Response Delete(int cartId, int itemId)
         {
-            throw new NotImplementedException();
+            Response response = new Response();
+            try
+            {
+
+                var getResponse = Get(cartId, itemId);
+                if (getResponse.Success)
+                {
+                    using (context = new OkeaFurnitureContext(context.Options))
+                    {
+                        context.CartItems.Remove(getResponse.Data);
+                        context.SaveChanges();
+
+                        response.Success = true;
+                        response.Message = $"Successfully deleted cart-item {cartId}-{itemId}";
+                    }
+                }
+                else
+                {
+                    response.Message = $"Could not find cart-item {cartId}-{itemId}";
+                }
+
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = ex.Message;
+            }
+            return response;
         }
 
         public Response<CartItem> Get(int cartId, int itemId)
         {
-            throw new NotImplementedException();
+            Response<CartItem> response = new Response<CartItem>();
+            try
+            {
+                using (context = new OkeaFurnitureContext(context.Options))
+                {
+                    response.Data = context.CartItems.SingleOrDefault(ci => ci.CartId == cartId && ci.ItemId == itemId);
+                    if (response.Data != null)
+                    {
+                        response.Success = true;
+                        response.Message = $"Successfully retrieved cart-item";
+                    }
+                    else
+                    {
+                        response.Success = false;
+                        response.Message = "Card-item relationship not found";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = ex.Message;
+            }
+            return response;
         }
 
         public Response<List<CartItem>> GetByCart(int cartId)
         {
-            throw new NotImplementedException();
+            Response<List<CartItem>> response = new Response<List<CartItem>>();
+            try
+            {
+                using (context = new OkeaFurnitureContext(context.Options))
+                {
+                    response.Data = context.CartItems.Where(ci => ci.CartId == cartId).ToList();
+                    if (response.Data != null)
+                    {
+                        response.Success = true;
+                        response.Message = $"Successfully retrieved items in cart #{cartId}";
+                    }
+                    else
+                    {
+                        response.Success = false;
+                        response.Message = "Please enter a valid cart ID";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = ex.Message;
+            }
+            return response;
         }
 
-        public Response Update(int cartId, int itemId)
+        public Response Update(CartItem cartItem)
         {
-            throw new NotImplementedException();
+            Response response = new Response();
+            try
+            {
+                using (context = new OkeaFurnitureContext(context.Options))
+                {
+                    context.CartItems.Update(cartItem);
+                    context.SaveChanges();
+                    response.Success = true;
+                    response.Message = $"successfully updated Cart-Item {cartItem.CartId}_{cartItem.ItemId}";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = ex.Message;
+            }
+            return response;
         }
     }
 }
