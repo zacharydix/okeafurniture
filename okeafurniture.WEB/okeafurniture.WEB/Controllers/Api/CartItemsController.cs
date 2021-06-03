@@ -10,36 +10,36 @@ namespace okeafurniture.WEB.Controllers.Api
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PaymentMethodsController : ControllerBase
+    public class CartItemsController : Controller
     {
-        private IPaymentMethodRepository repository;
+        private ICartItemRepository repository;
 
-        public PaymentMethodsController(IPaymentMethodRepository repository)
+        public CartItemsController(ICartItemRepository repository)
         {
             this.repository = repository;
         }
 
         [HttpGet, Route("get/id")]
-        public IActionResult GetPaymentMethodById(int id)
+        public IActionResult GetCartItemById(int cartId, int itemId)
         {
-            Response<PaymentMethod> response = repository.Get(id);
-            if (response.Success)
+            Response<CartItem> result = repository.Get(cartId, itemId);
+            if (result.Success)
             {
-                return Ok(response.Data);
+                return Ok(result.Data);
             }
             else
             {
-                return BadRequest(response.Message);
+                return BadRequest(result.Message);
             }
         }
 
-        [HttpGet, Route("get/user")]
-        public IActionResult GetPaymentMethodByUser(int accountId)
+        [HttpGet, Route("get/id/all")]
+        public IActionResult GetCartItemsByCartId(int cartId)
         {
-            Response<List<PaymentMethod>> response = repository.GetByUser(accountId);
+            Response<List<CartItem>> response = repository.GetByCart(cartId);
             if (response.Success)
             {
-                return Ok(response.Data);
+                return Ok(response.Data.MapToModel());
             }
             else
             {
@@ -48,12 +48,12 @@ namespace okeafurniture.WEB.Controllers.Api
         }
 
         [HttpPost, Route("add")]
-        public IActionResult AddPaymentMethod(PaymentMethod model)
+        public IActionResult AddCartItem(CartItem model)
         {
-            Response<PaymentMethod> response = repository.Add(model.MapToPaymentMethod());
+            Response<CartItem> response = repository.Add(model.MapToCartItem());
             if (response.Success)
             {
-                return CreatedAtRoute(nameof(GetPaymentMethodById), new { id = model.PaymentMethodId }, model.MapToPaymentMethod());
+                return CreatedAtRoute(nameof(GetCartItemById), new { cartId = response.Data.CartId, itemId = response.Data.ItemId }, response.Data.MapToModel());
             }
             else
             {
@@ -62,14 +62,14 @@ namespace okeafurniture.WEB.Controllers.Api
         }
 
         [HttpPut, Route("edit")]
-        public IActionResult EditPaymentMethod(PaymentMethod model)
+        public IActionResult EditCartItem(CartItem model)
         {
-            Response<PaymentMethod> response = repository.Get(model.PaymentMethodId);
+            Response<CartItem> response = repository.Get(model.CartId, model.ItemId);
             if (!response.Success)
             {
-                return NotFound($"Payment method {model.PaymentMethodId} not found");
+                return NotFound($"Cart Item not found");
             }
-            Response updateResponse = repository.Update(model.MapToPaymentMethod());
+            Response updateResponse = repository.Update(model.MapToCartItem());
             if (updateResponse.Success)
             {
                 return Ok();
@@ -81,14 +81,14 @@ namespace okeafurniture.WEB.Controllers.Api
         }
 
         [HttpDelete, Route("delete")]
-        public IActionResult DeletePaymentMethod(int id)
+        public IActionResult DeleteCartItem(int cartId, int itemId)
         {
-            Response<PaymentMethod> response = repository.Get(id);
+            Response<CartItem> response = repository.Get(cartId, itemId);
             if (!response.Success)
             {
-                return NotFound($"Payment method {id} not found");
+                return NotFound($"Cart Item not found");
             }
-            Response deleteResponse = repository.Delete(id);
+            Response deleteResponse = repository.Delete(cartId, itemId);
             if (deleteResponse.Success)
             {
                 return Ok();
