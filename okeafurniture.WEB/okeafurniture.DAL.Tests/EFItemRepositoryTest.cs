@@ -17,6 +17,7 @@ namespace okeafurniture.DAL.Tests
         public readonly static Item ITEM = MakeItem();
         public readonly static Item ITEM1 = MakeItem1();
         public readonly static Item ITEM2 = MakeItem2();
+        public readonly static Category CATEGORY = MakeCategory();
 
 
         [SetUp]
@@ -27,6 +28,7 @@ namespace okeafurniture.DAL.Tests
             db = new OkeaFurnitureContext(options);
             db.Database.EnsureDeleted();
             db.Database.EnsureCreated();
+            db.Categories.Add(CATEGORY);
             db.SaveChanges();
 
             itemRepo = new EFItemRepository(db);
@@ -35,11 +37,15 @@ namespace okeafurniture.DAL.Tests
         [Test]
         public void InsertingItem()
         {
-            itemRepo.Insert(ITEM);
+            Response<Item> result = itemRepo.Insert(ITEM);
+            Assert.IsTrue(result.Success);
+            //put message assert here also
+            //and data assert here
 
             var response = db.Items.Find(1);
-            Assert.AreEqual(response.ItemName, ITEM.ItemName);
-            Assert.AreEqual(response.CategoryId, 1);
+            Assert.AreEqual(response.ItemName, ITEM.ItemName); //backwards, should be expected then actual
+            Assert.AreEqual(CATEGORY.CategoryId, response.Categories[0].CategoryId);
+            Assert.AreEqual(CATEGORY.CategoryName, response.Categories[0].CategoryName);
             Assert.AreEqual(response.ItemDescription, ITEM.ItemDescription);
             Assert.AreEqual(response.UnitPrice,ITEM.UnitPrice);
         }
@@ -110,10 +116,10 @@ namespace okeafurniture.DAL.Tests
             {
 
                 ItemName = "Couch",
-                CategoryId = 1,
                 ItemDescription = "bigCouch",
                 UnitPrice =200.00M
             };
+            item.Categories.Add(CATEGORY);
             return item;
         }
         public static Item MakeItem1()
@@ -122,10 +128,10 @@ namespace okeafurniture.DAL.Tests
             {
 
                 ItemName = "SuperCouch",
-                CategoryId = 1,
                 ItemDescription = "biggerCouch",
                 UnitPrice = 999.00M
             };
+            item.Categories.Add(CATEGORY);
             return item;
         }
         public static Item MakeItem2()
@@ -134,11 +140,20 @@ namespace okeafurniture.DAL.Tests
             {
 
                 ItemName = "UltraMegaCouch",
-                CategoryId = 1,
                 ItemDescription = "BiggerBetterBestest",
                 UnitPrice = 10000.00M
             };
+            item.Categories.Add(CATEGORY);
             return item;
+        }
+
+        public static Category MakeCategory()
+        {
+            Category category = new Category()
+            {
+                CategoryName = "Couch"
+            };
+            return category;
         }
     }
 }

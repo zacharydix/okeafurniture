@@ -13,5 +13,10 @@ namespace okeafurniture.CORE.Entites
         public decimal UnitPrice {get;set;}
         public List<CartItem> CartItems { get; set; }
         public List<Category> Categories { get; set; }
+
+        public Item()
+        {
+            Categories = new List<Category>();
+        }
     }
 }
