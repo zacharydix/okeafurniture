@@ -54,6 +54,32 @@ namespace okeafurniture.WEB.Models
             };
         }
 
+        public static Item MapToItem(this ItemModel model)
+        {
+            return new Item()
+            {
+                ItemId=model.ItemId,
+                ItemName=model.ItemName,
+                ItemDescription=model.ItemDescription,
+                UnitPrice=model.UnitPrice
+            };
+        }
+
+        public static PaymentMethod MapToPaymentMethod(this PaymentMethodModel model)
+        {
+            return new PaymentMethod()
+            {
+                PaymentMethodId = model.PaymentMethodId,
+                AccountId=model.AccountId,
+                CardHolderFirstName=model.CardHolderFirstName,
+                CardHolderLastName=model.CardHolderLastName,
+                CardNumber=model.CardNumber,
+                CardExpiration=model.CardExpiration,
+                CardCVV=model.CardCVV,
+                BillingAddress=model.BillingAddress
+            };
+        }
+
         public static AccountModel MapToModel(this Account account)
         {
             return new AccountModel()
@@ -186,6 +212,78 @@ namespace okeafurniture.WEB.Models
                     });
             };
             return categoryModels;
+        }
+
+        public static ItemModel MapToModel(this Item item)
+        {
+            return new ItemModel()
+            {
+                ItemId = item.ItemId,
+                ItemName = item.ItemName,
+                ItemDescription = item.ItemDescription,
+                UnitPrice = item.UnitPrice,
+                Categories = item.Categories,
+                CartItems = item.CartItems
+            };
+        }
+
+        public static List<ItemModel> MapToModel(this List<Item> items)
+        {
+            var itemModels = new List<ItemModel>();
+
+            foreach (var i in items)
+            {
+                itemModels.Add(
+                    new ItemModel()
+                    {
+                        ItemId = i.ItemId,
+                        ItemName = i.ItemName,
+                        ItemDescription = i.ItemDescription,
+                        UnitPrice = i.UnitPrice,
+                        Categories = i.Categories,
+                        CartItems = i.CartItems
+                    });
+            };
+            return itemModels;
+        }
+
+        public static PaymentMethodModel MapToModel(this PaymentMethod paymentMethod)
+        {
+            return new PaymentMethodModel()
+            {
+                PaymentMethodId = paymentMethod.PaymentMethodId,
+                AccountId = paymentMethod.AccountId,
+                CardHolderFirstName = paymentMethod.CardHolderFirstName,
+                CardHolderLastName = paymentMethod.CardHolderLastName,
+                CardNumber = paymentMethod.CardNumber,
+                CardExpiration = paymentMethod.CardExpiration,
+                CardCVV = paymentMethod.CardCVV,
+                BillingAddress = paymentMethod.BillingAddress,
+                Account = paymentMethod.Account
+            };
+        }
+
+        public static List<PaymentMethodModel> MapToModel(this List<PaymentMethod> paymentMethods)
+        {
+            var paymentMethodModels = new List<PaymentMethodModel>();
+
+            foreach (var p in paymentMethods)
+            {
+                paymentMethodModels.Add(
+                    new PaymentMethodModel()
+                    {
+                        PaymentMethodId = p.PaymentMethodId,
+                        AccountId = p.AccountId,
+                        CardHolderFirstName = p.CardHolderFirstName,
+                        CardHolderLastName = p.CardHolderLastName,
+                        CardNumber = p.CardNumber,
+                        CardExpiration = p.CardExpiration,
+                        CardCVV = p.CardCVV,
+                        BillingAddress = p.BillingAddress,
+                        Account = p.Account
+                    });
+            };
+            return paymentMethodModels;
         }
     }
 }
