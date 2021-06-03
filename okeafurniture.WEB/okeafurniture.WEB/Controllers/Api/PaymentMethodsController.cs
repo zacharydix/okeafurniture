@@ -48,7 +48,7 @@ namespace okeafurniture.WEB.Controllers.Api
         }
 
         [HttpPost, Route("add")]
-        public IActionResult AddPaymentMethod(PaymentMethod model)
+        public IActionResult AddPaymentMethod(PaymentMethodModel model)
         {
             Response<PaymentMethod> response = repository.Add(model.MapToPaymentMethod());
             if (response.Success)
@@ -62,7 +62,7 @@ namespace okeafurniture.WEB.Controllers.Api
         }
 
         [HttpPut, Route("edit")]
-        public IActionResult EditPaymentMethod(PaymentMethod model)
+        public IActionResult EditPaymentMethod(PaymentMethodModel model)
         {
             Response<PaymentMethod> response = repository.Get(model.PaymentMethodId);
             if (!response.Success)

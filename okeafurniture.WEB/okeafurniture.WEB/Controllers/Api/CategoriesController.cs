@@ -47,7 +47,7 @@ namespace okeafurniture.WEB.Controllers.Api
         }
 
         [HttpPost, Route("add")]
-        public IActionResult AddCategory(Category model)
+        public IActionResult AddCategory(CategoryModel model)
         {
             Response<Category> response = repository.Add(model.MapToAccount());
             if (response.Success)
@@ -61,7 +61,7 @@ namespace okeafurniture.WEB.Controllers.Api
         }
 
         [HttpPut, Route("edit")]
-        public IActionResult EditCategory(Category model)
+        public IActionResult EditCategory(CategoryModel model)
         {
             Response<Category> response = repository.Get(model.CategoryId);
             if (!response.Success)

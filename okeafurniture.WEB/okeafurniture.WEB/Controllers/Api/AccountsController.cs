@@ -62,7 +62,7 @@ namespace okeafurniture.WEB.Controllers.Api
         }
 
         [HttpPost, Route("add")]
-        public IActionResult AddAccount(Account model)
+        public IActionResult AddAccount(AccountModel model)
         {
             Response<Account> response = repository.Add(model.MapToAccount());
             if (response.Success)
@@ -76,7 +76,7 @@ namespace okeafurniture.WEB.Controllers.Api
         }
 
         [HttpPut, Route("edit")]
-        public IActionResult EditAccount(Account model)
+        public IActionResult EditAccount(AccountModel model)
         {
             Response<Account> response = repository.Get(model.AccountId);
             if (!response.Success)

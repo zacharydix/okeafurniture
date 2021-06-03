@@ -48,7 +48,7 @@ namespace okeafurniture.WEB.Controllers.Api
         }
 
         [HttpPost, Route("add")]
-        public IActionResult AddCartItem(CartItem model)
+        public IActionResult AddCartItem(CartItemModel model)
         {
             Response<CartItem> response = repository.Add(model.MapToCartItem());
             if (response.Success)
@@ -62,7 +62,7 @@ namespace okeafurniture.WEB.Controllers.Api
         }
 
         [HttpPut, Route("edit")]
-        public IActionResult EditCartItem(CartItem model)
+        public IActionResult EditCartItem(CartItemModel model)
         {
             Response<CartItem> response = repository.Get(model.CartId, model.ItemId);
             if (!response.Success)
