@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 
 namespace okeafurniture.WEB.Controllers.Api
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class AuthController : ControllerBase
     {
         private IAccountRepository _accountRepo;
