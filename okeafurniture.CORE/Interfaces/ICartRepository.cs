@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace okeafurniture.CORE.Interfaces
 {
-    interface ICartRepository
+    public interface ICartRepository
     {
         public Response<Cart> Get(int id);
         public Response<Cart> GetActive(int accountId);
@@ -15,6 +15,6 @@ namespace okeafurniture.CORE.Interfaces
         public Response<List<Cart>> GetAllByAccount(int accountId);
         public Response<List<Cart>> GetAllByStatus(bool CheckedOut);
         public Response<Cart> Add(int accountId);
-        public Response Update(int accountId);
+        public Response Update(Cart cart);
     }
 }
