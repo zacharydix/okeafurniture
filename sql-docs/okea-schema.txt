@@ -1,0 +1,79 @@
+use master;
+drop database if exists okea;
+create database okea;
+use okea;
+
+create table User (
+UserId int primary key identity(1,1),
+FirstName varchar(50) not null,
+LastName varchar(50) not null,
+Email varchar(50) not null,
+Password varchar(50) not null,
+Address varchar(50) not null, 
+DateOfBirth date not null,
+IsAdmin bool not null 
+);
+
+create table Category (
+CategoryId int primary key identity(1,1),
+CategoryName varchar(25) not null 
+);
+
+create table PaymentMethod (
+PaymentMethodId int primary key identity(1,1),
+CardHolderFirstName varchar(50) not null,
+CardHolderLastName varchar(50) not null,
+CardNumber varchar(50) not null,
+CardExpiration varchar(50) not null,
+CardCVV varchar(50) not null,
+BillingAddress varchar(50) not null, 
+constraint fk_User_PaymentMethod_UserId
+	foreign key (UserId),
+	references User(UserId)
+);
+
+
+
+
+
+
+
+
+
+Create table Item (
+	ItemId int primary key identity(1,1),
+	CategoryId int not null,
+	ItemName varchar(50) not null,
+	ItemDescription varchar(50) not null,
+	UnitPrice decimal(12,2) not null,
+	Constraint fk_Category_Item_CategoryId
+		Foreign key (CategoryId)
+		references Category(CategoryId)
+);
+
+Create table ItemCategory (
+	ItemId int not null,
+	CategoryId int not null,
+	Constraint fk_Item_ItemCategory_ItemId
+		Foreign key (ItemId)
+		References Item(ItemId),
+	Constraint fk_Category_ItemCategory_CategoryId
+		Foreign key (CategoryId)
+		References Category(CategoryId),
+	Constraint pk_ItemCategory
+		Primary key (ItemId, CategoryId)
+);
+
+Create table Cart (
+	CartId int primary key not null,
+	UserId int not null,
+	PaymentMethodId int not null,
+	OrderTotal decimal(12,2) not null,
+	CheckedOut bool not null,
+	Constraint fk_User_Cart_UserId
+		Foreign key (UserId)
+		References User(UserId),
+	Constraint fk_PaymentMethod_Cart_PaymentMethodId
+		Foreign key (PaymentMethodId)
+		References PaymentMethod(PaymentMethodId)
+);
