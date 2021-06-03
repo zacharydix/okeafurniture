@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using okeafurniture.CORE.Entites;
 
 namespace okeafurniture.CORE.Interfaces
 {
-    public class IItemRepository
+    public interface IItemRepository
     {
-        Response<Item> Insert(Item item);
-        Response Update(Item item);
-        Response Delete(int itemId);
-        Response<Item> Get(int itemId);
-        Response<List<Item>> GetByCategory(int categoryId);
+        public Response<Item> Insert(Item item);
+        public Response Update(Item item);
+        public Response Delete(int itemId);
+        public Response<Item> Get(int itemId);
+        public Response<List<Item>> GetAll();
+        public Response<List<Item>> GetByCategory(int categoryId);
     }
 }
