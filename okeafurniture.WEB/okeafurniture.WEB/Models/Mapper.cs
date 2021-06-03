@@ -100,20 +100,20 @@ namespace okeafurniture.WEB.Models
         {
             var accountModels = new List<AccountModel>();
 
-            foreach (var a in accounts)
+            foreach (var account in accounts)
             {
                 accountModels.Add(
                     new AccountModel()
                     {
-                        AccountId = a.AccountId,
-                        FirstName = a.FirstName,
-                        LastName = a.LastName,
-                        Email = a.Email,
-                        Password = a.Password,
-                        DateOfBirth = a.DateOfBirth,
-                        IsAdmin = a.IsAdmin,
-                        PaymentMethods = a.PaymentMethods,
-                        Carts = a.Carts
+                        AccountId = account.AccountId,
+                        FirstName = account.FirstName,
+                        LastName = account.LastName,
+                        Email = account.Email,
+                        Password = account.Password,
+                        DateOfBirth = account.DateOfBirth,
+                        IsAdmin = account.IsAdmin,
+                        PaymentMethods = account.PaymentMethods,
+                        Carts = account.Carts
                     });
             }
             return accountModels;
@@ -135,16 +135,16 @@ namespace okeafurniture.WEB.Models
         {
             var cartItemModels = new List<CartItemModel>();
 
-            foreach (var c in cartItems)
+            foreach (var cartItem in cartItems)
             {
                 cartItemModels.Add(
                     new CartItemModel()
                     {
-                        CartId = c.CartId,
-                        ItemId = c.ItemId,
-                        Quantity = c.Quantity,
-                        Cart = c.Cart,
-                        Item = c.Item
+                        CartId = cartItem.CartId,
+                        ItemId = cartItem.ItemId,
+                        Quantity = cartItem.Quantity,
+                        Cart = cartItem.Cart,
+                        Item = cartItem.Item
                     });
             }
             return cartItemModels;
@@ -169,19 +169,19 @@ namespace okeafurniture.WEB.Models
         {
             var cartModels = new List<CartModel>();
 
-            foreach (var c in carts)
+            foreach (var cart in carts)
             {
                 cartModels.Add(
                     new CartModel()
                     {
-                        CartId = c.CartId,
-                        AccountId = c.AccountId,
-                        PaymentMethodId = c.PaymentMethodId,
-                        OrderTotal = c.OrderTotal,
-                        CheckedOut = c.CheckedOut,
-                        Account = c.Account,
-                        PaymentMethod = c.PaymentMethod,
-                        CartItems = c.CartItems
+                        CartId = cart.CartId,
+                        AccountId = cart.AccountId,
+                        PaymentMethodId = cart.PaymentMethodId,
+                        OrderTotal = cart.OrderTotal,
+                        CheckedOut = cart.CheckedOut,
+                        Account = cart.Account,
+                        PaymentMethod = cart.PaymentMethod,
+                        CartItems = cart.CartItems
                     });
             }
             return cartModels;
@@ -201,14 +201,14 @@ namespace okeafurniture.WEB.Models
         {
             var categoryModels = new List<CategoryModel>();
 
-            foreach (var c in categories)
+            foreach (var category in categories)
             {
                 categoryModels.Add(
                     new CategoryModel()
                     {
-                        CategoryId = c.CategoryId,
-                        CategoryName = c.CategoryName,
-                        Items = c.Items
+                        CategoryId = category.CategoryId,
+                        CategoryName = category.CategoryName,
+                        Items = category.Items
                     });
             };
             return categoryModels;
@@ -231,17 +231,17 @@ namespace okeafurniture.WEB.Models
         {
             var itemModels = new List<ItemModel>();
 
-            foreach (var i in items)
+            foreach (var item in items)
             {
                 itemModels.Add(
                     new ItemModel()
                     {
-                        ItemId = i.ItemId,
-                        ItemName = i.ItemName,
-                        ItemDescription = i.ItemDescription,
-                        UnitPrice = i.UnitPrice,
-                        Categories = i.Categories,
-                        CartItems = i.CartItems
+                        ItemId = item.ItemId,
+                        ItemName = item.ItemName,
+                        ItemDescription = item.ItemDescription,
+                        UnitPrice = item.UnitPrice,
+                        Categories = item.Categories,
+                        CartItems = item.CartItems
                     });
             };
             return itemModels;
@@ -267,20 +267,20 @@ namespace okeafurniture.WEB.Models
         {
             var paymentMethodModels = new List<PaymentMethodModel>();
 
-            foreach (var p in paymentMethods)
+            foreach (var paymentMethod in paymentMethods)
             {
                 paymentMethodModels.Add(
                     new PaymentMethodModel()
                     {
-                        PaymentMethodId = p.PaymentMethodId,
-                        AccountId = p.AccountId,
-                        CardHolderFirstName = p.CardHolderFirstName,
-                        CardHolderLastName = p.CardHolderLastName,
-                        CardNumber = p.CardNumber,
-                        CardExpiration = p.CardExpiration,
-                        CardCVV = p.CardCVV,
-                        BillingAddress = p.BillingAddress,
-                        Account = p.Account
+                        PaymentMethodId = paymentMethod.PaymentMethodId,
+                        AccountId = paymentMethod.AccountId,
+                        CardHolderFirstName = paymentMethod.CardHolderFirstName,
+                        CardHolderLastName = paymentMethod.CardHolderLastName,
+                        CardNumber = paymentMethod.CardNumber,
+                        CardExpiration = paymentMethod.CardExpiration,
+                        CardCVV = paymentMethod.CardCVV,
+                        BillingAddress = paymentMethod.BillingAddress,
+                        Account = paymentMethod.Account
                     });
             };
             return paymentMethodModels;
