@@ -11,6 +11,8 @@ namespace okeafurniture.DAL
 {
     public class OkeaFurnitureContext : DbContext
     {
+        public DbContextOptions Options { private set; get; }
+
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<Category> Categories { get; set; }
@@ -22,7 +24,7 @@ namespace okeafurniture.DAL
 
         public OkeaFurnitureContext(DbContextOptions options) : base(options)
         {
-
+            Options = options;
         }
 
         public static OkeaFurnitureContext GetDbContext()

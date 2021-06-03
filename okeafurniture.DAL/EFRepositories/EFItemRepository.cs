@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 using okeafurniture.CORE;
 using okeafurniture.CORE.Entites;
 using okeafurniture.CORE.Interfaces;
@@ -62,7 +63,7 @@ namespace okeafurniture.DAL.EFRepositories
         {
             Response<List<Item>> response = new Response<List<Item>>();
 
-            List<Item> items = _context.Items.Where(z => z.CategoryId == categoryId).ToList();
+            List<Item> items = _context.Items.Include(a => a.Categories).Where(i => i.Categories.Any(p => p.CategoryId == categoryId)).ToList();
 
             response.Data = items;
             response.Success = true;

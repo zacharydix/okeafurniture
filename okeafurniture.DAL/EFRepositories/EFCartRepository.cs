@@ -83,7 +83,7 @@ namespace okeafurniture.DAL.EFRepositories
             Response<Cart> response = new Response<Cart>();
             try
             {
-                using (var context = OkeaFurnitureContext.GetDbContext())
+                using (context = new OkeaFurnitureContext(context.Options))
                 {
                     response.Data = context.Carts.FirstOrDefault(c => c.AccountId == accountId && c.CheckedOut == false);
                     if (response.Data != null)
