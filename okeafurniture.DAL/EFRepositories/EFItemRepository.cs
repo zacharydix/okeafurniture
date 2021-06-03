@@ -35,6 +35,7 @@ namespace okeafurniture.DAL.EFRepositories
             }
 
             aResponse.Success = true;
+            aResponse.Message = "Successfully deleted Item";
 
             return aResponse;
         }
@@ -42,10 +43,12 @@ namespace okeafurniture.DAL.EFRepositories
         public Response<Item> Get(int itemId)
         {
             Response<Item> response = new Response<Item>();
-            Item item = _context.Items.Find(itemId);
+            Item item = _context.Items.Include(a => a.Categories)
+                .Include(b => b.CartItems).SingleOrDefault(i=>i.ItemId==itemId);
 
             response.Data = item;
             response.Success = true;
+            response.Message = "Successfully retrieved Item";
             return response;
         }
 
@@ -55,6 +58,7 @@ namespace okeafurniture.DAL.EFRepositories
             List<Item> items = _context.Items.ToList();
             response.Success = true;
             response.Data = items;
+            response.Message = "Successfully retrieved Items";
 
             return response;
         }
@@ -67,6 +71,7 @@ namespace okeafurniture.DAL.EFRepositories
 
             response.Data = items;
             response.Success = true;
+            response.Message = "Successfully retrieved item's category";
             return response;
         }
 
@@ -79,6 +84,7 @@ namespace okeafurniture.DAL.EFRepositories
                 _context.Items.Add(item);
                 _context.SaveChanges();
                 response.Success = true;
+                response.Message = "Successfully inserted Item";
                 response.Data = item;
             }
             catch (Exception ex)
@@ -99,7 +105,9 @@ namespace okeafurniture.DAL.EFRepositories
 
                     _context.Items.Update(item);
                     _context.SaveChanges();
+                    
                     response.Success = true;
+                    response.Message = "update was successful";
 
 
                 }

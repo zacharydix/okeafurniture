@@ -1,12 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
-using okeafurniture.DAL.EFRepositories;
 using okeafurniture.CORE.Entites;
 using okeafurniture.CORE.Interfaces;
-using Microsoft.EntityFrameworkCore.InMemory;
-using System;
+using okeafurniture.DAL.EFRepositories;
 using System.Collections.Generic;
-using System.Linq;
 namespace okeafurniture.DAL.Tests
 {
     public class EFItemRepositoryTests
@@ -14,21 +11,18 @@ namespace okeafurniture.DAL.Tests
         private OkeaFurnitureContext db;
         private IItemRepository itemRepo;
 
-        public readonly static Item ITEM = MakeItem();
-        public readonly static Item ITEM1 = MakeItem1();
-        public readonly static Item ITEM2 = MakeItem2();
-        public readonly static Category CATEGORY = MakeCategory();
-
-
+        private static readonly Category CATEGORY = MakeCategory();
         [SetUp]
         public void Setup()
         {
             var options = new DbContextOptionsBuilder<OkeaFurnitureContext>()
-                    .UseInMemoryDatabase(databaseName: "okea").Options;
+                    .UseInMemoryDatabase("okea").Options;
             db = new OkeaFurnitureContext(options);
             db.Database.EnsureDeleted();
             db.Database.EnsureCreated();
-            db.Categories.Add(CATEGORY);
+            Item item1 = MakeItem();
+            Item item2 = MakeItem1();
+            Category category = MakeCategory();
             db.SaveChanges();
 
             itemRepo = new EFItemRepository(db);
@@ -37,39 +31,53 @@ namespace okeafurniture.DAL.Tests
         [Test]
         public void InsertingItem()
         {
-            Response<Item> result = itemRepo.Insert(ITEM);
-            Assert.IsTrue(result.Success);
-            //put message assert here also
-            //and data assert here
+            Item item = MakeItem();
 
-            var response = db.Items.Find(1);
-            Assert.AreEqual(response.ItemName, ITEM.ItemName); //backwards, should be expected then actual
-            Assert.AreEqual(CATEGORY.CategoryId, response.Categories[0].CategoryId);
-            Assert.AreEqual(CATEGORY.CategoryName, response.Categories[0].CategoryName);
-            Assert.AreEqual(response.ItemDescription, ITEM.ItemDescription);
-            Assert.AreEqual(response.UnitPrice,ITEM.UnitPrice);
+            Response<Item> expected = new Response<Item>()
+            {
+                Data = item,
+                Success = true,
+                Message = "Successfully inserted Item"
+            };
+
+            Response<Item> actual = itemRepo.Insert(item);
+            Assert.IsTrue(actual.Success);
+            Assert.AreEqual(expected.Data.ItemId, actual.Data.ItemId);
+            Assert.AreEqual(expected.Data.ItemName, actual.Data.ItemName);
+            Assert.AreEqual(expected.Data.ItemDescription, actual.Data.ItemDescription);
+            Assert.AreEqual(expected.Data.UnitPrice, actual.Data.UnitPrice);
+            Assert.AreEqual(expected.Message, actual.Message);
         }
 
         [Test]
         public void GetItemById()
         {
-            Response<Item> response = new Response<Item>();
-            itemRepo.Insert(ITEM);
+            Item item = MakeItem();
 
-            response.Data = ITEM;
-            var fromMethod = itemRepo.Get(1);
+            db.Items.Add(item);
+            db.SaveChanges();
 
-            Assert.AreEqual(response.Data, fromMethod.Data);
+            Response<Item> actual = itemRepo.Get(1);
+
+            Assert.IsTrue(actual.Success);
+            Assert.AreEqual("Successfully retrieved Item", actual.Message);
+            Assert.AreEqual(item.ItemId, actual.Data.ItemId);
 
         }
         [Test]
         public void GetListofItemsByCategoryID()
         {
+            Item item = MakeItem();
+            itemRepo.Insert(item);
+
+            Item item1 = MakeItem1();
+            Item item2 = MakeItem2();
+
+            itemRepo.Insert(item1);
+            itemRepo.Insert(item2);
+
             Response<List<Item>> response = new Response<List<Item>>();
 
-            itemRepo.Insert(ITEM);
-            itemRepo.Insert(ITEM1);
-            itemRepo.Insert(ITEM2);
 
             response = itemRepo.GetByCategory(1);
             Assert.AreEqual(3, response.Data.Count);
@@ -77,21 +85,35 @@ namespace okeafurniture.DAL.Tests
         [Test]
         public void ItemShouldUpdate()
         {
-            Response response = new Response();
-            var itemToUpdate = ITEM;
+            Item item = MakeItem();
+            itemRepo.Insert(item);
+
+            Response expected = new Response()
+            {
+                Success = true,
+                Message = "update was successful"
+            };
+            Response actual = new Response();
+            var itemToUpdate = item;
+
             itemRepo.Insert(itemToUpdate);
 
-            itemToUpdate.ItemName= "Ghost";
-            response = itemRepo.Update(itemToUpdate);
 
-            Assert.IsTrue(response.Success);
+            itemToUpdate.ItemName = "Ghost";
+            actual = itemRepo.Update(itemToUpdate);
+
+            Assert.AreEqual(expected.Message, actual.Message);
+            Assert.IsTrue(actual.Success);
         }
         [Test]
         public void ShouldDeleteItem()
         {
+            Item item = MakeItem();
+            itemRepo.Insert(item);
+
             Response aResponse = new Response();
-            itemRepo.Insert(ITEM);
-            itemRepo.Insert(ITEM);
+            itemRepo.Insert(item);
+            itemRepo.Insert(item);
             aResponse = itemRepo.Delete(1);
 
             Assert.IsTrue(aResponse.Success);
@@ -100,11 +122,20 @@ namespace okeafurniture.DAL.Tests
         [Test]
         public void GetAllItems()
         {
+            Item item = MakeItem();
+            itemRepo.Insert(item);
+
+            Item item1 = MakeItem1();
+            Item item2 = MakeItem2();
+
+            itemRepo.Insert(item1);
+            itemRepo.Insert(item2);
+
             Response<List<Item>> response = new Response<List<Item>>();
 
-            itemRepo.Insert(ITEM);
-            itemRepo.Insert(ITEM2);
-            itemRepo.Insert(ITEM1);
+            itemRepo.Insert(item);
+            itemRepo.Insert(item1);
+            itemRepo.Insert(item2);
 
             response = itemRepo.GetAll();
             Assert.AreEqual(3, response.Data.Count);
@@ -132,6 +163,7 @@ namespace okeafurniture.DAL.Tests
                 UnitPrice = 999.00M
             };
             item.Categories.Add(CATEGORY);
+
             return item;
         }
         public static Item MakeItem2()
@@ -151,8 +183,9 @@ namespace okeafurniture.DAL.Tests
         {
             Category category = new Category()
             {
-                CategoryName = "Couch"
+                CategoryName = "Couch"       
             };
+            
             return category;
         }
     }
