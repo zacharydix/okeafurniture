@@ -113,6 +113,28 @@ namespace okeafurniture.DAL
             }
         }
 
+        public Response<List<Account>> GetByEmail(string email)
+        {
+            Response<List<Account>> response = new Response<List<Account>>()
+            {
+                Data = null,
+                Success = true,
+                Message = "Successfully retrieved accounts."
+            };
+            try
+            {
+                response.Data = context.Accounts.Where(a => a.Email == email).ToList();
+                return response;
+            }
+            catch (Exception)
+            {
+                response.Data = null;
+                response.Success = false;
+                response.Message = "An error occured when accessing data. Please contact support.";
+                return response;
+            }
+        }
+
         public Response Update(Account account)
         {
             Response response = new Response()
@@ -122,12 +144,11 @@ namespace okeafurniture.DAL
             };
             try
             {
-                /*using (context = GetDbContext())
+                using (context = new OkeaFurnitureContext(context.Options))
                 {
                     context.Accounts.Update(account);
                     context.SaveChanges();
                 }
-                */
                 return response;
             }
             catch (Exception)

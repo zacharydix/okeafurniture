@@ -11,8 +11,10 @@ namespace okeafurniture.CORE.Interfaces
     {
         public Response<Account> Get(int id);
         public Response<List<Account>> GetAll();
+        public Response<List<Account>> GetByEmail(string email);
         public Response<Account> Add(Account account);
         public Response Update(Account account);
         public Response Delete(int id);
+
     }
 }
