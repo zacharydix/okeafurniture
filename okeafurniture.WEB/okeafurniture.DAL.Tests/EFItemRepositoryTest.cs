@@ -10,8 +10,11 @@ namespace okeafurniture.DAL.Tests
     {
         private OkeaFurnitureContext db;
         private IItemRepository itemRepo;
-
-        private static readonly Category CATEGORY = MakeCategory();
+        private Item item;
+        private Item item1;
+        private Item item2;
+        private Category category;
+        
         [SetUp]
         public void Setup()
         {
@@ -20,19 +23,39 @@ namespace okeafurniture.DAL.Tests
             db = new OkeaFurnitureContext(options);
             db.Database.EnsureDeleted();
             db.Database.EnsureCreated();
-            Item item1 = MakeItem();
-            Item item2 = MakeItem1();
-            Category category = MakeCategory();
-            db.SaveChanges();
+            Category category = new Category()
+            {
+                CategoryName = "Couch"
+            };
+            item = new Item()
+            {
+                ItemName = "Couch",
+                ItemDescription = "bigCouch",
+                UnitPrice = 200.00M
+            };
+            item1 = new Item()
+            {
 
+                ItemName = "SuperCouch",
+                ItemDescription = "biggerCouch",
+                UnitPrice = 999.00M
+            };
+            item2 = new Item()
+            {
+                ItemName = "UltraMegaCouch",
+                ItemDescription = "BiggerBetterBestest",
+                UnitPrice = 10000.00M
+            };
+            item.Categories.Add(category);
+            item1.Categories.Add(category);
+            item2.Categories.Add(category);
+            db.SaveChanges();
             itemRepo = new EFItemRepository(db);
         }
 
         [Test]
         public void InsertingItem()
         {
-            Item item = MakeItem();
-
             Response<Item> expected = new Response<Item>()
             {
                 Data = item,
@@ -52,8 +75,6 @@ namespace okeafurniture.DAL.Tests
         [Test]
         public void GetItemById()
         {
-            Item item = MakeItem();
-
             db.Items.Add(item);
             db.SaveChanges();
 
@@ -67,40 +88,28 @@ namespace okeafurniture.DAL.Tests
         [Test]
         public void GetListofItemsByCategoryID()
         {
-            Item item = MakeItem();
             itemRepo.Insert(item);
-
-            Item item1 = MakeItem1();
-            Item item2 = MakeItem2();
-
             itemRepo.Insert(item1);
             itemRepo.Insert(item2);
+            db.SaveChanges();
 
-            Response<List<Item>> response = new Response<List<Item>>();
-
-
-            response = itemRepo.GetByCategory(1);
-            Assert.AreEqual(3, response.Data.Count);
+            Response<List<Item>> actual = itemRepo.GetByCategory(1);
+            Assert.AreEqual(3, actual.Data.Count);
         }
         [Test]
         public void ItemShouldUpdate()
         {
-            Item item = MakeItem();
-            itemRepo.Insert(item);
-
             Response expected = new Response()
             {
                 Success = true,
                 Message = "update was successful"
             };
-            Response actual = new Response();
-            var itemToUpdate = item;
 
-            itemRepo.Insert(itemToUpdate);
+            itemRepo.Insert(item);
+            db.SaveChanges();
 
-
-            itemToUpdate.ItemName = "Ghost";
-            actual = itemRepo.Update(itemToUpdate);
+            item.ItemName = "Ghost";
+            Response actual = itemRepo.Update(item);
 
             Assert.AreEqual(expected.Message, actual.Message);
             Assert.IsTrue(actual.Success);
@@ -108,85 +117,24 @@ namespace okeafurniture.DAL.Tests
         [Test]
         public void ShouldDeleteItem()
         {
-            Item item = MakeItem();
             itemRepo.Insert(item);
+            db.SaveChanges();
 
-            Response aResponse = new Response();
-            itemRepo.Insert(item);
-            itemRepo.Insert(item);
-            aResponse = itemRepo.Delete(1);
+            Response actual = itemRepo.Delete(1);
 
-            Assert.IsTrue(aResponse.Success);
+            Assert.IsTrue(actual.Success);
 
         }
         [Test]
         public void GetAllItems()
         {
-            Item item = MakeItem();
-            itemRepo.Insert(item);
-
-            Item item1 = MakeItem1();
-            Item item2 = MakeItem2();
-
-            itemRepo.Insert(item1);
-            itemRepo.Insert(item2);
-
-            Response<List<Item>> response = new Response<List<Item>>();
-
             itemRepo.Insert(item);
             itemRepo.Insert(item1);
             itemRepo.Insert(item2);
+            db.SaveChanges();
 
-            response = itemRepo.GetAll();
-            Assert.AreEqual(3, response.Data.Count);
-        }
-        //supporting Code
-        public static Item MakeItem()
-        {
-            Item item = new Item()
-            {
-
-                ItemName = "Couch",
-                ItemDescription = "bigCouch",
-                UnitPrice =200.00M
-            };
-            item.Categories.Add(CATEGORY);
-            return item;
-        }
-        public static Item MakeItem1()
-        {
-            Item item = new Item()
-            {
-
-                ItemName = "SuperCouch",
-                ItemDescription = "biggerCouch",
-                UnitPrice = 999.00M
-            };
-            item.Categories.Add(CATEGORY);
-
-            return item;
-        }
-        public static Item MakeItem2()
-        {
-            Item item = new Item()
-            {
-
-                ItemName = "UltraMegaCouch",
-                ItemDescription = "BiggerBetterBestest",
-                UnitPrice = 10000.00M
-            };
-            item.Categories.Add(CATEGORY);
-            return item;
-        }
-
-        public static Category MakeCategory()
-        {
-            Category category = new Category()
-            {
-                CategoryName = "Couch"       
-            };
-            
-            return category;
+            Response<List<Item>> actual = itemRepo.GetAll();
+            Assert.AreEqual(3, actual.Data.Count);
         }
     }
 }
