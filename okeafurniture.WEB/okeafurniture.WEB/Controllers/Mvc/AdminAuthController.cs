@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using okeafurniture.CORE.Interfaces;
+using okeafurniture.WEB.Models;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -11,16 +12,22 @@ using System.Threading.Tasks;
 
 namespace okeafurniture.WEB.Controllers.Mvc
 {
-    public class AuthController : Controller
+    public class AdminAuthController : Controller
     {
         private IAccountRepository _accountRepo;
 
-        public AuthController(IAccountRepository accountRepo)
+        public AdminAuthController(IAccountRepository accountRepo)
         {
             _accountRepo = accountRepo;
         }
 
-        [HttpPost, Route("login")]
+        [HttpGet, Route("AdminAuth/login")]
+        public IActionResult Login()
+        {
+            return View(new LoginModel());
+        }
+
+        [HttpPost, Route("AdminAuth/login")]
         public IActionResult Login(LoginModel login)
         {
             if (login == null)
@@ -29,10 +36,7 @@ namespace okeafurniture.WEB.Controllers.Mvc
             }
 
             //get account by Email
-            var account = _accountRepo.GetByEmail(login.Email);
-
-            //;
-            //var account = _accountRepo.GetAll().SingleOrDefault(a => a.Email == login.Email);
+            var account = _accountRepo.GetByEmail(login.Email).Data;
 
             //if no user found, say "That email is not registered"
             if (account == null)
@@ -71,7 +75,7 @@ namespace okeafurniture.WEB.Controllers.Mvc
             }
             else
             {
-                return View(); // Unauthorized();
+                return View(); // Authorized
             }
         }
     }

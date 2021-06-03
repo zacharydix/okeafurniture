@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using okeafurniture.CORE.Interfaces;
+using okeafurniture.WEB.Models;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -31,7 +32,7 @@ namespace okeafurniture.WEB.Controllers.Api
             }
 
             //get account by Email
-            var account = _accountRepo.GetByEmail(login.Email);
+            var account = _accountRepo.GetByEmail(login.Email).Data;
 
             //;
             //var account = _accountRepo.GetAll().SingleOrDefault(a => a.Email == login.Email);

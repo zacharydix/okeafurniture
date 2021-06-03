@@ -113,17 +113,17 @@ namespace okeafurniture.DAL
             }
         }
 
-        public Response<List<Account>> GetByEmail(string email)
+        public Response<Account> GetByEmail(string email)
         {
-            Response<List<Account>> response = new Response<List<Account>>()
+            Response<Account> response = new Response<Account>()
             {
                 Data = null,
                 Success = true,
-                Message = "Successfully retrieved accounts."
+                Message = "Successfully retrieved account."
             };
             try
             {
-                response.Data = context.Accounts.Where(a => a.Email == email).ToList();
+                response.Data = context.Accounts.SingleOrDefault(a => a.Email == email);
                 return response;
             }
             catch (Exception)
