@@ -32,15 +32,8 @@ namespace okeafurniture.WEB.Controllers.Api
             }
 
             //get account by Email
-<<<<<<< HEAD
             var account = _accountRepo.GetByEmail(login.Email).Data;
-=======
-            //var account = _accountRepo.GetByEmail(login.Email);
->>>>>>> origin/kaitlyncurtis
-
-            //;
-            var account = _accountRepo.GetAll().Data.SingleOrDefault(a => a.Email == login.Email);
-
+            
             //if no user found, say "That email is not registered"
             if (account == null)
             {
