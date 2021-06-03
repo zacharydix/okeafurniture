@@ -1,0 +1,19 @@
+﻿@model okeafurniture.WEB.Models.LoginModel
+@{
+    ViewData["Title"] = "Login Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Login</h1>
+    <form asp-controller="Auth" asp-action="Login" method="post">
+        <div class="mb-3">
+            <label asp-for="Email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="Email" asp-for="Email" />
+            <p>@Html.ValidationMessageFor(m => m.Email)</p>
+            <label asp-for="Password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="Password" asp-for="Password" />
+            <p>@Html.ValidationMessageFor(m => m.Password)</p>
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+</div>
