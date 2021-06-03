@@ -1,4 +1,5 @@
-﻿using System;
+﻿using okeafurniture.CORE.Entites;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,6 +13,8 @@ namespace okeafurniture.WEB.Models
         public int? PaymentMethodId { get; set; }
         public decimal OrderTotal { get; set; }
         public bool CheckedOut { get; set; }
-        //add Account? PaymentMethod?, CartItems
+        public Account Account { get; set; }
+        public PaymentMethod PaymentMethod { get; set; }
+        public List<CartItem> CartItems { get; set; }
     }
 }
