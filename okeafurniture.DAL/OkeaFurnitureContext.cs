@@ -20,11 +20,6 @@ namespace okeafurniture.DAL
         //bridge table
         public DbSet<CartItem> CartItems { get; set; }
 
-        public OkeaFurnitureContext() : base()
-        {
-
-        }
-
         public OkeaFurnitureContext(DbContextOptions options) : base(options)
         {
 

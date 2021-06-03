@@ -10,12 +10,6 @@ namespace okeafurniture.CORE.Entites
     {
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
-
         public List<Item> Items { get; set; }
-
-        public Category()
-        {
-            Items = new List<Item>();
-        }
     }
 }
