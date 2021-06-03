@@ -29,7 +29,7 @@ namespace okeafurniture.WEB.Controllers.Mvc
             }
 
             //get account by Email
-            var account = _accountRepo.GetByEmail(login.Email);
+            var account = _accountRepo.GetByEmail(login.Email).Data;
 
             //;
             //var account = _accountRepo.GetAll().SingleOrDefault(a => a.Email == login.Email);

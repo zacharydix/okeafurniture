@@ -31,10 +31,10 @@ namespace okeafurniture.WEB.Controllers.Api
             }
 
             //get account by Email
-            var account = _accountRepo.GetByEmail(login.Email);
+            //var account = _accountRepo.GetByEmail(login.Email);
 
             //;
-            //var account = _accountRepo.GetAll().SingleOrDefault(a => a.Email == login.Email);
+            var account = _accountRepo.GetAll().Data.SingleOrDefault(a => a.Email == login.Email);
 
             //if no user found, say "That email is not registered"
             if (account == null)
