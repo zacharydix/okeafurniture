@@ -82,7 +82,7 @@ namespace okeafurniture.DAL.EFRepositories
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error inserting agent" + ex.Message);
+                Console.WriteLine("Error inserting item" + ex.Message);
             }
             return response;
         }
