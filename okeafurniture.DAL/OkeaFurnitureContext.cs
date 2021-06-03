@@ -18,7 +18,6 @@ namespace okeafurniture.DAL
         
         //bridge tables
         public DbSet<CartItem> CartItems { get; set; }
-        public DbSet<ItemCategory> ItemCategories { get; set; }
 
         public OkeaFurnitureContext(DbContextOptions options) : base(options)
         {
@@ -28,7 +27,6 @@ namespace okeafurniture.DAL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<CartItem>().HasKey(ci => new { ci.CartId, ci.ItemId });
-            modelBuilder.Entity<ItemCategory>().HasKey(ic => new { ic.ItemId, ic.CategoryId });
         }
     }
 }
