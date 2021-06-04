@@ -10,21 +10,22 @@ namespace okeafurniture.WEB.Controllers.Api
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CategoriesController : ControllerBase
+    public class PaymentMethodsController : ControllerBase
     {
-        private ICategoryRepository repository;
-        public CategoriesController(ICategoryRepository repository)
+        private IPaymentMethodRepository repository;
+
+        public PaymentMethodsController(IPaymentMethodRepository repository)
         {
             this.repository = repository;
         }
 
-        [HttpGet, Route("get/all")]
-        public IActionResult GetCategories()
+        [HttpGet, Route("get/id")]
+        public IActionResult GetPaymentMethodById(int id)
         {
-            Response<List<Category>> response = repository.GetAll();
+            Response<PaymentMethod> response = repository.Get(id);
             if (response.Success)
             {
-                return Ok(response.Data.MapToModel());
+                return Ok(response.Data);
             }
             else
             {
@@ -32,13 +33,13 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [HttpGet, Route("get/id")]
-        public IActionResult GetCategoryById(int id)
+        [HttpGet, Route("get/user")]
+        public IActionResult GetPaymentMethodByUser(int accountId)
         {
-            Response<Category> response = repository.Get(id);
+            Response<List<PaymentMethod>> response = repository.GetByUser(accountId);
             if (response.Success)
             {
-                return Ok(response.Data.MapToModel());
+                return Ok(response.Data);
             }
             else
             {
@@ -47,12 +48,12 @@ namespace okeafurniture.WEB.Controllers.Api
         }
 
         [HttpPost, Route("add")]
-        public IActionResult AddCategory(CategoryModel model)
+        public IActionResult AddPaymentMethod(PaymentMethodModel model)
         {
-            Response<Category> response = repository.Add(model.MapToAccount());
+            Response<PaymentMethod> response = repository.Add(model.MapToPaymentMethod());
             if (response.Success)
             {
-                return CreatedAtRoute(nameof(GetCategoryById), new { id = response.Data.CategoryId }, response.Data.MapToModel());
+                return CreatedAtRoute(nameof(GetPaymentMethodById), new { id = model.PaymentMethodId }, model.MapToPaymentMethod());
             }
             else
             {
@@ -61,14 +62,14 @@ namespace okeafurniture.WEB.Controllers.Api
         }
 
         [HttpPut, Route("edit")]
-        public IActionResult EditCategory(CategoryModel model)
+        public IActionResult EditPaymentMethod(PaymentMethodModel model)
         {
-            Response<Category> response = repository.Get(model.CategoryId);
+            Response<PaymentMethod> response = repository.Get(model.PaymentMethodId);
             if (!response.Success)
             {
-                return NotFound($"Category {model.CategoryId} not found");
+                return NotFound($"Payment method {model.PaymentMethodId} not found");
             }
-            Response updateResponse = repository.Update(model.MapToAccount());
+            Response updateResponse = repository.Update(model.MapToPaymentMethod());
             if (updateResponse.Success)
             {
                 return Ok();
@@ -80,12 +81,12 @@ namespace okeafurniture.WEB.Controllers.Api
         }
 
         [HttpDelete, Route("delete")]
-        public IActionResult DeleteCategory(int id)
+        public IActionResult DeletePaymentMethod(int id)
         {
-            Response<Category> response = repository.Get(id);
+            Response<PaymentMethod> response = repository.Get(id);
             if (!response.Success)
             {
-                return NotFound($"Category {id} not found");
+                return NotFound($"Payment method {id} not found");
             }
             Response deleteResponse = repository.Delete(id);
             if (deleteResponse.Success)

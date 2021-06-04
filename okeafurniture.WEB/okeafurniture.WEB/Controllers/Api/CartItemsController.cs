@@ -10,32 +10,33 @@ namespace okeafurniture.WEB.Controllers.Api
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CategoriesController : ControllerBase
+    public class CartItemsController : Controller
     {
-        private ICategoryRepository repository;
-        public CategoriesController(ICategoryRepository repository)
+        private ICartItemRepository repository;
+
+        public CartItemsController(ICartItemRepository repository)
         {
             this.repository = repository;
         }
 
-        [HttpGet, Route("get/all")]
-        public IActionResult GetCategories()
+        [HttpGet, Route("get/id")]
+        public IActionResult GetCartItemById(int cartId, int itemId)
         {
-            Response<List<Category>> response = repository.GetAll();
-            if (response.Success)
+            Response<CartItem> result = repository.Get(cartId, itemId);
+            if (result.Success)
             {
-                return Ok(response.Data.MapToModel());
+                return Ok(result.Data);
             }
             else
             {
-                return BadRequest(response.Message);
+                return BadRequest(result.Message);
             }
         }
 
-        [HttpGet, Route("get/id")]
-        public IActionResult GetCategoryById(int id)
+        [HttpGet, Route("get/id/all")]
+        public IActionResult GetCartItemsByCartId(int cartId)
         {
-            Response<Category> response = repository.Get(id);
+            Response<List<CartItem>> response = repository.GetByCart(cartId);
             if (response.Success)
             {
                 return Ok(response.Data.MapToModel());
@@ -47,12 +48,12 @@ namespace okeafurniture.WEB.Controllers.Api
         }
 
         [HttpPost, Route("add")]
-        public IActionResult AddCategory(CategoryModel model)
+        public IActionResult AddCartItem(CartItemModel model)
         {
-            Response<Category> response = repository.Add(model.MapToAccount());
+            Response<CartItem> response = repository.Add(model.MapToCartItem());
             if (response.Success)
             {
-                return CreatedAtRoute(nameof(GetCategoryById), new { id = response.Data.CategoryId }, response.Data.MapToModel());
+                return CreatedAtRoute(nameof(GetCartItemById), new { cartId = response.Data.CartId, itemId = response.Data.ItemId }, response.Data.MapToModel());
             }
             else
             {
@@ -61,14 +62,14 @@ namespace okeafurniture.WEB.Controllers.Api
         }
 
         [HttpPut, Route("edit")]
-        public IActionResult EditCategory(CategoryModel model)
+        public IActionResult EditCartItem(CartItemModel model)
         {
-            Response<Category> response = repository.Get(model.CategoryId);
+            Response<CartItem> response = repository.Get(model.CartId, model.ItemId);
             if (!response.Success)
             {
-                return NotFound($"Category {model.CategoryId} not found");
+                return NotFound($"Cart Item not found");
             }
-            Response updateResponse = repository.Update(model.MapToAccount());
+            Response updateResponse = repository.Update(model.MapToCartItem());
             if (updateResponse.Success)
             {
                 return Ok();
@@ -80,14 +81,14 @@ namespace okeafurniture.WEB.Controllers.Api
         }
 
         [HttpDelete, Route("delete")]
-        public IActionResult DeleteCategory(int id)
+        public IActionResult DeleteCartItem(int cartId, int itemId)
         {
-            Response<Category> response = repository.Get(id);
+            Response<CartItem> response = repository.Get(cartId, itemId);
             if (!response.Success)
             {
-                return NotFound($"Category {id} not found");
+                return NotFound($"Cart Item not found");
             }
-            Response deleteResponse = repository.Delete(id);
+            Response deleteResponse = repository.Delete(cartId, itemId);
             if (deleteResponse.Success)
             {
                 return Ok();

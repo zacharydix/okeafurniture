@@ -10,18 +10,19 @@ namespace okeafurniture.WEB.Controllers.Api
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CategoriesController : ControllerBase
+    public class AccountsController : ControllerBase
     {
-        private ICategoryRepository repository;
-        public CategoriesController(ICategoryRepository repository)
+        private IAccountRepository repository;
+
+        public AccountsController(IAccountRepository repository)
         {
             this.repository = repository;
         }
 
         [HttpGet, Route("get/all")]
-        public IActionResult GetCategories()
+        public IActionResult GetAccounts()
         {
-            Response<List<Category>> response = repository.GetAll();
+            Response<List<Account>> response = repository.GetAll();
             if (response.Success)
             {
                 return Ok(response.Data.MapToModel());
@@ -33,9 +34,23 @@ namespace okeafurniture.WEB.Controllers.Api
         }
 
         [HttpGet, Route("get/id")]
-        public IActionResult GetCategoryById(int id)
+        public IActionResult GetAccountById(int id)
         {
-            Response<Category> response = repository.Get(id);
+            Response<Account> response = repository.Get(id);
+            if (response.Success)
+            {
+                return Ok(response.Data.MapToModel());
+            }
+            else
+            {
+                return BadRequest(response.Message);
+            }
+        }
+
+        [HttpGet, Route("get/email")]
+        public IActionResult GetAccountByEmail(string email)
+        {
+            Response<Account> response = repository.GetByEmail(email);
             if (response.Success)
             {
                 return Ok(response.Data.MapToModel());
@@ -47,12 +62,12 @@ namespace okeafurniture.WEB.Controllers.Api
         }
 
         [HttpPost, Route("add")]
-        public IActionResult AddCategory(CategoryModel model)
+        public IActionResult AddAccount(AccountModel model)
         {
-            Response<Category> response = repository.Add(model.MapToAccount());
+            Response<Account> response = repository.Add(model.MapToAccount());
             if (response.Success)
             {
-                return CreatedAtRoute(nameof(GetCategoryById), new { id = response.Data.CategoryId }, response.Data.MapToModel());
+                return CreatedAtRoute(nameof(GetAccountById), new { id = response.Data.AccountId }, response.Data.MapToModel());
             }
             else
             {
@@ -61,12 +76,12 @@ namespace okeafurniture.WEB.Controllers.Api
         }
 
         [HttpPut, Route("edit")]
-        public IActionResult EditCategory(CategoryModel model)
+        public IActionResult EditAccount(AccountModel model)
         {
-            Response<Category> response = repository.Get(model.CategoryId);
+            Response<Account> response = repository.Get(model.AccountId);
             if (!response.Success)
             {
-                return NotFound($"Category {model.CategoryId} not found");
+                return NotFound($"Account {model.AccountId} not found");
             }
             Response updateResponse = repository.Update(model.MapToAccount());
             if (updateResponse.Success)
@@ -80,12 +95,12 @@ namespace okeafurniture.WEB.Controllers.Api
         }
 
         [HttpDelete, Route("delete")]
-        public IActionResult DeleteCategory(int id)
+        public IActionResult DeleteAccount(int id)
         {
-            Response<Category> response = repository.Get(id);
+            Response<Account> response = repository.Get(id);
             if (!response.Success)
             {
-                return NotFound($"Category {id} not found");
+                return NotFound($"Account {id} not found");
             }
             Response deleteResponse = repository.Delete(id);
             if (deleteResponse.Success)
