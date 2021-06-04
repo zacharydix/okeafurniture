@@ -19,7 +19,7 @@ namespace okeafurniture.WEB.Controllers.Api
             _repo = repo;
         }
         [HttpGet]
-        [Route("/api/pcontroller]/{id}", Name="GetItem")]
+        [Route("get/{id}", Name ="GetItemById")]
         public IActionResult GetItem(int id)
         {
             var result = _repo.Get(id);
@@ -34,8 +34,8 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
         [HttpGet]
-        [Route("/api/[controller]/getall", Name = "GetAll")]
-        public IActionResult GetAll()
+        [Route("get/all", Name="GetAllItems")]
+        public IActionResult GetAllItems()
         {
             var result = _repo.GetAll();
 
@@ -49,9 +49,9 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
         [HttpGet]
-        [Route("/api/[controller]/getall", Name = "GetCategories")]
+        [Route("get/all/categories", Name ="GetItemsByCategory")]
 
-        public IActionResult GetCategories(int id)
+        public IActionResult GetItemsByCategories(int id)
         {
             var result = _repo.GetByCategory(id);
 
@@ -65,7 +65,7 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
         [HttpPost]
-        [Route("/api/[controller]")]
+        [Route("add", Name ="AddItem")]
 
         public IActionResult AddItem(Item item)
         {
@@ -84,7 +84,7 @@ namespace okeafurniture.WEB.Controllers.Api
             }
             return BadRequest(ModelState);
         }
-        [HttpPut]
+        [HttpPut, Route("edit", Name ="EditItem")]
         public IActionResult EditItem(Item item)
         {
             Item existingitem = _repo.Get(item.ItemId).Data;
@@ -108,7 +108,7 @@ namespace okeafurniture.WEB.Controllers.Api
             }
             return BadRequest(ModelState);
         }
-        [HttpDelete("{id}")]
+        [HttpDelete("delete/{id}", Name ="DeleteItem")]
         public IActionResult DeleteItem(int id)
         {
             if (!_repo.Get(id).Success)

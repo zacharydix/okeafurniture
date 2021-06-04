@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using okeafurniture.CORE.Entites;
 using okeafurniture.CORE.Interfaces;
+using okeafurniture.WEB.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace okeafurniture.WEB.Controllers.Api
             this.repository = repository;
         }
 
-        [HttpGet, Route("get/id")]
+        [HttpGet, Route("get/cartid/{cartId}/itemid/{itemId}", Name="GetCartItemById")]
         public IActionResult GetCartItemById(int cartId, int itemId)
         {
             Response<CartItem> result = repository.Get(cartId, itemId);
@@ -33,7 +34,7 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [HttpGet, Route("get/id/all")]
+        [HttpGet, Route("get/all/cartid/{cartid}", Name ="GetAllCartItemsById")]
         public IActionResult GetCartItemsByCartId(int cartId)
         {
             Response<List<CartItem>> response = repository.GetByCart(cartId);
@@ -47,7 +48,7 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [HttpPost, Route("add")]
+        [HttpPost, Route("add", Name ="AddCartItem")]
         public IActionResult AddCartItem(CartItemModel model)
         {
             Response<CartItem> response = repository.Add(model.MapToCartItem());
@@ -61,7 +62,7 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [HttpPut, Route("edit")]
+        [HttpPut, Route("edit", Name ="EditCartItem")]
         public IActionResult EditCartItem(CartItemModel model)
         {
             Response<CartItem> response = repository.Get(model.CartId, model.ItemId);
@@ -80,7 +81,7 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [HttpDelete, Route("delete")]
+        [HttpDelete, Route("delete/cartid/{cartId}/itemid/{itemId}", Name ="DeleteCartItem")]
         public IActionResult DeleteCartItem(int cartId, int itemId)
         {
             Response<CartItem> response = repository.Get(cartId, itemId);

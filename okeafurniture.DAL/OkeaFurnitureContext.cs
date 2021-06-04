@@ -13,14 +13,14 @@ namespace okeafurniture.DAL
     {
         public DbContextOptions Options { private set; get; }
 
-        public DbSet<Account> Accounts { get; set; }
-        public DbSet<Cart> Carts { get; set; }
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<Item> Items { get; set; }
-        public DbSet<PaymentMethod> PaymentMethods { get; set; }
+        public DbSet<Account> Account { get; set; }
+        public DbSet<Cart> Cart { get; set; }
+        public DbSet<Category> Category { get; set; }
+        public DbSet<Item> Item { get; set; }
+        public DbSet<PaymentMethod> PaymentMethod { get; set; }
         
         //bridge table
-        public DbSet<CartItem> CartItems { get; set; }
+        public DbSet<CartItem> CartItem { get; set; }
 
         public OkeaFurnitureContext(DbContextOptions options) : base(options)
         {
@@ -44,6 +44,7 @@ namespace okeafurniture.DAL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<CartItem>().HasKey(ci => new { ci.CartId, ci.ItemId });
+
         }
     }
 }

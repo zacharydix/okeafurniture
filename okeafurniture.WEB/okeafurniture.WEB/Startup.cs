@@ -32,6 +32,8 @@ namespace okeafurniture.WEB
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddTransient<IAccountRepository, EFAccountRepository>();
             services.AddTransient<IPaymentMethodRepository, EFPaymentMethodRepository>();
             services.AddTransient<ICartRepository, EFCartRepository>();
@@ -85,6 +87,7 @@ namespace okeafurniture.WEB
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllers();
             });
         }
     }

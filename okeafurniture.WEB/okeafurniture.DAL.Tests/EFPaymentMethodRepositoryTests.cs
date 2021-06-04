@@ -35,7 +35,7 @@ namespace okeafurniture.DAL.Tests
                 DateOfBirth = new DateTime(1990, 01, 01),
                 IsAdmin = false
             };
-            context.Accounts.Add(account1);
+            context.Account.Add(account1);
             context.SaveChanges();
             payment1 = new PaymentMethod()
             {
@@ -59,7 +59,7 @@ namespace okeafurniture.DAL.Tests
                 BillingAddress = "4321 Count Drive, Milwaukee, WI 53214",
                 Account = account1
             };
-            context.PaymentMethods.Add(payment1);
+            context.PaymentMethod.Add(payment1);
             context.SaveChanges();
         }
 
@@ -88,7 +88,7 @@ namespace okeafurniture.DAL.Tests
         [Test]
         public void ShouldGetPaymentMethodByUser()
         {
-            context.PaymentMethods.Add(payment2);
+            context.PaymentMethod.Add(payment2);
             context.SaveChanges();
             Response<List<PaymentMethod>> expected = new Response<List<PaymentMethod>>()
             {
@@ -143,7 +143,7 @@ namespace okeafurniture.DAL.Tests
             Assert.AreEqual(expected.Data.BillingAddress, actual.Data.BillingAddress);
             Assert.AreEqual(expected.Message, actual.Message);
 
-            Assert.AreEqual(2, context.PaymentMethods.ToList().Count());
+            Assert.AreEqual(2, context.PaymentMethod.ToList().Count());
         }
 
         [Test]
@@ -166,7 +166,7 @@ namespace okeafurniture.DAL.Tests
             Assert.IsTrue(actual.Success);
             Assert.AreEqual(expected.Message, actual.Message);
 
-            PaymentMethod temp = context.PaymentMethods.Find(payment1.PaymentMethodId);
+            PaymentMethod temp = context.PaymentMethod.Find(payment1.PaymentMethodId);
             Assert.AreEqual(payment1.PaymentMethodId, temp.PaymentMethodId);
             Assert.AreEqual(payment1.AccountId, temp.AccountId);
             Assert.AreEqual(payment1.CardHolderFirstName, temp.CardHolderFirstName);
@@ -189,7 +189,7 @@ namespace okeafurniture.DAL.Tests
             Assert.IsTrue(actual.Success);
             Assert.AreEqual(expected.Message, actual.Message);
 
-            Assert.AreEqual(0, context.PaymentMethods.ToList().Count());
+            Assert.AreEqual(0, context.PaymentMethod.ToList().Count());
         }
     }
 }

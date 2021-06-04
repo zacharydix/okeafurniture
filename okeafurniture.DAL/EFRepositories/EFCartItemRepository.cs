@@ -16,19 +16,15 @@ namespace okeafurniture.DAL.EFRepositories
         {
             this.context = context;
         }
-        public Response<CartItem> Add(int cartId, int itemId)
+        public Response<CartItem> Add(CartItem cartItem)
         {
-            CartItem cartItem = new CartItem();
-            cartItem.CartId = cartId;
-            cartItem.ItemId = itemId;
-            cartItem.Quantity = 1;
-
             Response<CartItem> response = new Response<CartItem>();
             try
             {
                 response.Data = context.Add(cartItem).Entity;
+                context.SaveChanges();
                 response.Success = true;
-                response.Message = $"Successfully added new cart-item relationship {cartId}-{itemId}";
+                response.Message = $"Successfully added new cart-item relationship {cartItem.CartId}-{cartItem.ItemId}";
             }
             catch (Exception ex)
             {
@@ -49,7 +45,7 @@ namespace okeafurniture.DAL.EFRepositories
                 {
                     using (context = new OkeaFurnitureContext(context.Options))
                     {
-                        context.CartItems.Remove(getResponse.Data);
+                        context.CartItem.Remove(getResponse.Data);
                         context.SaveChanges();
 
                         response.Success = true;
@@ -77,7 +73,7 @@ namespace okeafurniture.DAL.EFRepositories
             {
                 using (context = new OkeaFurnitureContext(context.Options))
                 {
-                    response.Data = context.CartItems.SingleOrDefault(ci => ci.CartId == cartId && ci.ItemId == itemId);
+                    response.Data = context.CartItem.SingleOrDefault(ci => ci.CartId == cartId && ci.ItemId == itemId);
                     if (response.Data != null)
                     {
                         response.Success = true;
@@ -105,7 +101,7 @@ namespace okeafurniture.DAL.EFRepositories
             {
                 using (context = new OkeaFurnitureContext(context.Options))
                 {
-                    response.Data = context.CartItems.Where(ci => ci.CartId == cartId).ToList();
+                    response.Data = context.CartItem.Where(ci => ci.CartId == cartId).ToList();
                     if (response.Data != null)
                     {
                         response.Success = true;
@@ -133,7 +129,7 @@ namespace okeafurniture.DAL.EFRepositories
             {
                 using (context = new OkeaFurnitureContext(context.Options))
                 {
-                    context.CartItems.Update(cartItem);
+                    context.CartItem.Update(cartItem);
                     context.SaveChanges();
                     response.Success = true;
                     response.Message = $"successfully updated Cart-Item {cartItem.CartId}_{cartItem.ItemId}";
