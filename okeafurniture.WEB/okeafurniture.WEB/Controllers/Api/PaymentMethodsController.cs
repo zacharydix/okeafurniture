@@ -20,7 +20,7 @@ namespace okeafurniture.WEB.Controllers.Api
             this.repository = repository;
         }
 
-        [HttpGet, Route("get/id", Name ="GetPaymentMethodById")]
+        [HttpGet, Route("get/id/{id}", Name ="GetPaymentMethodById")]
         public IActionResult GetPaymentMethodById(int id)
         {
             Response<PaymentMethod> response = repository.Get(id);
@@ -34,7 +34,7 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [HttpGet, Route("get/account", Name ="GetPaymentMethodByAccount")]
+        [HttpGet, Route("get/account/{accountId}", Name ="GetPaymentMethodByAccount")]
         public IActionResult GetPaymentMethodByAccount(int accountId)
         {
             Response<List<PaymentMethod>> response = repository.GetByUser(accountId);
@@ -54,7 +54,7 @@ namespace okeafurniture.WEB.Controllers.Api
             Response<PaymentMethod> response = repository.Add(model.MapToPaymentMethod());
             if (response.Success)
             {
-                return CreatedAtRoute(nameof(GetPaymentMethodById), new { id = model.PaymentMethodId }, model.MapToPaymentMethod());
+                return CreatedAtRoute(nameof(GetPaymentMethodById), new { id = response.Data.PaymentMethodId }, response.Data);
             }
             else
             {
@@ -81,7 +81,7 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [HttpDelete, Route("delete", Name ="DeletePaymentMethod")]
+        [HttpDelete, Route("delete/{id}", Name ="DeletePaymentMethod")]
         public IActionResult DeletePaymentMethod(int id)
         {
             Response<PaymentMethod> response = repository.Get(id);

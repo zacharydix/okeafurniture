@@ -23,7 +23,7 @@ namespace okeafurniture.DAL.EFRepositories
 
             try
             {
-                _context.Items.Remove(_context.Items.Find(itemId));
+                _context.Item.Remove(_context.Item.Find(itemId));
                 _context.SaveChanges();
 
             }
@@ -43,7 +43,7 @@ namespace okeafurniture.DAL.EFRepositories
         public Response<Item> Get(int itemId)
         {
             Response<Item> response = new Response<Item>();
-            Item item = _context.Items.Include(a => a.Categories)
+            Item item = _context.Item.Include(a => a.Categories)
                 .Include(b => b.CartItems).SingleOrDefault(i=>i.ItemId==itemId);
 
             response.Data = item;
@@ -55,7 +55,7 @@ namespace okeafurniture.DAL.EFRepositories
         public Response<List<Item>> GetAll()
         {
             Response<List<Item>> response = new Response<List<Item>>();
-            List<Item> items = _context.Items.ToList();
+            List<Item> items = _context.Item.ToList();
             response.Success = true;
             response.Data = items;
             response.Message = "Successfully retrieved Items";
@@ -67,7 +67,7 @@ namespace okeafurniture.DAL.EFRepositories
         {
             Response<List<Item>> response = new Response<List<Item>>();
 
-            List<Item> items = _context.Items.Include(a => a.Categories).Where(i => i.Categories.Any(p => p.CategoryId == categoryId)).ToList();
+            List<Item> items = _context.Item.Include(a => a.Categories).Where(i => i.Categories.Any(p => p.CategoryId == categoryId)).ToList();
 
             response.Data = items;
             response.Success = true;
@@ -81,7 +81,7 @@ namespace okeafurniture.DAL.EFRepositories
 
             try
             {
-                _context.Items.Add(item);
+                _context.Item.Add(item);
                 _context.SaveChanges();
                 response.Success = true;
                 response.Message = "Successfully inserted Item";
@@ -103,7 +103,7 @@ namespace okeafurniture.DAL.EFRepositories
                 try
                 {
 
-                    _context.Items.Update(item);
+                    _context.Item.Update(item);
                     _context.SaveChanges();
                     
                     response.Success = true;

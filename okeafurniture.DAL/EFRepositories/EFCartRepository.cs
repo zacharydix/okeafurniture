@@ -24,7 +24,7 @@ namespace okeafurniture.DAL.EFRepositories
             {
                 using (context = new OkeaFurnitureContext(context.Options))
                 {
-                    response.Data = context.Carts.Add(cart).Entity;
+                    response.Data = context.Cart.Add(cart).Entity;
                     context.SaveChanges();
                     if (response.Data != null)
                     {
@@ -48,7 +48,7 @@ namespace okeafurniture.DAL.EFRepositories
             {
                 using (context = new OkeaFurnitureContext(context.Options))
                 {
-                    response.Data = context.Carts.SingleOrDefault(c => c.CartId == id);
+                    response.Data = context.Cart.SingleOrDefault(c => c.CartId == id);
                     if (response.Data != null)
                     {
                         response.Success = true;
@@ -76,7 +76,7 @@ namespace okeafurniture.DAL.EFRepositories
             {
                 using (context = new OkeaFurnitureContext(context.Options))
                 {
-                    response.Data = context.Carts.SingleOrDefault(c => c.AccountId == accountId && c.CheckedOut == false);
+                    response.Data = context.Cart.SingleOrDefault(c => c.AccountId == accountId && c.CheckedOut == false);
                     if (response.Data != null)
                     {
                         response.Success = true;
@@ -105,7 +105,7 @@ namespace okeafurniture.DAL.EFRepositories
             {
                 using (context = new OkeaFurnitureContext(context.Options))
                 {
-                    response.Data = context.Carts.ToList();
+                    response.Data = context.Cart.ToList();
                     if (response.Data != null)
                     {
                         response.Success = true;
@@ -133,7 +133,7 @@ namespace okeafurniture.DAL.EFRepositories
             {
                 using (context = new OkeaFurnitureContext(context.Options))
                 {
-                    response.Data = context.Carts.Where(c => c.AccountId == accountId).ToList();
+                    response.Data = context.Cart.Where(c => c.AccountId == accountId).ToList();
                     if (response.Data != null)
                     {
                         response.Success = true;
@@ -162,7 +162,7 @@ namespace okeafurniture.DAL.EFRepositories
             {
                 using (context = new OkeaFurnitureContext(context.Options))
                 {
-                    response.Data = context.Carts.Where(c => c.CheckedOut == CheckedOut).ToList();
+                    response.Data = context.Cart.Where(c => c.CheckedOut == CheckedOut).ToList();
                     if (response.Data != null)
                     {
                         response.Success = true;
@@ -197,7 +197,7 @@ namespace okeafurniture.DAL.EFRepositories
             {
                 using (context = new OkeaFurnitureContext(context.Options))
                 {
-                    context.Carts.Update(cart);
+                    context.Cart.Update(cart);
                     context.SaveChanges();
                     response.Success = true;
                     response.Message = $"successfully updated Cart #{cart.CartId}";

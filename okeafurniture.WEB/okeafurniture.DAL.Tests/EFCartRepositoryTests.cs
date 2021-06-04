@@ -41,7 +41,7 @@ namespace okeafurniture.DAL.Tests
                 DateOfBirth = DateTime.Now.AddYears(-20),
                 IsAdmin = false
             };
-            context.Accounts.Add(account);
+            context.Account.Add(account);
             payment1 = new PaymentMethod()
             {
                 CardHolderFirstName = "John",
@@ -52,7 +52,7 @@ namespace okeafurniture.DAL.Tests
                 BillingAddress = "1234 Number Drive, Milwaukee, WI 53214",
                 Account = account
             };
-            context.PaymentMethods.Add(payment1);
+            context.PaymentMethod.Add(payment1);
             cart1 = new Cart()
             {
                 AccountId = 1,
@@ -67,8 +67,8 @@ namespace okeafurniture.DAL.Tests
                 OrderTotal = 2M,
                 CheckedOut = true
             };
-            context.Carts.Add(cart1);
-            context.Carts.Add(cart2);
+            context.Cart.Add(cart1);
+            context.Cart.Add(cart2);
             item1 = new Item()
             {
                 ItemName = "test item 1",
@@ -81,8 +81,8 @@ namespace okeafurniture.DAL.Tests
                 ItemDescription = "item 2 desc",
                 UnitPrice = 2M
             };
-            context.Items.Add(item1);
-            context.Items.Add(item2);
+            context.Item.Add(item1);
+            context.Item.Add(item2);
             context.SaveChanges();
             cartitem1 = new CartItem()
             {
@@ -96,8 +96,8 @@ namespace okeafurniture.DAL.Tests
                 ItemId = 1,
                 Quantity = 1
             };
-            context.CartItems.Add(cartitem1);
-            context.CartItems.Add(cartitem2);
+            context.CartItem.Add(cartitem1);
+            context.CartItem.Add(cartitem2);
             context.SaveChanges();
             repository = new EFCartRepository(context);
         }

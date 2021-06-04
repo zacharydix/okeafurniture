@@ -33,7 +33,7 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [HttpGet, Route("get/id", Name ="GetCategoryById")]
+        [HttpGet, Route("get/id/{id}", Name ="GetCategoryById")]
         public IActionResult GetCategoryById(int id)
         {
             Response<Category> response = repository.Get(id);
@@ -80,7 +80,7 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [HttpDelete, Route("delete", Name ="DeleteCategory")]
+        [HttpDelete, Route("delete/{id}", Name ="DeleteCategory")]
         public IActionResult DeleteCategory(int id)
         {
             Response<Category> response = repository.Get(id);
