@@ -11,7 +11,7 @@ namespace okeafurniture.WEB.Models
     {
         public int CartId { get; set; }
         public int AccountId { get; set; }
-
+      
         [Range(1,50, ErrorMessage = "Please enter a valid payment ID number.")]
         public int? PaymentMethodId { get; set; }
         public decimal OrderTotal { get; set; }
