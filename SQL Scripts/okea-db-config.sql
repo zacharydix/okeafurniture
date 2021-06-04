@@ -44,12 +44,12 @@ Create table Item (
 	UnitPrice decimal(12,2) not null
 );
 
-Create table CategoryItems (
+Create table CategoryItem (
 	ItemId int not null,
 	CategoryId int not null,
 	Constraint fk_Item_CategoryItem_ItemId
 		Foreign key (ItemId)
-		References Items(ItemId),
+		References Item(ItemId),
 	Constraint fk_Category_CategoryItem_CategoryId
 		Foreign key (CategoryId)
 		References Category(CategoryId),
