@@ -80,6 +80,10 @@ namespace okeafurniture.DAL
             try
             {
                 response.Data = context.Accounts.Find(id);
+                if (response.Data == null)
+                {
+                    throw new KeyNotFoundException();
+                }
                 return response;
             }
             catch (Exception)
@@ -124,6 +128,10 @@ namespace okeafurniture.DAL
             try
             {
                 response.Data = context.Accounts.SingleOrDefault(a => a.Email == email);
+                if (response.Data == null)
+                {
+                    throw new KeyNotFoundException();
+                }
                 return response;
             }
             catch (Exception)

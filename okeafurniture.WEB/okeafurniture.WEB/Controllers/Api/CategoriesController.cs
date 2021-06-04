@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using okeafurniture.CORE.Entites;
 using okeafurniture.CORE.Interfaces;
+using okeafurniture.WEB.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace okeafurniture.WEB.Controllers.Api
             this.repository = repository;
         }
 
-        [HttpGet, Route("get/all")]
+        [HttpGet, Route("get/all", Name ="GetAllCategories")]
         public IActionResult GetCategories()
         {
             Response<List<Category>> response = repository.GetAll();
@@ -32,7 +33,7 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [HttpGet, Route("get/id")]
+        [HttpGet, Route("get/id", Name ="GetCategoryById")]
         public IActionResult GetCategoryById(int id)
         {
             Response<Category> response = repository.Get(id);
@@ -46,10 +47,10 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [HttpPost, Route("add")]
+        [HttpPost, Route("add", Name ="AddCategory")]
         public IActionResult AddCategory(CategoryModel model)
         {
-            Response<Category> response = repository.Add(model.MapToAccount());
+            Response<Category> response = repository.Add(model.MapToCategory());
             if (response.Success)
             {
                 return CreatedAtRoute(nameof(GetCategoryById), new { id = response.Data.CategoryId }, response.Data.MapToModel());
@@ -60,7 +61,7 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [HttpPut, Route("edit")]
+        [HttpPut, Route("edit", Name ="EditCategory")]
         public IActionResult EditCategory(CategoryModel model)
         {
             Response<Category> response = repository.Get(model.CategoryId);
@@ -68,7 +69,7 @@ namespace okeafurniture.WEB.Controllers.Api
             {
                 return NotFound($"Category {model.CategoryId} not found");
             }
-            Response updateResponse = repository.Update(model.MapToAccount());
+            Response updateResponse = repository.Update(model.MapToCategory());
             if (updateResponse.Success)
             {
                 return Ok();
@@ -79,7 +80,7 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [HttpDelete, Route("delete")]
+        [HttpDelete, Route("delete", Name ="DeleteCategory")]
         public IActionResult DeleteCategory(int id)
         {
             Response<Category> response = repository.Get(id);

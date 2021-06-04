@@ -79,6 +79,10 @@ namespace okeafurniture.DAL.EFRepositories
             try
             {
                 response.Data = context.PaymentMethods.Find(id);
+                if (response.Data == null)
+                {
+                    throw new KeyNotFoundException();
+                }
                 return response;
             }
             catch (Exception)

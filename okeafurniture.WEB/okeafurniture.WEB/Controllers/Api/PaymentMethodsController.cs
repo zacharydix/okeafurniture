@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using okeafurniture.CORE.Entites;
 using okeafurniture.CORE.Interfaces;
+using okeafurniture.WEB.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace okeafurniture.WEB.Controllers.Api
             this.repository = repository;
         }
 
-        [HttpGet, Route("get/id")]
+        [HttpGet, Route("get/id", Name ="GetPaymentMethodById")]
         public IActionResult GetPaymentMethodById(int id)
         {
             Response<PaymentMethod> response = repository.Get(id);
@@ -33,8 +34,8 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [HttpGet, Route("get/user")]
-        public IActionResult GetPaymentMethodByUser(int accountId)
+        [HttpGet, Route("get/account", Name ="GetPaymentMethodByAccount")]
+        public IActionResult GetPaymentMethodByAccount(int accountId)
         {
             Response<List<PaymentMethod>> response = repository.GetByUser(accountId);
             if (response.Success)
@@ -47,7 +48,7 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [HttpPost, Route("add")]
+        [HttpPost, Route("add", Name ="AddPaymentMethod")]
         public IActionResult AddPaymentMethod(PaymentMethodModel model)
         {
             Response<PaymentMethod> response = repository.Add(model.MapToPaymentMethod());
@@ -61,7 +62,7 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [HttpPut, Route("edit")]
+        [HttpPut, Route("edit", Name ="EditPaymentMethod")]
         public IActionResult EditPaymentMethod(PaymentMethodModel model)
         {
             Response<PaymentMethod> response = repository.Get(model.PaymentMethodId);
@@ -80,7 +81,7 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [HttpDelete, Route("delete")]
+        [HttpDelete, Route("delete", Name ="DeletePaymentMethod")]
         public IActionResult DeletePaymentMethod(int id)
         {
             Response<PaymentMethod> response = repository.Get(id);
