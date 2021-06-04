@@ -164,7 +164,7 @@ namespace okeafurniture.DAL.Tests
         [Test]
         public void ShouldAdd()
         {
-            var result = repository.Add(1);
+            var result = repository.Add(cart1);
 
             Assert.IsTrue(result.Success);
             Assert.AreEqual(1, result.Data.AccountId);

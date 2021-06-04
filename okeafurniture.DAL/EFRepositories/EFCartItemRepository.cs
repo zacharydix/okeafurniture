@@ -16,19 +16,15 @@ namespace okeafurniture.DAL.EFRepositories
         {
             this.context = context;
         }
-        public Response<CartItem> Add(int cartId, int itemId)
+        public Response<CartItem> Add(CartItem cartItem)
         {
-            CartItem cartItem = new CartItem();
-            cartItem.CartId = cartId;
-            cartItem.ItemId = itemId;
-            cartItem.Quantity = 1;
-
             Response<CartItem> response = new Response<CartItem>();
             try
             {
                 response.Data = context.Add(cartItem).Entity;
+                context.SaveChanges();
                 response.Success = true;
-                response.Message = $"Successfully added new cart-item relationship {cartId}-{itemId}";
+                response.Message = $"Successfully added new cart-item relationship {cartItem.CartId}-{cartItem.ItemId}";
             }
             catch (Exception ex)
             {

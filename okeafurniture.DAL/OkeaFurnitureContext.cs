@@ -44,6 +44,14 @@ namespace okeafurniture.DAL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<CartItem>().HasKey(ci => new { ci.CartId, ci.ItemId });
+            modelBuilder.Entity<Category>().HasMany(c => c.Items).WithMany(i => i.Categories)
+                .Map(m =>
+                {
+                    m.MapLeftKey("CategoryId");
+                    m.MapRightKey("ItemId");
+                    m.ToTable("CategoryItems");
+                });
+
         }
     }
 }

@@ -194,3 +194,6 @@ insert into ItemCategories (ItemId, CategoryId) values (1,2);
 insert into ItemCategories (ItemId, CategoryId) values (2,10);
 insert into ItemCategories (ItemId, CategoryId) values (3,15);
 insert into ItemCategories (ItemId, CategoryId) values (4,8);
+
+insert into Carts (AccountId, PaymentMethodId, OrderTotal, CheckedOut) values (1, 1, 0.0, 0);
+insert into CartItems (CartId, ItemId, Quantity) values (1, 1, 1);

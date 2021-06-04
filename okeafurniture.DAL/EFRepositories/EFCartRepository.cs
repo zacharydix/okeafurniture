@@ -17,35 +17,19 @@ namespace okeafurniture.DAL.EFRepositories
             this.context = context;
         }
 
-        public Response<Cart> Add(int accountId)
+        public Response<Cart> Add(Cart cart)
         {
             Response<Cart> response = new Response<Cart>();
             try
             {
                 using (context = new OkeaFurnitureContext(context.Options))
                 {
-                    var accountExists = context.Accounts.Any(a => a.AccountId == accountId);
-                    if (accountExists)
+                    response.Data = context.Carts.Add(cart).Entity;
+                    context.SaveChanges();
+                    if (response.Data != null)
                     {
-                        Cart cart = new Cart()
-                        {
-                            // cart ID will be handled when added to db
-                            AccountId = accountId,
-                            PaymentMethodId = null,
-                            OrderTotal = 0M,
-                            CheckedOut = false
-                        };
-                        response.Data = context.Carts.Add(cart).Entity;
-                        if (response.Data != null)
-                        {
-                            response.Success = true;
-                            response.Message = $"Successfully created new cart for Account #{accountId}";
-                        }
-                    }
-                    else
-                    {
-                        response.Success = false;
-                        response.Message = "Please enter a valid Account ID";
+                        response.Success = true;
+                        response.Message = $"Successfully created new cart for Account #{cart.AccountId}";
                     }
                 }
             }
