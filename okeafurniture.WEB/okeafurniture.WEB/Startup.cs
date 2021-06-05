@@ -37,7 +37,7 @@ namespace okeafurniture.WEB
             {
                 builder.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin();
             }));
-
+          
             services.AddControllersWithViews();
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
@@ -93,6 +93,7 @@ namespace okeafurniture.WEB
 
             app.UseCors("corspolicy");
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
            
