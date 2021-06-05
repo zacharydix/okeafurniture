@@ -5,8 +5,4 @@
 	<UserSecretsId>e389eba4-11c7-4723-a2fa-fa6850bfa30b</UserSecretsId>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="DTOs\" />
-  </ItemGroup>
-
 </Project>
