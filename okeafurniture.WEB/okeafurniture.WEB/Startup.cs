@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using okeafurniture.CORE.Interfaces;
@@ -13,6 +14,7 @@ using okeafurniture.DAL;
 using okeafurniture.DAL.EFRepositories;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,6 +37,7 @@ namespace okeafurniture.WEB
             {
                 builder.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin();
             }));
+          
             services.AddControllersWithViews();
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
@@ -47,6 +50,10 @@ namespace okeafurniture.WEB
 
             services.AddDbContext<OkeaFurnitureContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("OkeaFurniture")));
+
+            services.AddSingleton<IFileProvider>(
+            new PhysicalFileProvider(
+                Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images")));
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
            .AddJwtBearer(options =>
@@ -88,6 +95,8 @@ namespace okeafurniture.WEB
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+           
 
             app.UseEndpoints(endpoints =>
             {
