@@ -182,6 +182,7 @@ insert into PaymentMethod (AccountId, CardHolderFirstName, CardHolderLastName, C
 insert into PaymentMethod (AccountId, CardHolderFirstName, CardHolderLastName, CardNumber, CardExpiration, CardCVV, BillingAddress) values (45, 'Fayth', 'Sharrard', 3682606472012710, '07/01/2019', 5356, '6925 Lake View Circle');
 insert into PaymentMethod (AccountId, CardHolderFirstName, CardHolderLastName, CardNumber, CardExpiration, CardCVV, BillingAddress) values (29, 'Georgine', 'Potts', 9629273033745305, '09/26/2023', 8251, '399 Sherman Parkway');
 insert into PaymentMethod (AccountId, CardHolderFirstName, CardHolderLastName, CardNumber, CardExpiration, CardCVV, BillingAddress) values (31, 'Amalee', 'Hards', 5019141540820894, '09/18/2019', 3375, '8376 Sutherland Road');
+insert into PaymentMethod (AccountId, CardHolderFirstName, CardHolderLastName, CardNumber, CardExpiration, CardCVV, BillingAddress) values (1, 'Joey', 'Nequest', 9089141540820894, '04/18/2022', 9875, '201 South Wabash Avenue');
 
 set identity_insert Item on;
 insert into Item (ItemId, ItemName, ItemDescription, UnitPrice) values (1, 'Uppland', 'Sectional, 4-seat corner', 799.00);
@@ -195,5 +196,18 @@ insert into CategoryItem (ItemId, CategoryId) values (2,10);
 insert into CategoryItem (ItemId, CategoryId) values (3,15);
 insert into CategoryItem (ItemId, CategoryId) values (4,8);
 
-insert into Cart (AccountId, PaymentMethodId, OrderTotal, CheckedOut) values (1, 1, 0.0, 0);
-insert into CartItem (CartId, ItemId, Quantity) values (1, 1, 1);
+insert into Cart 
+(AccountId, PaymentMethodId, OrderTotal, CheckedOut) 
+values 
+(1, null, 1245.0, 0),
+(1, 26, 187.0, 1);
+
+insert into CartItem 
+(CartId, ItemId, Quantity) 
+values 
+(1, 1, 1),
+(1, 2, 1),
+(1, 3, 1),
+(1, 4, 2),
+(2, 2, 2),
+(2, 4, 1);
