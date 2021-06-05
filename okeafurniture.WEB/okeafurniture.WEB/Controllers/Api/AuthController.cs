@@ -62,7 +62,7 @@ namespace okeafurniture.WEB.Controllers.Api
                 );
 
                 var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
-                return Ok(new { Token = tokenString });
+                return Ok(new { Token = tokenString, Account = account });
             }
             else
             {
