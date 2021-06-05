@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using okeafurniture.CORE.Entites;
 using okeafurniture.CORE.Interfaces;
+using okeafurniture.WEB.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,9 +21,9 @@ namespace okeafurniture.WEB.Controllers.Api
             this.repo = repo;
         }
 
-        [Route("/get/all", Name = "GetAll")]
+        [Route("get/all", Name ="GetAllCarts")]
         [HttpGet]
-        public IActionResult GetAll()
+        public IActionResult GetAllCarts()
         {
             var result = repo.GetAll();
 
@@ -36,9 +37,9 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [Route("/get/{id}", Name = "GetById")]
+        [Route("get/{id}", Name ="GetCartById")]
         [HttpGet]
-        public IActionResult GetById(int id)
+        public IActionResult GetCartById(int id)
         {
             var result = repo.Get(id);
 
@@ -52,9 +53,9 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [Route("/getbyaccount/{id}", Name = "GetByAccount")]
+        [Route("get/account/{id}", Name ="GetCartByAccountId")]
         [HttpGet]
-        public IActionResult GetByAccount(int id)
+        public IActionResult GetCartByAccount(int id)
         {
             var result = repo.GetAllByAccount(id);
 
@@ -68,9 +69,9 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [Route("/getactive/{id}", Name = "GetActive")]
+        [Route("get/active/{id}", Name ="GetCartByActive")]
         [HttpGet]
-        public IActionResult GetActive(int id)
+        public IActionResult GetActiveCarts(int id)
         {
             var result = repo.GetActive(id);
 
@@ -84,9 +85,9 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [Route("/getbystatus/{status}", Name = "GetByStatus")]
+        [Route("get/status/{status}", Name ="GetCartByStatus")]
         [HttpGet]
-        public IActionResult GetByStatus(bool CheckedOut)
+        public IActionResult GetCartsByStatus(bool CheckedOut)
         {
             var result = repo.GetAllByStatus(CheckedOut);
 
@@ -100,9 +101,9 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [Route("/add/{id}", Name = "Add")]
+        [Route("add", Name ="AddCart")]
         [HttpPost]
-        public IActionResult Add(CartModel model)
+        public IActionResult AddCart(CartModel model)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
@@ -110,7 +111,7 @@ namespace okeafurniture.WEB.Controllers.Api
 
             if (result.Success)
             {
-                return CreatedAtRoute(nameof(GetById), new { id = result.Data.CartId }, result.Data.MapToModel());
+                return CreatedAtRoute(nameof(GetCartById), new { id = result.Data.CartId }, result.Data.MapToModel());
             }
             else
             {
@@ -118,9 +119,9 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [Route("/update/{id}", Name = "Update")]
+        [Route("update", Name ="EditCart")]
         [HttpPut]
-        public IActionResult Update(CartModel model)
+        public IActionResult UpdateCart(CartModel model)
         {
             var result = repo.Get(model.CartId);
             if (!result.Success)

@@ -18,6 +18,7 @@ namespace okeafurniture.WEB.Models
                 Email = model.Email,
                 Password = model.Password,
                 DateOfBirth = model.DateOfBirth,
+                Address = model.Address,
                 IsAdmin = model.IsAdmin
                 // account model will not have nav properties yet!
             };

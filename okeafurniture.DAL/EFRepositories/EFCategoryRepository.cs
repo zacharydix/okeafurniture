@@ -24,8 +24,7 @@ namespace okeafurniture.DAL.EFRepositories
             var response = new Response<Category>();
             try
             {
-                var category = _context.Categories
-                    .Include(c => c.Items)
+                var category = _context.Category
                     .SingleOrDefault(c => c.CategoryId == id);
 
                 if (category == null)
@@ -52,8 +51,7 @@ namespace okeafurniture.DAL.EFRepositories
             var response = new Response<List<Category>>();
             try
             {
-                var categories = _context.Categories
-                    .Include(c => c.Items)
+                var categories = _context.Category
                     .ToList();
 
                 if (categories == null || categories.Count == 0)
@@ -112,8 +110,11 @@ namespace okeafurniture.DAL.EFRepositories
                 }
                 else
                 {
-                    _context.Categories.Update(category);
-                    _context.SaveChanges();
+                    using (_context = new OkeaFurnitureContext(_context.Options))
+                    {
+                        _context.Category.Update(category);
+                        _context.SaveChanges();
+                    }
 
                     response.Success = true;
                 }
@@ -139,7 +140,7 @@ namespace okeafurniture.DAL.EFRepositories
                 }
                 else
                 {
-                    _context.Categories.Remove(category);
+                    _context.Category.Remove(category);
                     _context.SaveChanges();
 
                     response.Success = true;

@@ -42,7 +42,7 @@ namespace okeafurniture.DAL.Tests
                 DateOfBirth = new DateTime(1992, 01, 01),
                 IsAdmin = false
             };
-            context.Accounts.Add(account1);
+            context.Account.Add(account1);
             context.SaveChanges();
 
 
@@ -72,7 +72,7 @@ namespace okeafurniture.DAL.Tests
         [Test]
         public void ShouldGetAllAccounts()
         {
-            context.Accounts.Add(account2);
+            context.Account.Add(account2);
             context.SaveChanges();
             Response<List<Account>> expected = new Response<List<Account>>()
             {
@@ -144,7 +144,7 @@ namespace okeafurniture.DAL.Tests
             Assert.AreEqual(expected.Data.IsAdmin, actual.Data.IsAdmin);
             Assert.AreEqual(expected.Message, actual.Message);
 
-            Assert.AreEqual(2, context.Accounts.ToList().Count);
+            Assert.AreEqual(2, context.Account.ToList().Count);
         }
 
         [Test]
@@ -165,7 +165,7 @@ namespace okeafurniture.DAL.Tests
             Assert.IsTrue(actual.Success);
             Assert.AreEqual(expected.Message, actual.Message);
 
-            Account temp = context.Accounts.Find(account1.AccountId);
+            Account temp = context.Account.Find(account1.AccountId);
             Assert.AreEqual(account1.FirstName, temp.FirstName);
             Assert.AreEqual(account1.LastName, temp.LastName);
             Assert.AreEqual(account1.Email, temp.Email);
@@ -186,7 +186,7 @@ namespace okeafurniture.DAL.Tests
             Assert.IsTrue(actual.Success);
             Assert.AreEqual(expected.Message, actual.Message);
 
-            Assert.AreEqual(0, context.Accounts.ToList().Count);
+            Assert.AreEqual(0, context.Account.ToList().Count);
 
         }
     }

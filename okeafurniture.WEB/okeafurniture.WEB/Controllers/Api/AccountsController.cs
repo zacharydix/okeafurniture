@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using okeafurniture.CORE.Entites;
 using okeafurniture.CORE.Interfaces;
+using okeafurniture.WEB.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace okeafurniture.WEB.Controllers.Api
             this.repository = repository;
         }
 
-        [HttpGet, Route("get/all")]
+        [HttpGet, Route("get/all", Name ="GetAllAccounts")]
         public IActionResult GetAccounts()
         {
             Response<List<Account>> response = repository.GetAll();
@@ -33,7 +34,7 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [HttpGet, Route("get/id")]
+        [HttpGet, Route("get/id/{id}", Name ="GetAccountById")]
         public IActionResult GetAccountById(int id)
         {
             Response<Account> response = repository.Get(id);
@@ -47,8 +48,8 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [HttpGet, Route("get/email")]
-        public IActionResult GetAccountByEmail(string email)
+        [HttpGet, Route("get/email", Name ="GetAccountsByEmail")]
+        public IActionResult GetAccountByEmail([FromBody] string email)
         {
             Response<Account> response = repository.GetByEmail(email);
             if (response.Success)
@@ -61,13 +62,13 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [HttpPost, Route("add")]
+        [HttpPost, Route("add", Name ="AddAccount")]
         public IActionResult AddAccount(AccountModel model)
         {
             Response<Account> response = repository.Add(model.MapToAccount());
             if (response.Success)
             {
-                return CreatedAtRoute(nameof(GetAccountById), new { id = response.Data.AccountId }, response.Data.MapToModel());
+                return CreatedAtRoute(nameof(GetAccountById), new { id = response.Data.AccountId }, response.Data);
             }
             else
             {
@@ -75,7 +76,7 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [HttpPut, Route("edit")]
+        [HttpPut, Route("edit", Name ="EditAccount")]
         public IActionResult EditAccount(AccountModel model)
         {
             Response<Account> response = repository.Get(model.AccountId);
@@ -94,7 +95,7 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [HttpDelete, Route("delete")]
+        [HttpDelete, Route("delete/id/{id}", Name ="DeleteAccount")]
         public IActionResult DeleteAccount(int id)
         {
             Response<Account> response = repository.Get(id);

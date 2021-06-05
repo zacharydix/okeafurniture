@@ -31,7 +31,7 @@ namespace okeafurniture.DAL.Tests
         public void ShouldGetCategory()
         {
             var category = MakeCategoryDesk();
-            _context.Categories.Add(category);
+            _context.Category.Add(category);
             _context.SaveChanges();
 
             var response = _repository.Get(category.CategoryId);
@@ -50,9 +50,9 @@ namespace okeafurniture.DAL.Tests
             item1.Categories.Add(category);
             item2.Categories.Add(category);
 
-            _context.Categories.Add(category);
-            _context.Items.Add(item1);
-            _context.Items.Add(item2);
+            _context.Category.Add(category);
+            _context.Item.Add(item1);
+            _context.Item.Add(item2);
             _context.SaveChanges();
 
             var response = _repository.Get(category.CategoryId);
@@ -78,9 +78,9 @@ namespace okeafurniture.DAL.Tests
             var cat2 = MakeCategoryDesk();
             var cat3 = MakeCategoryOffice();
 
-            _context.Categories.Add(cat1);
-            _context.Categories.Add(cat2);
-            _context.Categories.Add(cat3);
+            _context.Category.Add(cat1);
+            _context.Category.Add(cat2);
+            _context.Category.Add(cat3);
             _context.SaveChanges();
 
             var response = _repository.GetAll();
@@ -104,11 +104,11 @@ namespace okeafurniture.DAL.Tests
             item2.Categories.Add(cat2);
             item2.Categories.Add(cat3);
 
-            _context.Categories.Add(cat1);
-            _context.Categories.Add(cat2);
-            _context.Categories.Add(cat3);
-            _context.Items.Add(item1);
-            _context.Items.Add(item2);
+            _context.Category.Add(cat1);
+            _context.Category.Add(cat2);
+            _context.Category.Add(cat3);
+            _context.Item.Add(item1);
+            _context.Item.Add(item2);
             _context.SaveChanges();
 
             var response = _repository.GetAll();
@@ -161,7 +161,7 @@ namespace okeafurniture.DAL.Tests
         {
             var category = MakeCategoryChair();
 
-            _context.Categories.Add(category);
+            _context.Category.Add(category);
             _context.SaveChanges();
 
             var response = _repository.Add(category);
@@ -175,7 +175,7 @@ namespace okeafurniture.DAL.Tests
         {
             var category = MakeCategoryChair();
 
-            _context.Categories.Add(category);
+            _context.Category.Add(category);
             _context.SaveChanges();
 
             var existingCategory = _repository.Get(category.CategoryId).Data;
@@ -205,7 +205,7 @@ namespace okeafurniture.DAL.Tests
         {
             var category = MakeCategoryOffice();
 
-            _context.Categories.Add(category);
+            _context.Category.Add(category);
             _context.SaveChanges();
 
             var response = _repository.Delete(category.CategoryId);

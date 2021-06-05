@@ -31,7 +31,13 @@ namespace okeafurniture.WEB
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options => options.AddPolicy("corspolicy", (builder) =>
+            {
+                builder.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin();
+            }));
             services.AddControllersWithViews();
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddTransient<IAccountRepository, EFAccountRepository>();
             services.AddTransient<IPaymentMethodRepository, EFPaymentMethodRepository>();
             services.AddTransient<ICartRepository, EFCartRepository>();
@@ -78,6 +84,9 @@ namespace okeafurniture.WEB
 
             app.UseRouting();
 
+            app.UseCors("corspolicy");
+
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -85,6 +94,7 @@ namespace okeafurniture.WEB
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllers();
             });
         }
     }

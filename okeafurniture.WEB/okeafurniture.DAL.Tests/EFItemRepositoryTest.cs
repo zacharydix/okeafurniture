@@ -13,7 +13,6 @@ namespace okeafurniture.DAL.Tests
         private Item item;
         private Item item1;
         private Item item2;
-        private Category category;
         
         [SetUp]
         public void Setup()
@@ -75,7 +74,7 @@ namespace okeafurniture.DAL.Tests
         [Test]
         public void GetItemById()
         {
-            db.Items.Add(item);
+            db.Item.Add(item);
             db.SaveChanges();
 
             Response<Item> actual = itemRepo.Get(1);

@@ -23,7 +23,7 @@ namespace okeafurniture.DAL
             };
             try
             {
-                context.Accounts.Add(account);
+                context.Account.Add(account);
                 context.SaveChanges();
                 response.Data = account;
                 return response;
@@ -45,18 +45,18 @@ namespace okeafurniture.DAL
             };
             try
             {
-                context.Accounts.Remove(context.Accounts.Find(id));
-                foreach (var item in context.PaymentMethods.Where(pm => pm.AccountId == id))
+                context.Account.Remove(context.Account.Find(id));
+                foreach (var item in context.PaymentMethod.Where(pm => pm.AccountId == id))
                 {
-                    context.PaymentMethods.Remove(item);
+                    context.PaymentMethod.Remove(item);
                 }
-                foreach (var item in context.Carts.Where(c => c.AccountId == id))
+                foreach (var item in context.Cart.Where(c => c.AccountId == id))
                 {
-                    foreach (var item2 in context.CartItems.Where(ci => ci.CartId == item.CartId))
+                    foreach (var item2 in context.CartItem.Where(ci => ci.CartId == item.CartId))
                     {
-                        context.CartItems.Remove(item2);
+                        context.CartItem.Remove(item2);
                     }
-                    context.Carts.Remove(item);
+                    context.Cart.Remove(item);
                 }
                 context.SaveChanges();
                 return response;
@@ -79,7 +79,11 @@ namespace okeafurniture.DAL
             };
             try
             {
-                response.Data = context.Accounts.Find(id);
+                response.Data = context.Account.Find(id);
+                if (response.Data == null)
+                {
+                    throw new KeyNotFoundException();
+                }
                 return response;
             }
             catch (Exception)
@@ -101,7 +105,7 @@ namespace okeafurniture.DAL
             };
             try
             {
-                response.Data = context.Accounts.ToList();
+                response.Data = context.Account.ToList();
                 return response;
             }
             catch (Exception)
@@ -123,7 +127,11 @@ namespace okeafurniture.DAL
             };
             try
             {
-                response.Data = context.Accounts.SingleOrDefault(a => a.Email == email);
+                response.Data = context.Account.SingleOrDefault(a => a.Email == email);
+                if (response.Data == null)
+                {
+                    throw new KeyNotFoundException();
+                }
                 return response;
             }
             catch (Exception)
@@ -146,7 +154,7 @@ namespace okeafurniture.DAL
             {
                 using (context = new OkeaFurnitureContext(context.Options))
                 {
-                    context.Accounts.Update(account);
+                    context.Account.Update(account);
                     context.SaveChanges();
                 }
                 return response;

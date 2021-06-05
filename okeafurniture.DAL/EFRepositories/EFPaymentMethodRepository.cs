@@ -26,7 +26,7 @@ namespace okeafurniture.DAL.EFRepositories
             };
             try
             {
-                context.PaymentMethods.Add(paymentMethod);
+                context.PaymentMethod.Add(paymentMethod);
                 context.SaveChanges();
                 response.Data = paymentMethod;
                 return response;
@@ -48,14 +48,14 @@ namespace okeafurniture.DAL.EFRepositories
             };
             try
             {
-                context.PaymentMethods.Remove(context.PaymentMethods.Find(id));
-                foreach (var item in context.Carts.Where(c => c.PaymentMethodId == id))
+                context.PaymentMethod.Remove(context.PaymentMethod.Find(id));
+                foreach (var item in context.Cart.Where(c => c.PaymentMethodId == id))
                 {
-                    foreach (var item2 in context.CartItems.Where(ci => ci.CartId == item.CartId))
+                    foreach (var item2 in context.CartItem.Where(ci => ci.CartId == item.CartId))
                     {
-                        context.CartItems.Remove(item2);
+                        context.CartItem.Remove(item2);
                     }
-                    context.Carts.Remove(item);
+                    context.Cart.Remove(item);
                 }
                 context.SaveChanges();
                 return response;
@@ -78,7 +78,11 @@ namespace okeafurniture.DAL.EFRepositories
             };
             try
             {
-                response.Data = context.PaymentMethods.Find(id);
+                response.Data = context.PaymentMethod.Find(id);
+                if (response.Data == null)
+                {
+                    throw new KeyNotFoundException();
+                }
                 return response;
             }
             catch (Exception)
@@ -100,7 +104,7 @@ namespace okeafurniture.DAL.EFRepositories
             };
             try
             {
-                response.Data = context.PaymentMethods.Where(pm => pm.AccountId == accountId).ToList();
+                response.Data = context.PaymentMethod.Where(pm => pm.AccountId == accountId).ToList();
                 return response;
             }
             catch (Exception)
@@ -121,12 +125,11 @@ namespace okeafurniture.DAL.EFRepositories
             };
             try
             {
-                /*using (context = GetDbContext())
+                using (context = new OkeaFurnitureContext(context.Options))
                 {
-                    context.PaymentMethods.Update(paymentMethod);
+                    context.PaymentMethod.Update(paymentMethod);
                     context.SaveChanges();
                 }
-                */
                 return response;
             }
             catch (Exception)
