@@ -1,0 +1,43 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The HTML5 Herald</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+
+</head>
+
+<body>
+  <input type="file" id="fileUpload" />
+      
+  <script>
+      document.querySelector('#fileUpload').addEventListener('change', event => {
+        handleImageUpload(event)
+      })
+
+      const handleImageUpload = event => {
+        const files = event.target.files
+        const fileName = "" + event.target.files.item(0).name
+        console.log(fileName)
+        const formData = new FormData()
+        formData.append('myFile', files[0])
+
+        fetch('https://localhost:44370/api/images/add', {
+          method: 'POST',
+          body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data)
+        })
+        .catch(error => {
+          console.error(error)
+        })
+      }
+  </script>
+</body>
+</html>
+

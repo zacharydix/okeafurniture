@@ -1,0 +1,8 @@
+Create PROCEDURE TopItems (@categoryId as int)
+AS BEGIN
+SELECT a.CategoryId, a.CategoryName, ay.ItemName, ay.ItemDescription, ay.UnitPrice
+FROM Categories as a
+INNER JOIN ItemCategories as aa on aa.CategoryId = a.CategoryId
+INNER JOIN Items AS ay on ay.ItemId=a.CategoryId
+Where a.CategoryId=@categoryId;
+END
