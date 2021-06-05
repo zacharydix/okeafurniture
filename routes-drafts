@@ -1,0 +1,21 @@
+Home Page -> /
+Login Page -> /account/login
+
+Account Create Page /account/create
+Account Page -> /account
+Edit Account -> account/edit
+
+Admin Actions Page -> /admin
+Admin Top Items by Cat -> /admin/report/topitems
+Admin Sales -> /admin/report/sales
+Admin Add Item -> /admin/item/add
+Admin Edit Item -> /admin/item/edit
+Admin Add Category -> /admin/category/add
+Admin Add Category -> /admin/category/edit
+
+View All Items -> /items/all
+View By Category -> /items/category
+
+Add Payment Method /account/paymentmethod/add
+Remove Payment method /account/paymentmethod/edit
+
