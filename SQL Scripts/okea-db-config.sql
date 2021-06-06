@@ -62,7 +62,7 @@ Create table Cart (
 	AccountId int not null,
 	PaymentMethodId int null,
 	OrderTotal decimal(12,2) not null,
-	CheckedOut bit not null,
+	CheckOutDate datetime null,
 	Constraint fk_Account_Cart_AccountId
 		Foreign key (AccountId)
 		References Account(AccountId),
@@ -199,8 +199,8 @@ insert into CategoryItem (ItemId, CategoryId) values (4,8);
 insert into Cart 
 (AccountId, PaymentMethodId, OrderTotal, CheckedOut) 
 values 
-(1, null, 1245.0, 0),
-(1, 26, 187.0, 1);
+(1, null, 1245.0, null),
+(1, 26, 187.0, '2021-06-06T12:15');
 
 insert into CartItem 
 (CartId, ItemId, Quantity) 
