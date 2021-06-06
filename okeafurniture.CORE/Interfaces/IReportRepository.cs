@@ -9,6 +9,6 @@ namespace okeafurniture.CORE.Interfaces
 {
     public interface IReportRepository
     {
-        Response<List<TopItems>> GetTopItems(int categoryId);
+        Response<List<TopItems>> GetTopItems();
     }
 }

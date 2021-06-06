@@ -30,8 +30,8 @@ namespace okeafurniture.DAL.Tests
         [Test]
         public void ShouldReturnItemList()
         {
-            var result = repo.GetTopItems(2);
-            Assert.AreEqual(1, result.Data.Count);
+            var result = repo.GetTopItems();
+            Assert.AreEqual(2, result.Data.Count);
         }
     }
 }
