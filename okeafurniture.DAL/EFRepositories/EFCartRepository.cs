@@ -25,7 +25,6 @@ namespace okeafurniture.DAL.EFRepositories
                 using (context = new OkeaFurnitureContext(context.Options))
                 {
                     response.Data = context.Cart.Add(cart).Entity;
-                    context.SaveChanges();
                     if (response.Data != null)
                     {
                         response.Success = true;

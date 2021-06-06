@@ -23,7 +23,6 @@ namespace okeafurniture.DAL
 
             List<TopItems> itemList = new List<TopItems>();
 
-            //Return agent information for only retired agents (security clearance retired)
             using (var connection = new SqlConnection(_sqlConnectionString))
             {
                 var command = new SqlCommand("TopItems", connection);
@@ -38,12 +37,6 @@ namespace okeafurniture.DAL
                     {
                         while (reader.Read())
                         {
-                            /*
-                            public string AgencyName { get; set; }
-                            public Guid BadgeId { get; set; }
-                            public string NameLastFirst { get; set; }}
-                            public DateTime DeactivationDate { get; set; }
-                             */
                             var row = new TopItems();
 
                             row.CategoryId = (int)reader["CategoryId"];
