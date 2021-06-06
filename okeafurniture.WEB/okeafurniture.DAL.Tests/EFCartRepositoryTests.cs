@@ -164,6 +164,13 @@ namespace okeafurniture.DAL.Tests
         [Test]
         public void ShouldAdd()
         {
+            cart1 = new Cart()
+            {
+                AccountId = 1,
+                PaymentMethodId = 1,
+                OrderTotal = 10M,
+                CheckedOut = true
+            };
             var result = repository.Add(cart1);
 
             Assert.IsTrue(result.Success);
