@@ -102,6 +102,11 @@ namespace okeafurniture.DAL.EFRepositories
             {
                 using (context = new OkeaFurnitureContext(context.Options))
                 {
+                    //response.Data = context.CartItem.Where(ci => ci.CartId == cartId).ToList();
+                    //foreach (var cartItem in response.Data)
+                    //{
+                    //    cartItem.Item = context.Item.Find(cartItem.ItemId);
+                    //}
                     response.Data = context.CartItem
                         .Include(ci => ci.Item)
                         .Where(ci => ci.CartId == cartId)
