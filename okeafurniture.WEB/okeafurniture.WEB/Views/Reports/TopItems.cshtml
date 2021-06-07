@@ -1,0 +1,52 @@
+﻿@model List<okeafurniture.CORE.DTOs.TopItems>
+
+@{
+    ViewData["Title"] = "Top Items";
+}
+
+<h1>Report</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Item Id
+            </th>
+            <th>
+                Item Name
+            </th>
+            <th>
+                Price
+            </th>
+            <th>
+                Units Sold
+            </th>
+            <th>
+                Revenue
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var abc in Model)
+        {
+            <tr>
+                <td>
+                    @abc.ItemId
+                </td>
+                <td>
+                    @abc.ItemName
+                </td>
+                <td>
+                    @abc.UnitPrice
+                </td>
+                <td>
+                    @abc.UnitSold
+                </td>
+                <td>
+                    @abc.Revenue
+                </td>
+            </tr>
+        }
+        <a asp-action="Index">Back to Reports</a>
+    </tbody>
+</table>

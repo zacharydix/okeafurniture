@@ -25,7 +25,6 @@ namespace okeafurniture.DAL.EFRepositories
                 using (context = new OkeaFurnitureContext(context.Options))
                 {
                     response.Data = context.Cart.Add(cart).Entity;
-                    context.SaveChanges();
                     if (response.Data != null)
                     {
                         response.Success = true;
@@ -76,7 +75,7 @@ namespace okeafurniture.DAL.EFRepositories
             {
                 using (context = new OkeaFurnitureContext(context.Options))
                 {
-                    response.Data = context.Cart.SingleOrDefault(c => c.AccountId == accountId && c.CheckedOut == false);
+                    response.Data = context.Cart.SingleOrDefault(c => c.AccountId == accountId && c.CheckOutDate == null);
                     if (response.Data != null)
                     {
                         response.Success = true;
@@ -162,7 +161,14 @@ namespace okeafurniture.DAL.EFRepositories
             {
                 using (context = new OkeaFurnitureContext(context.Options))
                 {
-                    response.Data = context.Cart.Where(c => c.CheckedOut == CheckedOut).ToList();
+                    if (CheckedOut == true)
+                    {
+                        response.Data = context.Cart.Where(c => c.CheckOutDate != null).ToList();
+                    }
+                    else
+                    {
+                        response.Data = context.Cart.Where(c => c.CheckOutDate == null).ToList();
+                    }
                     if (response.Data != null)
                     {
                         response.Success = true;

@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "Report(s)";
+}
+
+<h1>Reports</h1>
+
+<div class="row">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Click To Access Report</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr>
+                <td><a asp-controller="Reports" asp-action="TopItems">Get Top Items</a></td>
+                <td><p>Returns the top three items that generate the most revenue for OKEA</p></td>
+            </tr>
+            <tr>
+                <td><a asp-controller="" asp-action="">Revenue</a></td>
+                <td><p>View the total Revenue OKEA generated from a certain date range</p></td>
+            </tr>
+            <tr>
+                <td><a asp-controller="" asp-action="">Top Customer List</a></td>
+                <td><p>See what customers spent the most money at OKEA</p></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

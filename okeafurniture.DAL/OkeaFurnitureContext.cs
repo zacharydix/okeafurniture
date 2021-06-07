@@ -50,7 +50,7 @@ namespace okeafurniture.DAL
             builder.AddUserSecrets<OkeaFurnitureContext>();
             var config = builder.Build();
 
-            var connectionString = config["ConnectionStrings:okea-sql-express"];
+            var connectionString = config["ConnectionStrings:OkeaFurniture"];
 
             return connectionString;
         }

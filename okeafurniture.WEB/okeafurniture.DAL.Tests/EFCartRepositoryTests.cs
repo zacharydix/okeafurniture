@@ -58,14 +58,14 @@ namespace okeafurniture.DAL.Tests
                 AccountId = 1,
                 PaymentMethodId = 1,
                 OrderTotal = 2M,
-                CheckedOut = false
+                CheckOutDate = null
             };
             cart2 = new Cart()
             {
                 AccountId = 1,
                 PaymentMethodId = 1,
                 OrderTotal = 2M,
-                CheckedOut = true
+                CheckOutDate = DateTime.Now
             };
             context.Cart.Add(cart1);
             context.Cart.Add(cart2);
@@ -152,13 +152,13 @@ namespace okeafurniture.DAL.Tests
         public void ShouldUpdate()
         {
             Cart cart = repository.Get(1).Data;
-            cart.CheckedOut = true;
+            cart.CheckOutDate = DateTime.Now;
 
             var result = repository.Update(cart);
             Cart updatedCart = repository.Get(1).Data;
 
             Assert.IsTrue(result.Success);
-            Assert.IsTrue(updatedCart.CheckedOut);
+            Assert.IsTrue(updatedCart.CheckOutDate != null);
         }
 
         [Test]
@@ -169,7 +169,7 @@ namespace okeafurniture.DAL.Tests
                 AccountId = 1,
                 PaymentMethodId = 1,
                 OrderTotal = 10M,
-                CheckedOut = true
+                CheckOutDate = null
             };
             var result = repository.Add(cart1);
 
