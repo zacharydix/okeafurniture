@@ -40,7 +40,7 @@ namespace okeafurniture.DAL
                             row.ItemId = (int)reader["ItemId"];
                             row.ItemName = reader["ItemName"].ToString();
                             row.UnitPrice =      (decimal)reader["UnitPrice"];
-                            row.UnitSold = (int)reader["UnitSold"];
+                            row.UnitsSold = (int)reader["UnitsSold"];
                             row.Revenue = (decimal)reader["Revenue"];
 
                             itemList.Add(row);

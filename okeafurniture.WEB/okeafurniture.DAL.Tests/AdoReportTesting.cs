@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using okeafurniture.DAL;
 using NUnit.Framework;
 using Microsoft.EntityFrameworkCore;
+using okeafurniture.CORE.Entites;
 
 namespace okeafurniture.DAL.Tests
 {
@@ -15,7 +16,7 @@ namespace okeafurniture.DAL.Tests
         private AdoReportRepository repo;
 
         [SetUp]
-        
+
         public void Setup()
         {
             var options = new DbContextOptionsBuilder<OkeaFurnitureContext>()
@@ -23,15 +24,17 @@ namespace okeafurniture.DAL.Tests
             db = new OkeaFurnitureContext(options);
             db.Database.EnsureDeleted();
             db.Database.EnsureCreated();
-
             db.SaveChanges();
             repo = new AdoReportRepository(OkeaFurnitureContext.GetConnectionString());
         }
         [Test]
-        public void ShouldReturnItemList()
+        public void ShouldReturnTopItems()
         {
             var result = repo.GetTopItems();
+            Assert.IsTrue(result.Success);
             Assert.AreEqual(2, result.Data.Count);
+            Assert.AreEqual(2, result.Data[0].ItemId);
+            Assert.IsTrue(result.Data[0].Revenue >= result.Data[1].Revenue);
         }
     }
 }
