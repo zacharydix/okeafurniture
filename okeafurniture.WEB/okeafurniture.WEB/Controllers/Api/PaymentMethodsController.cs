@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using okeafurniture.CORE.Entites;
 using okeafurniture.CORE.Interfaces;
 using okeafurniture.WEB.Models;
@@ -20,7 +21,7 @@ namespace okeafurniture.WEB.Controllers.Api
             this.repository = repository;
         }
 
-        [HttpGet, Route("get/id/{id}", Name ="GetPaymentMethodById")]
+        [HttpGet, Route("get/id/{id}", Name ="GetPaymentMethodById"), Authorize]
         public IActionResult GetPaymentMethodById(int id)
         {
             Response<PaymentMethod> response = repository.Get(id);
@@ -34,7 +35,7 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [HttpGet, Route("get/account/{accountId}", Name ="GetPaymentMethodByAccount")]
+        [HttpGet, Route("get/account/{accountId}", Name ="GetPaymentMethodByAccount"), Authorize]
         public IActionResult GetPaymentMethodByAccount(int accountId)
         {
             Response<List<PaymentMethod>> response = repository.GetByUser(accountId);
@@ -48,7 +49,7 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [HttpPost, Route("add", Name ="AddPaymentMethod")]
+        [HttpPost, Route("add", Name ="AddPaymentMethod"), Authorize]
         public IActionResult AddPaymentMethod(PaymentMethodModel model)
         {
             Response<PaymentMethod> response = repository.Add(model.MapToPaymentMethod());
@@ -62,7 +63,7 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [HttpPut, Route("edit", Name ="EditPaymentMethod")]
+        [HttpPut, Route("edit", Name ="EditPaymentMethod"), Authorize]
         public IActionResult EditPaymentMethod(PaymentMethodModel model)
         {
             Response<PaymentMethod> response = repository.Get(model.PaymentMethodId);
@@ -81,7 +82,7 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [HttpDelete, Route("delete/{id}", Name ="DeletePaymentMethod")]
+        [HttpDelete, Route("delete/{id}", Name ="DeletePaymentMethod"), Authorize]
         public IActionResult DeletePaymentMethod(int id)
         {
             Response<PaymentMethod> response = repository.Get(id);

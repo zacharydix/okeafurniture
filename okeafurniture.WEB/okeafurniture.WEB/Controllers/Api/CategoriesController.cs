@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using okeafurniture.CORE.Entites;
 using okeafurniture.CORE.Interfaces;
 using okeafurniture.WEB.Models;
@@ -19,7 +20,7 @@ namespace okeafurniture.WEB.Controllers.Api
             this.repository = repository;
         }
 
-        [HttpGet, Route("get/all", Name ="GetAllCategories")]
+        [HttpGet, Route("get/all", Name ="GetAllCategories"), Authorize]
         public IActionResult GetCategories()
         {
             Response<List<Category>> response = repository.GetAll();
@@ -33,7 +34,7 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [HttpGet, Route("get/id/{id}", Name ="GetCategoryById")]
+        [HttpGet, Route("get/id/{id}", Name ="GetCategoryById"), Authorize]
         public IActionResult GetCategoryById(int id)
         {
             Response<Category> response = repository.Get(id);
@@ -47,7 +48,7 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [HttpPost, Route("add", Name ="AddCategory")]
+        [HttpPost, Route("add", Name ="AddCategory"), Authorize]
         public IActionResult AddCategory(CategoryModel model)
         {
             Response<Category> response = repository.Add(model.MapToCategory());
@@ -61,7 +62,7 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [HttpPut, Route("edit", Name ="EditCategory")]
+        [HttpPut, Route("edit", Name ="EditCategory"), Authorize]
         public IActionResult EditCategory(CategoryModel model)
         {
             Response<Category> response = repository.Get(model.CategoryId);
@@ -80,7 +81,7 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [HttpDelete, Route("delete/{id}", Name ="DeleteCategory")]
+        [HttpDelete, Route("delete/{id}", Name ="DeleteCategory"), Authorize]
         public IActionResult DeleteCategory(int id)
         {
             Response<Category> response = repository.Get(id);

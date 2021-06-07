@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace okeafurniture.WEB.Controllers.Api
 {
@@ -18,8 +19,8 @@ namespace okeafurniture.WEB.Controllers.Api
         {
             _repo = repo;
         }
-        [HttpGet]
-        [Route("get/{id}", Name ="GetItemById")]
+
+        [HttpGet, Route("get/{id}", Name ="GetItemById"), Authorize]
         public IActionResult GetItem(int id)
         {
             var result = _repo.Get(id);
@@ -33,8 +34,8 @@ namespace okeafurniture.WEB.Controllers.Api
                 return BadRequest(result.Message);
             }
         }
-        [HttpGet]
-        [Route("get/all", Name="GetAllItems")]
+
+        [HttpGet, Route("get/all", Name="GetAllItems"), Authorize]
         public IActionResult GetAllItems()
         {
             var result = _repo.GetAll();
@@ -48,9 +49,8 @@ namespace okeafurniture.WEB.Controllers.Api
                 return BadRequest(result.Message);
             }
         }
-        [HttpGet]
-        [Route("get/all/categories", Name ="GetItemsByCategory")]
 
+        [HttpGet, Route("get/all/categories", Name ="GetItemsByCategory"), Authorize]
         public IActionResult GetItemsByCategories(int id)
         {
             var result = _repo.GetByCategory(id);
@@ -64,9 +64,8 @@ namespace okeafurniture.WEB.Controllers.Api
                 return BadRequest(result.Message);
             }
         }
-        [HttpPost]
-        [Route("add", Name ="AddItem")]
 
+        [HttpPost, Route("add", Name ="AddItem"), Authorize]
         public IActionResult AddItem(Item item)
         {
             if (ModelState.IsValid)
@@ -84,7 +83,8 @@ namespace okeafurniture.WEB.Controllers.Api
             }
             return BadRequest(ModelState);
         }
-        [HttpPut, Route("edit", Name ="EditItem")]
+
+        [HttpPut, Route("edit", Name ="EditItem"), Authorize]
         public IActionResult EditItem(Item item)
         {
             Item existingitem = _repo.Get(item.ItemId).Data;
@@ -108,7 +108,8 @@ namespace okeafurniture.WEB.Controllers.Api
             }
             return BadRequest(ModelState);
         }
-        [HttpDelete("delete/{id}", Name ="DeleteItem")]
+
+        [HttpDelete("delete/{id}", Name ="DeleteItem"), Authorize]
         public IActionResult DeleteItem(int id)
         {
             if (!_repo.Get(id).Success)

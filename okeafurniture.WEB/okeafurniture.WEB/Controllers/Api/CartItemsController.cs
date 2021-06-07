@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using okeafurniture.CORE.Entites;
 using okeafurniture.CORE.Interfaces;
 using okeafurniture.WEB.Models;
@@ -20,7 +21,7 @@ namespace okeafurniture.WEB.Controllers.Api
             this.repository = repository;
         }
 
-        [HttpGet, Route("get/cartid/{cartId}/itemid/{itemId}", Name="GetCartItemById")]
+        [HttpGet, Route("get/cartid/{cartId}/itemid/{itemId}", Name="GetCartItemById"), Authorize]
         public IActionResult GetCartItemById(int cartId, int itemId)
         {
             Response<CartItem> result = repository.Get(cartId, itemId);
@@ -34,7 +35,7 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [HttpGet, Route("get/all/cartid/{cartid}", Name ="GetAllCartItemsById")]
+        [HttpGet, Route("get/all/cartid/{cartid}", Name ="GetAllCartItemsById"), Authorize]
         public IActionResult GetCartItemsByCartId(int cartId)
         {
             Response<List<CartItem>> response = repository.GetByCart(cartId);
@@ -48,7 +49,7 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [HttpPost, Route("add", Name ="AddCartItem")]
+        [HttpPost, Route("add", Name ="AddCartItem"), Authorize]
         public IActionResult AddCartItem(CartItemModel model)
         {
             Response<CartItem> response = repository.Add(model.MapToCartItem());
@@ -62,7 +63,7 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [HttpPut, Route("edit", Name ="EditCartItem")]
+        [HttpPut, Route("edit", Name ="EditCartItem"), Authorize]
         public IActionResult EditCartItem(CartItemModel model)
         {
             Response<CartItem> response = repository.Get(model.CartId, model.ItemId);
@@ -81,7 +82,7 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [HttpDelete, Route("delete/cartid/{cartId}/itemid/{itemId}", Name ="DeleteCartItem")]
+        [HttpDelete, Route("delete/cartid/{cartId}/itemid/{itemId}", Name ="DeleteCartItem"), Authorize]
         public IActionResult DeleteCartItem(int cartId, int itemId)
         {
             Response<CartItem> response = repository.Get(cartId, itemId);

@@ -31,7 +31,7 @@ namespace okeafurniture.WEB.Controllers.Api
         {
             if (login == null)
             {
-                return BadRequest(JObject.FromObject(new { message = "Invalid Request" }));
+                return BadRequest(JObject.FromObject(new { Message = "Invalid Request" }));
             }
 
             var account = _accountRepo.GetByEmail(login.Email).Data;
@@ -40,12 +40,12 @@ namespace okeafurniture.WEB.Controllers.Api
             {
                 //return BadRequest("Invalid Email");
                 //return BadRequest(new JavaScriptSerializer.Serialize(new { message = "Invalid Email" }));
-                return BadRequest(JObject.FromObject(new { message = "Invalid Email" }));
+                return BadRequest(JObject.FromObject(new { Message = "Invalid Email" }));
             }
 
             if (account.Password != login.Password)
             {
-                return BadRequest(JObject.FromObject(new { message = "Invalid Password" }));
+                return BadRequest(JObject.FromObject(new { Message = "Invalid Password" }));
             }
 
             else if (account.Password == login.Password)
