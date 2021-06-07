@@ -26,6 +26,8 @@ namespace okeafurniture.DAL.EFRepositories
             {
                 var category = _context.Category
                     .SingleOrDefault(c => c.CategoryId == id);
+                var items = _context.Item.Where(i => i.Categories.Contains(category)).ToList();
+                category.Items = items;
 
                 if (category == null)
                 {

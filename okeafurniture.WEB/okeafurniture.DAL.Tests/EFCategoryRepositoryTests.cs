@@ -229,7 +229,7 @@ namespace okeafurniture.DAL.Tests
         {
             return new Category()
             {
-                CategoryName = "Desk"
+                CategoryName = "Desk",
             };
         }
 
@@ -237,7 +237,7 @@ namespace okeafurniture.DAL.Tests
         {
             return new Category()
             {
-                CategoryName = "Chair"
+                CategoryName = "Chair",
             };
         }
 
@@ -245,7 +245,7 @@ namespace okeafurniture.DAL.Tests
         {
             return new Category()
             {
-                CategoryName = "Office"
+                CategoryName = "Office",
             };
         }
 
