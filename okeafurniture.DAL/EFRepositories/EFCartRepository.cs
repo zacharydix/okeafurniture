@@ -22,15 +22,12 @@ namespace okeafurniture.DAL.EFRepositories
             Response<Cart> response = new Response<Cart>();
             try
             {
-                using (context = new OkeaFurnitureContext(context.Options))
-                {
-                    response.Data = context.Cart.Add(cart).Entity;
-                    if (response.Data != null)
-                    {
-                        response.Success = true;
-                        response.Message = $"Successfully created new cart for Account #{cart.AccountId}";
-                    }
-                }
+                context.Cart.Add(cart);
+                context.SaveChanges();
+
+                response.Data = cart;
+                response.Success = true;
+                response.Message = $"Successfully created new cart for Account #{cart.AccountId}";
             }
             catch (Exception ex)
             {
