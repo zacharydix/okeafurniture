@@ -188,7 +188,7 @@ insert into PaymentMethod (AccountId, CardHolderFirstName, CardHolderLastName, C
 set identity_insert Item on;
 insert into Item (ItemId, ItemName, ItemDescription, UnitPrice, ImageName) values (1, 'Uppland', 'Sectional, 4-seat corner', 799.00, 'Uppland.png');
 insert into Item (ItemId, ItemName, ItemDescription, UnitPrice, ImageName) values (2, 'Neiden', 'Bed frame, twin', 59.00, 'Neiden.png');
-insert into Item (ItemId, ItemName, ItemDescription, UnitPrice. ImageName) values (3, 'Hemnes', '8-drawer dresser, 63x37 3/8 "', 249.00, 'Hemnes.png');
+insert into Item (ItemId, ItemName, ItemDescription, UnitPrice, ImageName) values (3, 'Hemnes', '8-drawer dresser, 63x37 3/8 "', 249.00, 'Hemnes.png');
 insert into Item (ItemId, ItemName, ItemDescription, UnitPrice, ImageName) values (4, 'Lerhamn', 'Table, 29 1/8x29 1/8 "', 69.00, 'Lerhamn.png');
 set identity_insert Item off;
 
