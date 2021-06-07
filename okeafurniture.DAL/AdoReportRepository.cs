@@ -17,10 +17,10 @@ namespace okeafurniture.DAL
 
 
 
-        public Response<List<TopItems>> GetTopItems()
+        public Response<List<TopItemListItem>> GetTopItems()
         {
 
-            List<TopItems> itemList = new List<TopItems>();
+            List<TopItemListItem> itemList = new List<TopItemListItem>();
 
             using (var connection = new SqlConnection(_sqlConnectionString))
             {
@@ -35,7 +35,7 @@ namespace okeafurniture.DAL
                     {
                         while (reader.Read())
                         {
-                            var row = new TopItems();
+                            var row = new TopItemListItem();
 
                             row.ItemId = (int)reader["ItemId"];
                             row.ItemName = reader["ItemName"].ToString();
@@ -51,7 +51,7 @@ namespace okeafurniture.DAL
                 {
                     Console.WriteLine(ex.Message);
                 }
-                Response<List<TopItems>> response = new Response<List<TopItems>>();
+                Response<List<TopItemListItem>> response = new Response<List<TopItemListItem>>();
                 response.Data = itemList;
                 response.Success = true;
                 response.Message = "Successfully retrieved report.";

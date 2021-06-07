@@ -16,7 +16,6 @@ namespace okeafurniture.DAL.Tests
         private AdoReportRepository repo;
 
         [SetUp]
-
         public void Setup()
         {
             var options = new DbContextOptionsBuilder<OkeaFurnitureContext>()
@@ -27,14 +26,37 @@ namespace okeafurniture.DAL.Tests
             db.SaveChanges();
             repo = new AdoReportRepository(OkeaFurnitureContext.GetConnectionString());
         }
+
         [Test]
         public void ShouldReturnTopItems()
         {
             var result = repo.GetTopItems();
             Assert.IsTrue(result.Success);
-            Assert.AreEqual(2, result.Data.Count);
-            Assert.AreEqual(2, result.Data[0].ItemId);
-            Assert.IsTrue(result.Data[0].Revenue >= result.Data[1].Revenue);
+            switch(result.Data.Count)
+            {
+                case 3:
+                    Assert.IsTrue(result.Data[0].Revenue >= result.Data[1].Revenue && result.Data[1].Revenue >= result.Data[2].Revenue);
+                    break;
+                case 2:
+                    Assert.IsTrue(result.Data[0].Revenue >= result.Data[1].Revenue);
+                    break;
+            }
+        }
+
+        [Test]
+        public void ShouldReturnTopCustomers()
+        {
+            var result = repo.GetTopCustomers();
+            Assert.IsTrue(result.Success);
+            switch (result.Data.Count)
+            {
+                case 3:
+                    Assert.IsTrue(result.Data[0].TotalSpent >= result.Data[1].TotalSpent && result.Data[1].TotalSpent >= result.Data[2].TotalSpent);
+                    break;
+                case 2:
+                    Assert.IsTrue(result.Data[0].TotalSpent >= result.Data[1].TotalSpent);
+                    break;
+            }
         }
     }
 }

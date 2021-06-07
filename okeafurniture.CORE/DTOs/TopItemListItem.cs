@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace okeafurniture.CORE.DTOs
 {
-    public class TopItems
+    public class TopItemListItem
     {
         public int ItemId { get; set; }
         public string ItemName { get; set; }
