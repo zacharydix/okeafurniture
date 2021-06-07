@@ -1,4 +1,5 @@
-﻿using okeafurniture.CORE.Entites;
+﻿using Microsoft.EntityFrameworkCore;
+using okeafurniture.CORE.Entites;
 using okeafurniture.CORE.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -101,7 +102,15 @@ namespace okeafurniture.DAL.EFRepositories
             {
                 using (context = new OkeaFurnitureContext(context.Options))
                 {
-                    response.Data = context.CartItem.Where(ci => ci.CartId == cartId).ToList();
+                    //response.Data = context.CartItem.Where(ci => ci.CartId == cartId).ToList();
+                    //foreach (var cartItem in response.Data)
+                    //{
+                    //    cartItem.Item = context.Item.Find(cartItem.ItemId);
+                    //}
+                    response.Data = context.CartItem
+                        .Include(ci => ci.Item)
+                        .Where(ci => ci.CartId == cartId)
+                        .ToList();
                     if (response.Data != null)
                     {
                         response.Success = true;

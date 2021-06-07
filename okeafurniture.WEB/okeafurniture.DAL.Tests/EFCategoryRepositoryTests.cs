@@ -182,7 +182,7 @@ namespace okeafurniture.DAL.Tests
             existingCategory.CategoryName = "Ottoman";
 
             var response = _repository.Update(existingCategory);
-            Category readResponse = _context.Category.FirstOrDefault(c => c.CategoryId == existingCategory.CategoryId);
+            var readResponse = _repository.Get(existingCategory.CategoryId);
 
             Assert.IsTrue(response.Success);
             Assert.AreEqual(readResponse.CategoryName, "Ottoman");
