@@ -1,4 +1,5 @@
-﻿using okeafurniture.CORE.Entites;
+﻿using Microsoft.EntityFrameworkCore;
+using okeafurniture.CORE.Entites;
 using okeafurniture.CORE.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -127,7 +128,9 @@ namespace okeafurniture.DAL
             };
             try
             {
-                response.Data = context.Account.SingleOrDefault(a => a.Email == email);
+                response.Data = context.Account
+                    .Include(a => a.PaymentMethods)
+                    .SingleOrDefault(a => a.Email == email);
                 if (response.Data == null)
                 {
                     throw new KeyNotFoundException();
