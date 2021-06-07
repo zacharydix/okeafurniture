@@ -24,6 +24,10 @@ namespace okeafurniture.DAL.EFRepositories
             try
             {
                 _context.Item.Remove(_context.Item.Find(itemId));
+                foreach (var entry in _context.CategoryItem.Where(a => a.ItemId == itemId))
+                {
+                    _context.CategoryItem.Remove(entry);
+                }
                 _context.SaveChanges();
 
             }
@@ -43,7 +47,7 @@ namespace okeafurniture.DAL.EFRepositories
         public Response<Item> Get(int itemId)
         {
             Response<Item> response = new Response<Item>();
-            Item item = _context.Item.Include(a => a.Categories)
+            Item item = _context.Item.Include(a => a.CategoryItems)
                 .Include(b => b.CartItems).SingleOrDefault(i=>i.ItemId==itemId);
 
             response.Data = item;
@@ -55,7 +59,8 @@ namespace okeafurniture.DAL.EFRepositories
         public Response<List<Item>> GetAll()
         {
             Response<List<Item>> response = new Response<List<Item>>();
-            List<Item> items = _context.Item.ToList();
+            List<Item> items = _context.Item.Include(a => a.CategoryItems)
+                .Include(b => b.CartItems).ToList();
             response.Success = true;
             response.Data = items;
             response.Message = "Successfully retrieved Items";
@@ -67,8 +72,7 @@ namespace okeafurniture.DAL.EFRepositories
         {
             Response<List<Item>> response = new Response<List<Item>>();
 
-            List<Item> items = _context.Item.Include(a => a.Categories).Where(i => i.Categories.Any(p => p.CategoryId == categoryId)).ToList();
-
+            List<Item> items = _context.Item.Include(a => a.CategoryItems).Where(b => b.CategoryItems.Intersect(_context.CategoryItem.Where(c => c.CategoryId == categoryId)).Any()).ToList();
             response.Data = items;
             response.Success = true;
             response.Message = "Successfully retrieved item's category";

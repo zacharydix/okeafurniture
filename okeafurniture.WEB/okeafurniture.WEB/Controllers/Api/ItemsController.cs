@@ -49,7 +49,7 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
         [HttpGet]
-        [Route("get/all/categories", Name ="GetItemsByCategory")]
+        [Route("get/all/categories/{id}", Name ="GetItemsByCategory")]
 
         public IActionResult GetItemsByCategories(int id)
         {

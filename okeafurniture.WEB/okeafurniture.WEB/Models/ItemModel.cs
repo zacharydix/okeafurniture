@@ -1,4 +1,5 @@
 ﻿using okeafurniture.CORE.Entites;
+using okeafurniture.CORE.Entities;
 using System.Collections.Generic;
 
 namespace okeafurniture.WEB.Models
@@ -9,7 +10,8 @@ namespace okeafurniture.WEB.Models
         public string ItemName { get; set; }
         public string ItemDescription { get; set; }
         public decimal UnitPrice { get; set; }
-        public List<Category> Categories { get; set; }
+        public string ImageName { get; set; }
+        public List<CategoryItem> CategoryItems { get; set; }
         public List<CartItem> CartItems { get; set; }
     }
 }

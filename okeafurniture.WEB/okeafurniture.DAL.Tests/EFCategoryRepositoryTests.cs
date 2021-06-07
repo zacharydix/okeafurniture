@@ -68,7 +68,7 @@ namespace okeafurniture.DAL.Tests
             var response = _repository.Get(99);
 
             Assert.IsFalse(response.Success);
-            Assert.AreEqual(response.Message, "Category not found. ");
+            Assert.AreEqual("Could not locate selected record.", response.Message);
         }
 
         [Test]
@@ -126,7 +126,7 @@ namespace okeafurniture.DAL.Tests
 
             Assert.IsFalse(response.Success);
             Assert.IsNull(response.Data);
-            Assert.AreEqual(response.Message, "No categories found. ");
+            Assert.AreEqual(response.Message, "No categories found.");
         }
 
         [Test]
@@ -167,7 +167,7 @@ namespace okeafurniture.DAL.Tests
             var response = _repository.Add(category);
 
             Assert.IsFalse(response.Success);
-            Assert.AreEqual(response.Message, "Could not add record. ");
+            Assert.AreEqual(response.Message, "Could not add record.");
         }
 
         [Test]
@@ -221,7 +221,7 @@ namespace okeafurniture.DAL.Tests
             var response = _repository.Delete(88);
 
             Assert.IsFalse(response.Success);
-            Assert.AreEqual(response.Message, "Category not found. ");
+            Assert.AreEqual(response.Message, "Category not found.");
         }
 
 
@@ -230,6 +230,7 @@ namespace okeafurniture.DAL.Tests
             return new Category()
             {
                 CategoryName = "Desk",
+                ImageName = "Desk.png"
             };
         }
 
@@ -238,6 +239,8 @@ namespace okeafurniture.DAL.Tests
             return new Category()
             {
                 CategoryName = "Chair",
+                ImageName = "Chair.png"
+
             };
         }
 
@@ -246,6 +249,8 @@ namespace okeafurniture.DAL.Tests
             return new Category()
             {
                 CategoryName = "Office",
+                ImageName = "Office.png"
+
             };
         }
 

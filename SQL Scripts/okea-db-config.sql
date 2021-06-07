@@ -20,7 +20,8 @@ IsAdmin bit not null
 
 create table Category (
 CategoryId int primary key identity(1,1),
-CategoryName varchar(25) not null 
+CategoryName varchar(25) not null ,
+ImageName varchar(100) not null
 );
 
 create table PaymentMethod (
@@ -141,21 +142,21 @@ insert into Account (FirstName, LastName, Email, Password, Address, DateOfBirth,
 insert into Account (FirstName, LastName, Email, Password, Address, DateOfBirth, IsAdmin) values ('Admin', 'Account', 'admin@dev-10.com', 'admin123', 'Address', '2021-01-01 01:01:01', 1);
 
 set identity_insert Category on;
-insert into Category (CategoryId, CategoryName) values (1, 'Sofa');
-insert into Category (CategoryId, CategoryName) values (2, 'Sectional');
-insert into Category (CategoryId, CategoryName) values (3, 'Chair');
-insert into Category (CategoryId, CategoryName) values (4, 'Loveseat');
-insert into Category (CategoryId, CategoryName) values (5, 'Recliner');
-insert into Category (CategoryId, CategoryName) values (6, 'Coffee table');
-insert into Category (CategoryId, CategoryName) values (7, 'Bench');
-insert into Category (CategoryId, CategoryName) values (8, 'Table');
-insert into Category (CategoryId, CategoryName) values (9, 'Bookcase');
-insert into Category (CategoryId, CategoryName) values (10, 'Bed');
-insert into Category (CategoryId, CategoryName) values (11, 'End Table');
-insert into Category (CategoryId, CategoryName) values (12, 'Mirror');
-insert into Category (CategoryId, CategoryName) values (13, 'Desk');
-insert into Category (CategoryId, CategoryName) values (14, 'Ottoman');
-insert into Category (CategoryId, CategoryName) values (15, 'Dresser');
+insert into Category (CategoryId, CategoryName, ImageName) values (1, 'Sofa', 'sofa.png');
+insert into Category (CategoryId, CategoryName, ImageName) values (2, 'Sectional', 'sectional.png');
+insert into Category (CategoryId, CategoryName, ImageName) values (3, 'Chair', 'chair.png');
+insert into Category (CategoryId, CategoryName, ImageName) values (4, 'Loveseat', 'loveseat.png');
+insert into Category (CategoryId, CategoryName, ImageName) values (5, 'Recliner', 'recliner.png');
+insert into Category (CategoryId, CategoryName, ImageName) values (6, 'Coffee table', 'coffeetable.png');
+insert into Category (CategoryId, CategoryName, ImageName) values (7, 'Bench', 'bench.png');
+insert into Category (CategoryId, CategoryName, ImageName) values (8, 'Table', 'table.png');
+insert into Category (CategoryId, CategoryName, ImageName) values (9, 'Bookcase', 'bookcase.png');
+insert into Category (CategoryId, CategoryName, ImageName) values (10, 'Bed', 'bed.png');
+insert into Category (CategoryId, CategoryName, ImageName) values (11, 'End Table', 'endtable.png');
+insert into Category (CategoryId, CategoryName, ImageName) values (12, 'Mirror', 'mirror.png');
+insert into Category (CategoryId, CategoryName, ImageName) values (13, 'Desk', 'desk.png');
+insert into Category (CategoryId, CategoryName, ImageName) values (14, 'Ottoman', 'ottoman.png');
+insert into Category (CategoryId, CategoryName, ImageName) values (15, 'Dresser', 'dresser.png');
 set identity_insert Category off;
 
 insert into PaymentMethod (AccountId, CardHolderFirstName, CardHolderLastName, CardNumber, CardExpiration, CardCVV, BillingAddress) values (35, 'Angel', 'McCorry', 1363201241458749, '09/18/2018', 1060, '78 Moose Hill');
@@ -188,7 +189,7 @@ insert into PaymentMethod (AccountId, CardHolderFirstName, CardHolderLastName, C
 set identity_insert Item on;
 insert into Item (ItemId, ItemName, ItemDescription, UnitPrice, ImageName) values (1, 'Uppland', 'Sectional, 4-seat corner', 799.00, 'Uppland.png');
 insert into Item (ItemId, ItemName, ItemDescription, UnitPrice, ImageName) values (2, 'Neiden', 'Bed frame, twin', 59.00, 'Neiden.png');
-insert into Item (ItemId, ItemName, ItemDescription, UnitPrice. ImageName) values (3, 'Hemnes', '8-drawer dresser, 63x37 3/8 "', 249.00, 'Hemnes.png');
+insert into Item (ItemId, ItemName, ItemDescription, UnitPrice, ImageName) values (3, 'Hemnes', '8-drawer dresser, 63x37 3/8 "', 249.00, 'Hemnes.png');
 insert into Item (ItemId, ItemName, ItemDescription, UnitPrice, ImageName) values (4, 'Lerhamn', 'Table, 29 1/8x29 1/8 "', 69.00, 'Lerhamn.png');
 set identity_insert Item off;
 
