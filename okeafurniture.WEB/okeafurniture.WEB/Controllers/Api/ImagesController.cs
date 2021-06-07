@@ -23,7 +23,8 @@ namespace okeafurniture.WEB.Controllers.Api
             {
                 await myFile.CopyToAsync(stream);
             }
-            return Ok();
+
+            return Ok(new { ImageName = myFile.FileName});
         }
     }
 }
