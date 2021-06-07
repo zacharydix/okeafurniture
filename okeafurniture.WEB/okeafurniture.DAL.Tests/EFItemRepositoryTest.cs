@@ -31,7 +31,7 @@ namespace okeafurniture.DAL.Tests
                 ItemName = "Couch",
                 ItemDescription = "bigCouch",
                 UnitPrice = 200.00M,
-                ImageURL = "test.png"
+                ImageName = "test.png"
             };
             item1 = new Item()
             {
@@ -39,14 +39,14 @@ namespace okeafurniture.DAL.Tests
                 ItemName = "SuperCouch",
                 ItemDescription = "biggerCouch",
                 UnitPrice = 999.00M,
-                ImageURL = "test.png"
+                ImageName = "test.png"
             };
             item2 = new Item()
             {
                 ItemName = "UltraMegaCouch",
                 ItemDescription = "BiggerBetterBestest",
                 UnitPrice = 10000.00M,
-                ImageURL = "test.png"
+                ImageName = "test.png"
             };
             item.Categories.Add(category);
             item1.Categories.Add(category);
@@ -71,7 +71,7 @@ namespace okeafurniture.DAL.Tests
             Assert.AreEqual(expected.Data.ItemName, actual.Data.ItemName);
             Assert.AreEqual(expected.Data.ItemDescription, actual.Data.ItemDescription);
             Assert.AreEqual(expected.Data.UnitPrice, actual.Data.UnitPrice);
-            Assert.AreEqual(expected.Data.ImageURL, actual.Data.ImageURL);
+            Assert.AreEqual(expected.Data.ImageName, actual.Data.ImageName);
             Assert.AreEqual(expected.Message, actual.Message);
         }
 
