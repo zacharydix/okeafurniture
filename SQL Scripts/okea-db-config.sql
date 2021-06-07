@@ -197,10 +197,10 @@ insert into CategoryItem (ItemId, CategoryId) values (3,15);
 insert into CategoryItem (ItemId, CategoryId) values (4,8);
 
 insert into Cart 
-(AccountId, PaymentMethodId, OrderTotal, CheckedOut) 
+(AccountId, PaymentMethodId, OrderTotal, CheckOutDate) 
 values 
 (1, null, 1245.0, null),
-(1, 26, 187.0, '2021-06-06T12:15');
+(1, 26, 187.0, '06-06-2021');
 
 insert into CartItem 
 (CartId, ItemId, Quantity) 
