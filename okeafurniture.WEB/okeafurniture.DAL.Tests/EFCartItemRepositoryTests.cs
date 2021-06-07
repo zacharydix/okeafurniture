@@ -46,13 +46,13 @@ namespace okeafurniture.DAL.Tests
             {
                 AccountId = 1,
                 OrderTotal = 2M,
-                CheckedOut = false
+                CheckOutDate = null
             };
             cart2 = new Cart()
             {
                 AccountId = 1,
                 OrderTotal = 2M,
-                CheckedOut = true
+                CheckOutDate = DateTime.Now
             };
             context.Cart.Add(cart1);
             context.Cart.Add(cart2);

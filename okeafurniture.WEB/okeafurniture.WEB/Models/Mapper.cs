@@ -42,7 +42,7 @@ namespace okeafurniture.WEB.Models
                 AccountId = model.AccountId,
                 PaymentMethodId = model.PaymentMethodId,
                 OrderTotal = model.OrderTotal,
-                CheckedOut = model.CheckedOut
+                CheckOutDate = model.CheckOutDate
             };
         }
 
@@ -159,7 +159,7 @@ namespace okeafurniture.WEB.Models
                 AccountId = cart.AccountId,
                 PaymentMethodId = cart.PaymentMethodId,
                 OrderTotal = cart.OrderTotal,
-                CheckedOut = cart.CheckedOut,
+                CheckOutDate = cart.CheckOutDate,
                 Account = cart.Account,
                 PaymentMethod = cart.PaymentMethod,
                 CartItems = cart.CartItems
@@ -179,7 +179,7 @@ namespace okeafurniture.WEB.Models
                         AccountId = cart.AccountId,
                         PaymentMethodId = cart.PaymentMethodId,
                         OrderTotal = cart.OrderTotal,
-                        CheckedOut = cart.CheckedOut,
+                        CheckOutDate = cart.CheckOutDate,
                         Account = cart.Account,
                         PaymentMethod = cart.PaymentMethod,
                         CartItems = cart.CartItems

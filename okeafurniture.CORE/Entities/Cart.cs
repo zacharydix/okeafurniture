@@ -12,7 +12,7 @@ namespace okeafurniture.CORE.Entites
         public int AccountId { get; set; }
         public int? PaymentMethodId { get; set; }
         public decimal OrderTotal { get; set; }
-        public bool CheckedOut { get; set; }
+        public DateTime? CheckOutDate { get; set; } = null;
 
 
         public List<CartItem> CartItems { get; set; }

@@ -22,7 +22,6 @@ namespace okeafurniture.DAL
 
             List<TopItems> itemList = new List<TopItems>();
 
-            //Return agent information for only retired agents (security clearance retired)
             using (var connection = new SqlConnection(_sqlConnectionString))
             {
                 var command = new SqlCommand("TopItems", connection);
