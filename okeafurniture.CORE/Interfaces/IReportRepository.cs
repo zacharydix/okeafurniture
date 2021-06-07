@@ -10,5 +10,6 @@ namespace okeafurniture.CORE.Interfaces
     public interface IReportRepository
     {
         Response<List<TopItemListItem>> GetTopItems();
+        Response<List<TopCustomerListItem>> GetTopCustomers();
     }
 }

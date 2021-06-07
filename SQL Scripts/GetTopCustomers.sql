@@ -1,20 +1,18 @@
 USE okea;
 GO
-DROP PROCEDURE IF EXISTS TopItems;
+DROP PROCEDURE IF EXISTS TopCustomers;
 GO
 
-Create PROCEDURE TopItems
+Create PROCEDURE TopCustomers
 AS BEGIN
-SELECT Distinct top (3) 
-	i.ItemId, 
-	i.ItemName, 
-	i.UnitPrice, 
-	Sum(ci.Quantity) as UnitsSold, 
-	Sum(ci.Quantity * i.UnitPrice) as Revenue
-FROM Item as i
-INNER JOIN CartItem as ci on ci.Itemid = i.ItemId
-INNER JOIN Cart as c on c.CartId = ci.CartId
+SELECT top (3) 
+    a.AccountId,
+	a.FirstName + ' ' + a.LastName FullName,
+    a.Email,
+    sum(c.OrderTotal) TotalSpent
+FROM Account a
+INNER JOIN Cart c ON c.AccountId = a.AccountId
 WHERE c.CheckOutDate IS NOT NULL
-Group By i.Itemid, i.ItemName, i.UnitPrice
-Order By Revenue desc
+GROUP BY a.AccountId, a.FirstName, a.LastName, a.Email
+ORDER BY TotalSpent DESC
 END
