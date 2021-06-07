@@ -41,7 +41,8 @@ Create table Item (
 	ItemId int primary key identity(1,1),
 	ItemName varchar(50) not null,
 	ItemDescription varchar(100) not null,
-	UnitPrice decimal(12,2) not null
+	UnitPrice decimal(12,2) not null,
+	ImageName varchar(100) not null,
 );
 
 Create table CategoryItem (
@@ -185,10 +186,10 @@ insert into PaymentMethod (AccountId, CardHolderFirstName, CardHolderLastName, C
 insert into PaymentMethod (AccountId, CardHolderFirstName, CardHolderLastName, CardNumber, CardExpiration, CardCVV, BillingAddress) values (1, 'Joey', 'Nequest', 9089141540820894, '04/18/2022', 9875, '201 South Wabash Avenue');
 
 set identity_insert Item on;
-insert into Item (ItemId, ItemName, ItemDescription, UnitPrice) values (1, 'Uppland', 'Sectional, 4-seat corner', 799.00);
-insert into Item (ItemId, ItemName, ItemDescription, UnitPrice) values (2, 'Neiden', 'Bed frame, twin', 59.00);
-insert into Item (ItemId, ItemName, ItemDescription, UnitPrice) values (3, 'Hemnes', '8-drawer dresser, 63x37 3/8 "', 249.00);
-insert into Item (ItemId, ItemName, ItemDescription, UnitPrice) values (4, 'Lerhamn', 'Table, 29 1/8x29 1/8 "', 69.00);
+insert into Item (ItemId, ItemName, ItemDescription, UnitPrice, ImageName) values (1, 'Uppland', 'Sectional, 4-seat corner', 799.00, 'Uppland.png');
+insert into Item (ItemId, ItemName, ItemDescription, UnitPrice, ImageName) values (2, 'Neiden', 'Bed frame, twin', 59.00, 'Neiden.png');
+insert into Item (ItemId, ItemName, ItemDescription, UnitPrice. ImageName) values (3, 'Hemnes', '8-drawer dresser, 63x37 3/8 "', 249.00, 'Hemnes.png');
+insert into Item (ItemId, ItemName, ItemDescription, UnitPrice, ImageName) values (4, 'Lerhamn', 'Table, 29 1/8x29 1/8 "', 69.00, 'Lerhamn.png');
 set identity_insert Item off;
 
 insert into CategoryItem (ItemId, CategoryId) values (1,2);
