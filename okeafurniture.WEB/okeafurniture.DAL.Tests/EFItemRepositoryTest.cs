@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using okeafurniture.CORE.Entites;
+using okeafurniture.CORE.Entities;
 using okeafurniture.CORE.Interfaces;
 using okeafurniture.DAL.EFRepositories;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace okeafurniture.DAL.Tests
         private Item item;
         private Item item1;
         private Item item2;
+        Category category;
         
         [SetUp]
         public void Setup()
@@ -22,10 +24,11 @@ namespace okeafurniture.DAL.Tests
             db = new OkeaFurnitureContext(options);
             db.Database.EnsureDeleted();
             db.Database.EnsureCreated();
-            Category category = new Category()
+           category = new Category()
             {
                 CategoryName = "Couch"
             };
+            db.Category.Add(category);
             item = new Item()
             {
                 ItemName = "Couch",
@@ -48,9 +51,6 @@ namespace okeafurniture.DAL.Tests
                 UnitPrice = 10000.00M,
                 ImageName = "test.png"
             };
-            item.Categories.Add(category);
-            item1.Categories.Add(category);
-            item2.Categories.Add(category);
             db.SaveChanges();
             itemRepo = new EFItemRepository(db);
         }
@@ -64,7 +64,6 @@ namespace okeafurniture.DAL.Tests
                 Success = true,
                 Message = "Successfully inserted Item"
             };
-
             Response<Item> actual = itemRepo.Insert(item);
             Assert.IsTrue(actual.Success);
             Assert.AreEqual(expected.Data.ItemId, actual.Data.ItemId);
@@ -95,6 +94,11 @@ namespace okeafurniture.DAL.Tests
             itemRepo.Insert(item1);
             itemRepo.Insert(item2);
             db.SaveChanges();
+            db.CategoryItem.Add(new CategoryItem() { ItemId = item.ItemId, CategoryId = category.CategoryId });
+            db.CategoryItem.Add(new CategoryItem() { ItemId = item1.ItemId, CategoryId = category.CategoryId });
+            db.CategoryItem.Add(new CategoryItem() { ItemId = item2.ItemId, CategoryId = category.CategoryId });
+            db.SaveChanges();
+
 
             Response<List<Item>> actual = itemRepo.GetByCategory(1);
             Assert.AreEqual(3, actual.Data.Count);
