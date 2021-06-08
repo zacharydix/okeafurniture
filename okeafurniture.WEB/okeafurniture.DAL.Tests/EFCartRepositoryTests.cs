@@ -175,6 +175,7 @@ namespace okeafurniture.DAL.Tests
 
             Assert.IsTrue(result.Success);
             Assert.AreEqual(1, result.Data.AccountId);
+            Assert.AreEqual(3, result.Data.CartId); // set up adds 2 carts to in-memory DB
         }
     }
 }

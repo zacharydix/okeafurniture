@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using okeafurniture.CORE.Entites;
 using okeafurniture.CORE.Interfaces;
 using okeafurniture.WEB.Models;
@@ -20,7 +21,7 @@ namespace okeafurniture.WEB.Controllers.Api
             this.repository = repository;
         }
 
-        [HttpGet, Route("get/all", Name ="GetAllAccounts")]
+        [HttpGet, Route("get/all", Name ="GetAllAccounts"), Authorize]
         public IActionResult GetAccounts()
         {
             Response<List<Account>> response = repository.GetAll();
@@ -34,7 +35,7 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [HttpGet, Route("get/id/{id}", Name ="GetAccountById")]
+        [HttpGet, Route("get/id/{id}", Name ="GetAccountById"), Authorize]
         public IActionResult GetAccountById(int id)
         {
             Response<Account> response = repository.Get(id);
@@ -48,7 +49,7 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [HttpGet, Route("get/email", Name ="GetAccountsByEmail")]
+        [HttpGet, Route("get/email", Name ="GetAccountsByEmail"), Authorize]
         public IActionResult GetAccountByEmail([FromBody] string email)
         {
             Response<Account> response = repository.GetByEmail(email);
@@ -62,7 +63,7 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [HttpPost, Route("add", Name ="AddAccount")]
+        [HttpPost, Route("add", Name ="AddAccount")]  // auth not needed - you wouldn't be logged in while creating a new account
         public IActionResult AddAccount(AccountModel model)
         {
             Response<Account> response = repository.Add(model.MapToAccount());
@@ -76,7 +77,7 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [HttpPut, Route("edit", Name ="EditAccount")]
+        [HttpPut, Route("edit", Name ="EditAccount"), Authorize]
         public IActionResult EditAccount(AccountModel model)
         {
             Response<Account> response = repository.Get(model.AccountId);
@@ -95,7 +96,7 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [HttpDelete, Route("delete/id/{id}", Name ="DeleteAccount")]
+        [HttpDelete, Route("delete/id/{id}", Name ="DeleteAccount"), Authorize]
         public IActionResult DeleteAccount(int id)
         {
             Response<Account> response = repository.Get(id);
