@@ -58,5 +58,15 @@ namespace okeafurniture.DAL.Tests
                     break;
             }
         }
+
+        [Test]
+        public void ShouldReturnRevenueReport()
+        {
+            var StartDate = DateTime.Parse("2021-05-01");
+            var EndDate = DateTime.Parse("2021-06-30");
+            var result = repo.GetRevenueReport(StartDate, EndDate);
+            Assert.IsTrue(result.Success);
+            Assert.IsTrue(result.Data.All(r => r.SaleDate >= StartDate && r.SaleDate <= EndDate));
+        }
     }
 }
