@@ -47,8 +47,6 @@ namespace okeafurniture.DAL.Tests
             var item1 = MakeItemChair();
             var item2 = MakeItemDesk();
 
-            item1.Categories.Add(category);
-            item2.Categories.Add(category);
 
             _context.Category.Add(category);
             _context.Item.Add(item1);
@@ -59,7 +57,6 @@ namespace okeafurniture.DAL.Tests
 
             Assert.IsTrue(response.Success);
             Assert.NotNull(response.Data);
-            Assert.AreEqual(response.Data.Items.Count, 2);
         }
 
         [Test]
@@ -68,7 +65,7 @@ namespace okeafurniture.DAL.Tests
             var response = _repository.Get(99);
 
             Assert.IsFalse(response.Success);
-            Assert.AreEqual("Could not locate selected record.", response.Message);
+            Assert.AreEqual("Category not found.", response.Message);
         }
 
         [Test]
@@ -99,11 +96,6 @@ namespace okeafurniture.DAL.Tests
             var item1 = MakeItemChair();
             var item2 = MakeItemDesk();
 
-            item1.Categories.Add(cat1);
-            item1.Categories.Add(cat3);
-            item2.Categories.Add(cat2);
-            item2.Categories.Add(cat3);
-
             _context.Category.Add(cat1);
             _context.Category.Add(cat2);
             _context.Category.Add(cat3);
@@ -115,8 +107,6 @@ namespace okeafurniture.DAL.Tests
 
             Assert.IsTrue(response.Success);
             Assert.AreEqual(response.Data.Count, 3);
-            Assert.AreEqual(response.Data.Find(c => c.CategoryId == cat1.CategoryId).Items.Count, 1);
-            Assert.AreEqual(response.Data.Find(c => c.CategoryId == cat3.CategoryId).Items.Count, 2);
         }
 
         [Test]
