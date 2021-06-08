@@ -11,5 +11,6 @@ namespace okeafurniture.CORE.Interfaces
     {
         Response<List<TopItemListItem>> GetTopItems();
         Response<List<TopCustomerListItem>> GetTopCustomers();
+        Response<List<RevenueSummaryListItem>> GetRevenueReport(DateTime StartDate, DateTime EndDate);
     }
 }
