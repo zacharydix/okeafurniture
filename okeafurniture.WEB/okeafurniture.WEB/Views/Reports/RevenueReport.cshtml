@@ -1,0 +1,46 @@
+﻿@model okeafurniture.WEB.Models.RevenueReportModel
+
+@{
+    ViewData["Title"] = $"Revenue Report from {Model.StartDate} to {Model.EndDate}";
+}
+
+<h1>Report</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                Sale Date
+            </th>
+            <th>
+                Quantity Sold
+            </th>
+            <th>
+                Revenue Generated
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ListItems)
+        {
+            <tr>
+                <td>
+                    @item.SaleDate
+                </td>
+                <td>
+                    @item.QuantitySold
+                </td>
+                <td>
+                    $@item.RevenueGenerated
+                </td>
+            </tr>
+        }
+    <tr>
+        
+        <td><b>Total Revenue:</b></td>
+        <td></td>
+        <td><b>$@Model.TotalRevenue</b></td>
+        
+    </tr>
+        <a asp-action="Index">Back to Reports</a>
+    </tbody>
+</table>
