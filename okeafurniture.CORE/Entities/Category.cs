@@ -1,4 +1,5 @@
-﻿using System;
+﻿using okeafurniture.CORE.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,11 +11,12 @@ namespace okeafurniture.CORE.Entites
     {
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
-        public List<Item> Items { get; set; }
+        public string ImageName { get; set; }
+        public List<CategoryItem> CategoryItems { get; set; }
 
         public Category()
         {
-            Items = new List<Item>();
+            CategoryItems = new List<CategoryItem>();
         }
     }
 }

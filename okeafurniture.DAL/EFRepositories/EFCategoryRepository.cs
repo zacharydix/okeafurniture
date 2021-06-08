@@ -24,13 +24,13 @@ namespace okeafurniture.DAL.EFRepositories
             var response = new Response<Category>();
             try
             {
-                var category = _context.Category
+                var category = _context.Category.Include(a => a.CategoryItems).ThenInclude(b => b.Item)
                     .SingleOrDefault(c => c.CategoryId == id);
 
                 if (category == null)
                 {
                     response.Success = false;
-                    response.Message = "Category not found. ";
+                    response.Message = "Category not found.";
                 }
                 else
                 {
@@ -41,7 +41,7 @@ namespace okeafurniture.DAL.EFRepositories
             catch (Exception)
             {
                 response.Success = false;
-                response.Message = "Could not locate selected record. ";                
+                response.Message = "Could not locate selected record.";                
             }
             return response;
         }
@@ -51,13 +51,13 @@ namespace okeafurniture.DAL.EFRepositories
             var response = new Response<List<Category>>();
             try
             {
-                var categories = _context.Category
+                var categories = _context.Category.Include(a => a.CategoryItems).ThenInclude(b => b.Item)
                     .ToList();
 
                 if (categories == null || categories.Count == 0)
                 {
                     response.Success = false;
-                    response.Message = "No categories found. ";
+                    response.Message = "No categories found.";
                 }
                 else
                 {
@@ -68,7 +68,7 @@ namespace okeafurniture.DAL.EFRepositories
             catch (Exception)
             {
                 response.Success = false;
-                response.Message = "Could not locate selected records. ";
+                response.Message = "Could not locate selected records.";
             }
             return response;
         }
@@ -88,12 +88,12 @@ namespace okeafurniture.DAL.EFRepositories
             catch (DataException)
             {
                 response.Success = false;
-                response.Message = "Could not add record. ";
+                response.Message = "Could not add record.";
             }
             catch (ArgumentException)
             {
                 response.Success = false;
-                response.Message = "Could not add record. ";
+                response.Message = "Could not add record.";
             }
             return response;
         }
@@ -106,7 +106,7 @@ namespace okeafurniture.DAL.EFRepositories
                 if (!Get(category.CategoryId).Success)
                 {
                     response.Success = false;
-                    response.Message = "Category not found. ";
+                    response.Message = "Category not found.";
                 }
                 else
                 {
@@ -122,7 +122,7 @@ namespace okeafurniture.DAL.EFRepositories
             catch (DbUpdateException)
             {
                 response.Success = false;
-                response.Message = "Could not update selected record. ";
+                response.Message = "Could not update selected record.";
             }
             return response;
         }
@@ -136,11 +136,15 @@ namespace okeafurniture.DAL.EFRepositories
                 if (category == null)
                 {
                     response.Success = false;
-                    response.Message = "Category not found. ";
+                    response.Message = "Category not found.";
                 }
                 else
                 {
                     _context.Category.Remove(category);
+                    foreach (var entry in _context.CategoryItem.Where(a => a.CategoryId == category.CategoryId))
+                    {
+                        _context.CategoryItem.Remove(entry);
+                    }
                     _context.SaveChanges();
 
                     response.Success = true;
@@ -149,12 +153,12 @@ namespace okeafurniture.DAL.EFRepositories
             catch (ArgumentNullException)
             {
                 response.Success = false;
-                response.Message = "Could not locate selected record. ";
+                response.Message = "Could not locate selected record.";
             }
             catch (DataException)
             {
                 response.Success = false;
-                response.Message = "Could not delete selected record. ";
+                response.Message = "Could not delete selected record.";
             }
             return response;
         }
