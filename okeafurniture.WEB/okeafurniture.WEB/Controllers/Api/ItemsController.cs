@@ -49,8 +49,8 @@ namespace okeafurniture.WEB.Controllers.Api
                 return BadRequest(result.Message);
             }
         }
-
-        [HttpGet, Route("get/all/categories", Name ="GetItemsByCategory"), Authorize]
+        
+        [HttpGet, Route("get/all/categories/{id}", Name ="GetItemsByCategory"), Authorize]
         public IActionResult GetItemsByCategories(int id)
         {
             var result = _repo.GetByCategory(id);

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using okeafurniture.CORE.Entites;
+using okeafurniture.CORE.Entities;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,6 +23,7 @@ namespace okeafurniture.DAL
         
         //bridge table
         public DbSet<CartItem> CartItem { get; set; }
+        public DbSet<CategoryItem> CategoryItem { get; set; }
 
         public OkeaFurnitureContext(DbContextOptions options) : base(options)
         {
@@ -57,7 +59,7 @@ namespace okeafurniture.DAL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<CartItem>().HasKey(ci => new { ci.CartId, ci.ItemId });
-
+            modelBuilder.Entity<CategoryItem>().HasKey(ci => new { ci.CategoryId, ci.ItemId });
         }
     }
 }

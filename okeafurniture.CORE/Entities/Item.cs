@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using okeafurniture.CORE.Entities;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -15,11 +16,12 @@ namespace okeafurniture.CORE.Entites
         public decimal UnitPrice {get;set;}
         public string ImageName { get; set; }
         public List<CartItem> CartItems { get; set; }
-        public List<Category> Categories { get; set; }
+        public List<CategoryItem> CategoryItems { get; set; }
+
 
         public Item()
         {
-            Categories = new List<Category>();
+            CategoryItems = new List<CategoryItem>();
             CartItems = new List<CartItem>();
         }
     }

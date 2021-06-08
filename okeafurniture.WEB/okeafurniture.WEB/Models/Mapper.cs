@@ -51,7 +51,9 @@ namespace okeafurniture.WEB.Models
             return new Category()
             {
                 CategoryId = model.CategoryId,
-                CategoryName = model.CategoryName
+                CategoryName = model.CategoryName,
+                ImageName = model.ImageName,
+                CategoryItems = model.CategoryItems
             };
         }
 
@@ -62,7 +64,9 @@ namespace okeafurniture.WEB.Models
                 ItemId=model.ItemId,
                 ItemName=model.ItemName,
                 ItemDescription=model.ItemDescription,
-                UnitPrice=model.UnitPrice
+                UnitPrice=model.UnitPrice,
+                ImageName = model.ImageName,
+                CategoryItems = model.CategoryItems
             };
         }
 
@@ -194,7 +198,7 @@ namespace okeafurniture.WEB.Models
             {
                 CategoryId = category.CategoryId,
                 CategoryName = category.CategoryName,
-                Items = category.Items
+                CategoryItems = category.CategoryItems
             };
         }
 
@@ -209,8 +213,9 @@ namespace okeafurniture.WEB.Models
                     {
                         CategoryId = category.CategoryId,
                         CategoryName = category.CategoryName,
-                        Items = category.Items
-                    });
+                        ImageName = category.ImageName,
+                        CategoryItems = category.CategoryItems
+                    }); ;
             };
             return categoryModels;
         }
@@ -222,9 +227,10 @@ namespace okeafurniture.WEB.Models
                 ItemId = item.ItemId,
                 ItemName = item.ItemName,
                 ItemDescription = item.ItemDescription,
+                ImageName = item.ImageName,
                 UnitPrice = item.UnitPrice,
-                Categories = item.Categories,
-                CartItems = item.CartItems
+                CartItems = item.CartItems,
+                CategoryItems = item.CategoryItems
             };
         }
 
@@ -241,8 +247,8 @@ namespace okeafurniture.WEB.Models
                         ItemName = item.ItemName,
                         ItemDescription = item.ItemDescription,
                         UnitPrice = item.UnitPrice,
-                        Categories = item.Categories,
-                        CartItems = item.CartItems
+                        CartItems = item.CartItems,
+                        CategoryItems = item.CategoryItems
                     });
             };
             return itemModels;

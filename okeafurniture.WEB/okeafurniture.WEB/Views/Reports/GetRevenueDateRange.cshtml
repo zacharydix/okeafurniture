@@ -1,0 +1,18 @@
+﻿@model okeafurniture.WEB.Models.ParameterModel;
+
+<h1>Get Revenue Report Parameters</h1>
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4">
+        <form asp-controller="Reports" asp-action="RevenueReport" method="post">
+            <div class="mb-3">
+                <label asp-for="StartDate" class="form-label">Start Date</label>
+                <input type="date" class="form-control" id="StartDate" required asp-for="StartDate">
+            </div>
+            <div class="mb-3">
+                <label asp-for="EndDate" class="form-label">End Date</label>
+                <input type="date" class="form-control" id="EndDate" required asp-for="EndDate">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
