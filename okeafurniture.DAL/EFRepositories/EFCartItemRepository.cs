@@ -22,8 +22,13 @@ namespace okeafurniture.DAL.EFRepositories
             Response<CartItem> response = new Response<CartItem>();
             try
             {
-                response.Data = context.Add(cartItem).Entity;
+                context.CartItem.Add(cartItem);
                 context.SaveChanges();
+
+                //response.Data = cartItem;
+                response.Data = context.CartItem
+                    .Include(ci => ci.Item)
+                    .SingleOrDefault(ci => (ci.CartId == cartItem.CartId) && (ci.ItemId == cartItem.ItemId));
                 response.Success = true;
                 response.Message = $"Successfully added new cart-item relationship {cartItem.CartId}-{cartItem.ItemId}";
             }
