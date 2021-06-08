@@ -30,5 +30,12 @@ namespace okeafurniture.WEB.Controllers.Mvc
             var data = _repo.GetTopItems();
             return View(data.Data);
         }
+
+        [Route("Reports/TopCustomers")]
+        public IActionResult TopCustomers()
+        {
+            var data = _repo.GetTopCustomers();
+            return View(data.Data);
+        }
     }
 }

@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Report(s)";
+    ViewBag.Title = "Reports";
 }
 
 <h1>Reports</h1>
@@ -16,15 +16,15 @@
 
             <tr>
                 <td><a asp-controller="Reports" asp-action="TopItems">Get Top Items</a></td>
-                <td><p>Returns the top three items that generate the most revenue for OKEA</p></td>
+                <td><p>View the top three items that generate the most revenue for OKEA</p></td>
             </tr>
             <tr>
-                <td><a asp-controller="" asp-action="">Revenue</a></td>
+                <td><a asp-controller="Reports" asp-action="">Revenue</a></td>
                 <td><p>View the total Revenue OKEA generated from a certain date range</p></td>
             </tr>
             <tr>
-                <td><a asp-controller="" asp-action="">Top Customer List</a></td>
-                <td><p>See what customers spent the most money at OKEA</p></td>
+                <td><a asp-controller="Reports" asp-action="TopCustomers">Top Customer List</a></td>
+                <td><p>View which customers spent the most money at OKEA</p></td>
             </tr>
         </tbody>
     </table>

@@ -1,7 +1,7 @@
-﻿@model List<okeafurniture.CORE.DTOs.TopItemListItem>
+﻿@model List<okeafurniture.CORE.DTOs.TopCustomerListItem>
 
 @{
-    ViewData["Title"] = "Top Items";
+    ViewData["Title"] = "Top Customers";
 }
 
 <h1>Report</h1>
@@ -9,41 +9,35 @@
     <thead>
         <tr>
             <th>
-                Item Id
+                Account Id
             </th>
             <th>
-                Item Name
+                Customer Name
             </th>
             <th>
-                Price
+                Email
             </th>
             <th>
-                Units Sold
-            </th>
-            <th>
-                Revenue
+                Total Spent
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var customer in Model)
         {
             <tr>
                 <td>
-                    @item.ItemId
+                    @customer.AccountId
                 </td>
                 <td>
-                    @item.ItemName
+                    @customer.FullName
                 </td>
                 <td>
-                    @item.UnitPrice
+                    @customer.Email
                 </td>
                 <td>
-                    @item.UnitsSold
-                </td>
-                <td>
-                    $@item.Revenue
+                    $@customer.TotalSpent
                 </td>
             </tr>
         }
