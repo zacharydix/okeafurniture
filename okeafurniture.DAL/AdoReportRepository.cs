@@ -54,7 +54,7 @@ namespace okeafurniture.DAL
                 Response<List<TopItemListItem>> response = new Response<List<TopItemListItem>>();
                 response.Data = itemList;
                 response.Success = true;
-                response.Message = "Successfully retrieved Top Items report.";
+                response.Message = "Successfully retrieved Top Items Report.";
 
                 return response;
             }
@@ -96,7 +96,49 @@ namespace okeafurniture.DAL
                 Response<List<TopCustomerListItem>> response = new Response<List<TopCustomerListItem>>();
                 response.Data = customerList;
                 response.Success = true;
-                response.Message = "Successfully retrieved Top Customers report.";
+                response.Message = "Successfully retrieved Top Customers Report.";
+
+                return response;
+            }
+        }
+
+        public Response<List<RevenueSummaryListItem>> GetRevenueReport(DateTime StartDate, DateTime EndDate)
+        {
+            List<RevenueSummaryListItem> revenueList = new List<RevenueSummaryListItem>();
+
+            using (var connection = new SqlConnection(_sqlConnectionString))
+            {
+                var command = new SqlCommand("DailyRevenue", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@StartDate", StartDate);
+                command.Parameters.AddWithValue("@EndDate", EndDate);
+
+                try
+                {
+                    connection.Open();
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var row = new RevenueSummaryListItem();
+
+                            row.QuantitySold = (int)reader["QuantitySold"];
+                            row.SaleDate = (DateTime)reader["SaleDate"];
+                            row.RevenueGenerated = (decimal)reader["RevenueGenerated"];
+
+                            revenueList.Add(row);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                Response<List<RevenueSummaryListItem>> response = new Response<List<RevenueSummaryListItem>>();
+                response.Data = revenueList;
+                response.Success = true;
+                response.Message = $"Successfully retrieved Revenue Report between {StartDate.ToShortDateString()} and {EndDate.ToShortDateString()}.";
 
                 return response;
             }

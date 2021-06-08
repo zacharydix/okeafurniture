@@ -10,7 +10,7 @@ using okeafurniture.CORE.Entites;
 
 namespace okeafurniture.DAL.Tests
 {
-    public class AdoReportTesting
+    public class AdoReportTests
     {
         private OkeaFurnitureContext db;
         private AdoReportRepository repo;
