@@ -16,5 +16,5 @@ FROM Cart c
 INNER JOIN CartItem ci ON ci.CartId = c.CartId
 WHERE c.CheckOutDate BETWEEN @StartDate AND @EndDate
 GROUP BY CAST(c.CheckOutDate AS Date)
-ORDER BY CAST(c.CheckOutDate AS Date)
+ORDER BY CAST(c.CheckOutDate AS Date) DESC
 END

@@ -200,15 +200,46 @@ insert into CategoryItem (ItemId, CategoryId) values (4,8);
 insert into Cart 
 (AccountId, PaymentMethodId, OrderTotal, CheckOutDate) 
 values 
-(1, null, 1245.0, null),
-(1, 26, 187.0, '06-06-2021');
+-- ACCOUNT 1
+(1, null, 1245.0, null), --CART 1
+(1, 26, 187.0, '06-06-2021'), -- CART 2
+(1, 26, 187.0, '05-30-2021'), -- CART 3
+(1, 26, 1245.0, '05-30-2020'), -- CART 4
+-- ACCOUNT 2
+(2, 26, 187.0, '06-06-2021'), -- CART 5
+(1, 26, 1245.0, '05-30-2020'), -- CART 6
+-- ACCOUNT 3
+(3, 26, 187.0, '06-06-2021'), -- CART 7
+(3, 26, 187.0, '05-30-2021'), -- CART 8
+-- ACCOUNT 4
+(4, null, 4980.0, null); -- CART 9
 
 insert into CartItem 
 (CartId, ItemId, Quantity) 
 values 
-(1, 1, 1),
+(1, 1, 1), -- CART 1
 (1, 2, 1),
 (1, 3, 1),
 (1, 4, 2),
-(2, 2, 2),
-(2, 4, 1);
+(2, 2, 2), -- CART 2
+(2, 4, 1),
+(3, 2, 2), -- CART 3
+(3, 4, 1),
+(4, 1, 1), -- CART 4
+(4, 2, 1),
+(4, 3, 1),
+(4, 4, 2),
+(5, 2, 2), -- CART 5
+(5, 4, 1),
+(6, 1, 1), -- CART 6
+(6, 2, 1),
+(6, 3, 1),
+(6, 4, 2),
+(7, 2, 2), -- CART 7
+(7, 4, 1),
+(8, 2, 2), -- CART 8
+(8, 4, 1),
+(9, 1, 3), -- CART 9
+(9, 2, 4),
+(9, 3, 4),
+(9, 4, 8);
