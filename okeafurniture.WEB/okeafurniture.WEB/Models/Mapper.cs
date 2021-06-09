@@ -198,7 +198,9 @@ namespace okeafurniture.WEB.Models
             {
                 CategoryId = category.CategoryId,
                 CategoryName = category.CategoryName,
+                ImageName = category.ImageName,
                 CategoryItems = category.CategoryItems
+
             };
         }
 

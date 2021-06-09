@@ -10,7 +10,7 @@ namespace okeafurniture.WEB.Controllers.Api
     [Route("api/[controller]")]
     public class ImagesController : Controller
     {
-        [HttpPost, Route("add", Name ="AddImage"), Authorize]
+        [HttpPost, Route("add", Name ="AddImage")]
         public async Task<IActionResult> AddImageAsync(IFormFile myFile)
         {
             if (myFile == null || myFile.Length == 0)
