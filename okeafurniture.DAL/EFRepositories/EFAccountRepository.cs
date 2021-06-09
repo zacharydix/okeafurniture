@@ -22,6 +22,13 @@ namespace okeafurniture.DAL
                 Success = true,
                 Message = "Successfully added account."
             };
+            var existingAccounts = context.Account.ToList();
+            if (existingAccounts.Any(a => a.Email == account.Email))
+            {
+                response.Success = false;
+                response.Message = "That email address is already registered.";
+                return response;
+            }
             try
             {
                 context.Account.Add(account);
