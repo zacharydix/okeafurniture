@@ -49,20 +49,6 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [HttpGet, Route("get/email", Name ="GetAccountsByEmail"), Authorize]
-        public IActionResult GetAccountByEmail([FromBody] string email)
-        {
-            Response<Account> response = repository.GetByEmail(email);
-            if (response.Success)
-            {
-                return Ok(response.Data.MapToModel());
-            }
-            else
-            {
-                return BadRequest(response.Message);
-            }
-        }
-
         [HttpPost, Route("add", Name ="AddAccount")]  // auth not needed - you wouldn't be logged in while creating a new account
         public IActionResult AddAccount(AccountModel model)
         {
