@@ -20,7 +20,7 @@ namespace okeafurniture.WEB.Controllers.Api
             _repo = repo;
         }
 
-        [HttpGet, Route("get/{id}", Name ="GetItemById"), Authorize]
+        [HttpGet, Route("get/{id}", Name ="GetItem"), Authorize]
         public IActionResult GetItem(int id)
         {
             var result = _repo.Get(id);

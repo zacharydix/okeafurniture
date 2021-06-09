@@ -79,7 +79,7 @@ namespace okeafurniture.DAL.EFRepositories
             var response = new Response<Category>();
             try
             {
-                _context.Add(category);
+                _context.Category.Add(category);
                 _context.SaveChanges();
 
                 response.Success = true;
