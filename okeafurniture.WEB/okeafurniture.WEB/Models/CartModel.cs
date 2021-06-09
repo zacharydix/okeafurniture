@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace okeafurniture.WEB.Models
 {
-    public class CartModel
+    public class CartModel : IValidatableObject
     {
         public int CartId { get; set; }
 
@@ -15,6 +15,8 @@ namespace okeafurniture.WEB.Models
         public int AccountId { get; set; }
       
         public int? PaymentMethodId { get; set; }
+        
+        [PositiveTotal]
         public decimal OrderTotal { get; set; }
         public DateTime? CheckOutDate { get; set; }
 
@@ -23,7 +25,16 @@ namespace okeafurniture.WEB.Models
         public Account Account { get; set; }
         public PaymentMethod PaymentMethod { get; set; }
 
-        // further validation: if cart has checkOutDate, paymentMethod should be populated.
-        // should order total be >=0?
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            var errors = new List<ValidationResult>();
+
+            if (CheckOutDate.HasValue && !PaymentMethodId.HasValue)
+            {
+                errors.Add(new ValidationResult("Cart must have payment method ID at check out", new string[] { "PaymentMethodId" }));
+            }
+
+            return errors;
+        }
     }
 }
