@@ -68,6 +68,12 @@ namespace okeafurniture.WEB.Controllers.Api
         [HttpPost, Route("add", Name ="AddItem"), Authorize]
         public IActionResult AddItem(Item item)
         {
+            var existingItems = _repo.GetAll().Data;
+            if (existingItems.Any(i => i.ItemName == item.ItemName))
+            {
+                return BadRequest(new { Message = "That item already exists in the catalog." });
+            }
+
             if (ModelState.IsValid)
             {
                 var result = _repo.Insert(item);
