@@ -12,10 +12,12 @@ namespace okeafurniture.WEB.Models
     {
         public int CategoryId { get; set; }
 
-        [Required(ErrorMessage = "Category name is required")]
+        [Required(ErrorMessage = "Category name is required"),
+            MaxLength(25, ErrorMessage = "Cannot exceed 25 characters")]
         public string CategoryName { get; set; }
 
-        [Required(ErrorMessage = "Image name is required")]
+        [Required(ErrorMessage = "Image name is required"),
+            MaxLength(100, ErrorMessage = "Cannot exceed 100 characters")]
         public string ImageName { get; set; }
         public List<CategoryItem> CategoryItems { get; set; }
     }

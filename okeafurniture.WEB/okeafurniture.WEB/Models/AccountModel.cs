@@ -11,23 +11,28 @@ namespace okeafurniture.WEB.Models
     {
         public int AccountId { get; set; }
 
-        [Required(ErrorMessage ="First name is required")]
+        [Required(ErrorMessage ="First name is required"), 
+            MaxLength(50, ErrorMessage ="Cannot exceed 50 characters")]
         public string FirstName { get; set; }
 
-        [Required(ErrorMessage = "First name is required")]
+        [Required(ErrorMessage = "Last name is required"),
+            MaxLength(50, ErrorMessage = "Cannot exceed 50 characters")]
         public string LastName { get; set; }
 
         [Required(ErrorMessage = "Email address is required"),
-            EmailAddress(ErrorMessage = "Please enter a valid email address")]
+            EmailAddress(ErrorMessage = "Please enter a valid email address"),
+            MaxLength(50, ErrorMessage = "Cannot exceed 50 characters")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Password is required")]
+        [Required(ErrorMessage = "Password is required"),
+            MaxLength(50, ErrorMessage = "Cannot exceed 50 characters")]
         public string Password { get; set; }
 
         [Required(ErrorMessage = "Date of birth is required")]
         public DateTime DateOfBirth { get; set; }
 
-        [Required(ErrorMessage = "Address is required")]
+        [Required(ErrorMessage = "Address is required"),
+            MaxLength(50, ErrorMessage = "Cannot exceed 50 characters")]
         public string Address { get; set; }
 
         [Required(ErrorMessage = "Admin permission status is required")]
