@@ -52,6 +52,12 @@ namespace okeafurniture.WEB.Controllers.Api
         [HttpPost, Route("add", Name ="AddAccount")]  // auth not needed - you wouldn't be logged in while creating a new account
         public IActionResult AddAccount(AccountModel model)
         {
+            var existingAccounts = repository.GetAll().Data;
+            if (existingAccounts.Any(a => a.Email == model.Email))
+            {
+                return BadRequest(new { Message = "That email address is already registered." });
+            }
+
             Response<Account> response = repository.Add(model.MapToAccount());
             if (response.Success)
             {
