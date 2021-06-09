@@ -52,6 +52,11 @@ namespace okeafurniture.WEB.Controllers.Api
         [HttpPost, Route("add", Name ="AddPaymentMethod"), Authorize]
         public IActionResult AddPaymentMethod(PaymentMethodModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             Response<PaymentMethod> response = repository.Add(model.MapToPaymentMethod());
             if (response.Success)
             {
@@ -66,6 +71,11 @@ namespace okeafurniture.WEB.Controllers.Api
         [HttpPut, Route("edit", Name ="EditPaymentMethod"), Authorize]
         public IActionResult EditPaymentMethod(PaymentMethodModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             Response<PaymentMethod> response = repository.Get(model.PaymentMethodId);
             if (!response.Success)
             {
