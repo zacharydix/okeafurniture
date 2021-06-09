@@ -100,6 +100,10 @@ namespace okeafurniture.WEB.Controllers.Api
         [HttpPost, Route("add", Name ="AddCart"), Authorize]
         public IActionResult AddCart(CartModel model)
         {
+            if(repo.GetActive(model.AccountId).Success)
+            {
+                return BadRequest(new { Message = "Customer cannot have more than one active cart." });
+            }
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
             var result = repo.Add(model.MapToCart());
