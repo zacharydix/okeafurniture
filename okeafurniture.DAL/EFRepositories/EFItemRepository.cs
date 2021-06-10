@@ -46,13 +46,28 @@ namespace okeafurniture.DAL.EFRepositories
 
         public Response<Item> Get(int itemId)
         {
-            Response<Item> response = new Response<Item>();
-            Item item = _context.Item.Include(a => a.CategoryItems)
-                .Include(b => b.CartItems).SingleOrDefault(i=>i.ItemId==itemId);
+            var response = new Response<Item>();
+            try
+            {
+                var item = _context.Item.Include(a => a.CategoryItems)
+                .Include(b => b.CartItems).SingleOrDefault(i => i.ItemId == itemId);
 
-            response.Data = item;
-            response.Success = true;
-            response.Message = "Successfully retrieved Item";
+                if (item == null)
+                {
+                    response.Success = false;
+                    response.Message = "Item not found.";
+                }
+                else
+                {
+                    response.Success = true;
+                    response.Data = item;
+                }
+            }
+            catch (Exception)
+            {
+                response.Success = false;
+                response.Message = "Could not locate selected record.";
+            }
             return response;
         }
 
