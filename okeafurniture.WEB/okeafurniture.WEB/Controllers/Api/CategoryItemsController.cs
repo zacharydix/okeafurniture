@@ -38,6 +38,11 @@ namespace okeafurniture.WEB.Controllers.Api
         [HttpPost, Route("add", Name = "AddCategoryItem"), Authorize]
         public IActionResult AddCategoryItem(CategoryItemModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             Response<CategoryItem> result = repository.Add(model.MapToCategoryItem());
             if (result.Success)
             {
