@@ -51,6 +51,17 @@ namespace okeafurniture.WEB.Controllers.Api
         [HttpPost, Route("add", Name ="AddCategory"), Authorize]
         public IActionResult AddCategory(CategoryModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var existingCategories = repository.GetAll().Data;
+            if (existingCategories.Any(c => c.CategoryName == model.CategoryName))
+            {
+                return BadRequest(new { Message = "That category already exists in the catalog." });
+            }
+
             Response<Category> response = repository.Add(model.MapToCategory());
             if (response.Success)
             {
@@ -65,6 +76,11 @@ namespace okeafurniture.WEB.Controllers.Api
         [HttpPut, Route("edit", Name ="EditCategory"), Authorize]
         public IActionResult EditCategory(CategoryModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             Response<Category> response = repository.Get(model.CategoryId);
             if (!response.Success)
             {

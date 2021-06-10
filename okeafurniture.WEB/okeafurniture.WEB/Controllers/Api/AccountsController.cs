@@ -21,7 +21,7 @@ namespace okeafurniture.WEB.Controllers.Api
             this.repository = repository;
         }
 
-        [HttpGet, Route("get/all", Name ="GetAllAccounts"), Authorize]
+        [HttpGet, Route("get/all", Name = "GetAllAccounts"), Authorize]
         public IActionResult GetAccounts()
         {
             Response<List<Account>> response = repository.GetAll();
@@ -35,7 +35,7 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [HttpGet, Route("get/id/{id}", Name ="GetAccountById"), Authorize]
+        [HttpGet, Route("get/id/{id}", Name = "GetAccountById"), Authorize]
         public IActionResult GetAccountById(int id)
         {
             Response<Account> response = repository.Get(id);
@@ -49,9 +49,20 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [HttpPost, Route("add", Name ="AddAccount")]  // auth not needed - you wouldn't be logged in while creating a new account
+        [HttpPost, Route("add", Name = "AddAccount")]  // auth not needed - you wouldn't be logged in while creating a new account
         public IActionResult AddAccount(AccountModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var existingAccounts = repository.GetAll().Data;
+            if (existingAccounts.Any(a => a.Email == model.Email))
+            {
+                return BadRequest(new { Message = "That email address is already registered." });
+            }
+
             Response<Account> response = repository.Add(model.MapToAccount());
             if (response.Success)
             {
@@ -63,9 +74,14 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [HttpPut, Route("edit", Name ="EditAccount"), Authorize]
+        [HttpPut, Route("edit", Name = "EditAccount"), Authorize]
         public IActionResult EditAccount(AccountModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             Response<Account> response = repository.Get(model.AccountId);
             if (!response.Success)
             {
@@ -82,7 +98,7 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [HttpDelete, Route("delete/id/{id}", Name ="DeleteAccount"), Authorize]
+        [HttpDelete, Route("delete/id/{id}", Name = "DeleteAccount"), Authorize]
         public IActionResult DeleteAccount(int id)
         {
             Response<Account> response = repository.Get(id);

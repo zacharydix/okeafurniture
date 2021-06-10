@@ -148,6 +148,36 @@ namespace okeafurniture.DAL.Tests
         }
 
         [Test]
+        public void ShouldNotAddAccountWithDuplicateEmail()
+        {
+            context.Account.Add(account2);
+            context.SaveChanges();
+
+            Response<Account> expected = new Response<Account>()
+            {
+                Data = null,
+                Success = false,
+                Message = "That email address is already registered."
+            };
+
+            var badAccount = new Account()
+            {
+                FirstName = "Jane",
+                LastName = "Doe The Second",
+                Email = "janedoe@gmail.com",
+                Password = "janedoe1234",
+                DateOfBirth = new DateTime(2009, 01, 01),
+                IsAdmin = false
+            };
+            Response<Account> actual = repository.Add(badAccount);
+            Assert.IsFalse(actual.Success);
+            Assert.AreEqual(expected.Data, actual.Data);
+            Assert.AreEqual(expected.Message, actual.Message);
+
+            Assert.AreEqual(2, context.Account.ToList().Count);
+        }
+
+        [Test]
         public void ShouldUpdateAccount()
         {
             Response expected = new Response()

@@ -35,8 +35,8 @@ namespace okeafurniture.WEB.Controllers.Api
             {
                 return BadRequest(result.Message);
             }
-        }        
-        
+        }
+
         [HttpGet, Route("get/{id}", Name = "GetCartById"), Authorize]
         public IActionResult GetCartById(int id)
         {
@@ -51,8 +51,8 @@ namespace okeafurniture.WEB.Controllers.Api
                 return BadRequest(result.Message);
             }
         }
-        
-        [HttpGet, Route("get/account/{id}", Name ="GetCartByAccountId"), Authorize]
+
+        [HttpGet, Route("get/account/{id}", Name = "GetCartByAccountId"), Authorize]
         public IActionResult GetCartByAccount(int id)
         {
             var result = repo.GetAllByAccount(id);
@@ -66,8 +66,8 @@ namespace okeafurniture.WEB.Controllers.Api
                 return BadRequest(result.Message);
             }
         }
-        
-        [HttpGet, Route("get/active/{id}", Name ="GetCartByActive"), Authorize]
+
+        [HttpGet, Route("get/active/{id}", Name = "GetCartByActive"), Authorize]
         public IActionResult GetActiveCarts(int id)
         {
             var result = repo.GetActive(id);
@@ -82,7 +82,7 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [HttpGet, Route("get/status/{status}", Name ="GetCartByStatus"), Authorize]
+        [HttpGet, Route("get/status/{status}", Name = "GetCartByStatus"), Authorize]
         public IActionResult GetCartsByStatus(bool CheckedOut)
         {
             var result = repo.GetAllByStatus(CheckedOut);
@@ -97,9 +97,18 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [HttpPost, Route("add", Name ="AddCart"), Authorize]
+        [HttpPost, Route("add", Name = "AddCart"), Authorize]
         public IActionResult AddCart(CartModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (repo.GetActive(model.AccountId).Success)
+            {
+                return BadRequest(new { Message = "Customer cannot have more than one active cart." });
+            }
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
             var result = repo.Add(model.MapToCart());
@@ -114,31 +123,29 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [HttpPut, Route("update", Name ="EditCart"), Authorize]
+        [HttpPut, Route("update", Name = "EditCart"), Authorize]
         public IActionResult UpdateCart(CartModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var result = repo.Get(model.CartId);
             if (!result.Success)
             {
                 return NotFound($"Cart {model.CartId} not found");
             }
 
-            if (ModelState.IsValid)
-            {
-                var updatedResult = repo.Update(model.MapToCart());
+            var updatedResult = repo.Update(model.MapToCart());
 
-                if (updatedResult.Success)
-                {
-                    return Ok();
-                }
-                else
-                {
-                    return BadRequest(result.Message);
-                }
+            if (updatedResult.Success)
+            {
+                return Ok();
             }
             else
             {
-                return BadRequest(ModelState);
+                return BadRequest(result.Message);
             }
         }
     }
