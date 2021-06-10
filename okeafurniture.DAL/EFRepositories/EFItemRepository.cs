@@ -60,6 +60,7 @@ namespace okeafurniture.DAL.EFRepositories
                 else
                 {
                     response.Success = true;
+                    response.Message = "Successfully retrieved Item";
                     response.Data = item;
                 }
             }
@@ -74,11 +75,27 @@ namespace okeafurniture.DAL.EFRepositories
         public Response<List<Item>> GetAll()
         {
             Response<List<Item>> response = new Response<List<Item>>();
-            List<Item> items = _context.Item.Include(a => a.CategoryItems)
-                .Include(b => b.CartItems).ToList();
-            response.Success = true;
-            response.Data = items;
-            response.Message = "Successfully retrieved Items";
+            try
+            {
+                List<Item> items = _context.Item.Include(a => a.CategoryItems)
+                    .Include(b => b.CartItems).ToList();
+                if (items.Count() == 0)
+                {
+                    response.Success = false;
+                    response.Data = items;
+                    response.Message = "Could not locate records.";
+                }
+                response.Success = true;
+                response.Data = items;
+                response.Message = "Successfully retrieved Items";
+            }
+            catch (Exception)
+            {
+                response.Message = ("Error retrieving items");
+                response.Success = false;
+                response.Data = null;
+            }
+            
 
             return response;
         }
@@ -86,11 +103,25 @@ namespace okeafurniture.DAL.EFRepositories
         public Response<List<Item>> GetByCategory(int categoryId)
         {
             Response<List<Item>> response = new Response<List<Item>>();
-
-            List<Item> items = _context.Item.Include(a => a.CategoryItems).Where(b => b.CategoryItems.Intersect(_context.CategoryItem.Where(c => c.CategoryId == categoryId)).Any()).ToList();
-            response.Data = items;
-            response.Success = true;
-            response.Message = "Successfully retrieved item's category";
+            try
+            {
+                List<Item> items = _context.Item.Include(a => a.CategoryItems).Where(b => b.CategoryItems.Intersect(_context.CategoryItem.Where(c => c.CategoryId == categoryId)).Any()).ToList();
+                if (items.Count() == 0)
+                {
+                    response.Success = false;
+                    response.Data = items;
+                    response.Message = "Could not locate records.";
+                }
+                response.Success = true;
+                response.Data = items;
+                response.Message = "Successfully retrieved Items";
+            }
+            catch (Exception)
+            {
+                response.Message = ("Error retrieving items");
+                response.Success = false;
+                response.Data = null;
+            }
             return response;
         }
 
