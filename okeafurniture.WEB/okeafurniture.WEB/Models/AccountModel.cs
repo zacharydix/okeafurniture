@@ -28,7 +28,7 @@ namespace okeafurniture.WEB.Models
             MaxLength(50, ErrorMessage = "Cannot exceed 50 characters")]
         public string Password { get; set; }
 
-        [Required(ErrorMessage = "Date of birth is required")]
+        [Required(ErrorMessage = "Date of birth is required"), DateOfBirth]
         public DateTime DateOfBirth { get; set; }
 
         [Required(ErrorMessage = "Address is required"),
