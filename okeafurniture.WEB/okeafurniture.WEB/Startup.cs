@@ -46,6 +46,7 @@ namespace okeafurniture.WEB
             services.AddTransient<ICartRepository, EFCartRepository>();
             services.AddTransient<IItemRepository, EFItemRepository>();
             services.AddTransient<ICartItemRepository, EFCartItemRepository>();
+            services.AddTransient<ICategoryItemRepository, EFCategoryItemRepository>();
             services.AddTransient<ICategoryRepository, EFCategoryRepository>();
 
             services.AddTransient<IReportRepository>(s => new AdoReportRepository(Configuration.GetConnectionString("OkeaFurniture")));

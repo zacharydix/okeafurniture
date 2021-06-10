@@ -1,4 +1,5 @@
 ﻿using okeafurniture.CORE.Entites;
+using okeafurniture.CORE.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +32,17 @@ namespace okeafurniture.WEB.Models
                 CartId = model.CartId,
                 ItemId = model.ItemId,
                 Quantity = model.Quantity
+            };
+        }
+
+        public static CategoryItem MapToCategoryItem(this CategoryItemModel model)
+        {
+            return new CategoryItem()
+            {
+                CategoryId = model.CategoryId,
+                ItemId = model.ItemId,
+                Category = model.Category,
+                Item = model.Item
             };
         }
 
@@ -133,6 +145,17 @@ namespace okeafurniture.WEB.Models
                 Quantity = cartItem.Quantity,
                 Cart = cartItem.Cart,
                 Item = cartItem.Item
+            };
+        }
+
+        public static CategoryItemModel MapToModel(this CategoryItem categoryItem)
+        {
+            return new CategoryItemModel()
+            {
+                CategoryId = categoryItem.CategoryId,
+                ItemId = categoryItem.ItemId,
+                Category = categoryItem.Category,
+                Item = categoryItem.Item
             };
         }
 
