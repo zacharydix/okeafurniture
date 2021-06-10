@@ -70,20 +70,16 @@ namespace okeafurniture.DAL.EFRepositories
             Response<Cart> response = new Response<Cart>();
             try
             {
-                using (context = new OkeaFurnitureContext(context.Options))
+                response.Data = context.Cart.SingleOrDefault(c => c.AccountId == accountId && c.CheckOutDate == null);
+                if (response.Data != null)
                 {
-                    response.Data = context.Cart.SingleOrDefault(c => c.AccountId == accountId && c.CheckOutDate == null);
-                    if (response.Data != null)
-                    {
-                        response.Success = true;
-                        response.Message = $"Successfully retrieved active cart for Account #{accountId}";
-                    }
-                    else
-                    {
-                        response.Success = false;
-                        response.Message = "No active cart found";
-                    }
-
+                    response.Success = true;
+                    response.Message = $"Successfully retrieved active cart for Account #{accountId}";
+                }
+                else
+                {
+                    response.Success = false;
+                    response.Message = "No active cart found";
                 }
             }
             catch (Exception ex)
