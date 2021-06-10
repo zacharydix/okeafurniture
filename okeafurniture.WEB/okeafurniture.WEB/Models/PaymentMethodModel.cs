@@ -23,7 +23,7 @@ namespace okeafurniture.WEB.Models
         public string CardHolderLastName { get; set; }
 
         [Required(ErrorMessage = "Card number is required"),
-            MaxLength(16, ErrorMessage = "Cannot exceed 16 digits"), CreditCard]
+            MaxLength(16, ErrorMessage = "Cannot exceed 16 digits")]
         public string CardNumber { get; set; }
 
         [Required(ErrorMessage = "Card expiration is required"), CardExpiration]
