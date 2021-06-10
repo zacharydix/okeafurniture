@@ -28,6 +28,10 @@ namespace okeafurniture.DAL.EFRepositories
                 {
                     _context.CategoryItem.Remove(entry);
                 }
+                foreach (var entry in _context.CartItem.Where(a => a.ItemId == itemId))
+                {
+                    _context.CartItem.Remove(entry);
+                }
                 _context.SaveChanges();
 
             }
