@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using okeafurniture.WEB.Models;
 
 namespace okeafurniture.WEB.Controllers.Api
 {
@@ -20,12 +21,12 @@ namespace okeafurniture.WEB.Controllers.Api
             _repo = repo;
         }
 
-        [HttpGet, Route("get/{id}", Name ="GetItem"), Authorize]
+        [HttpGet, Route("get/{id}", Name = "GetItem"), Authorize]
         public IActionResult GetItem(int id)
         {
             var result = _repo.Get(id);
-            
-            if(result.Success)
+
+            if (result.Success)
             {
                 return Ok(result.Data);
             }
@@ -35,12 +36,12 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [HttpGet, Route("get/all", Name="GetAllItems"), Authorize]
+        [HttpGet, Route("get/all", Name = "GetAllItems"), Authorize]
         public IActionResult GetAllItems()
         {
             var result = _repo.GetAll();
 
-            if(result.Success)
+            if (result.Success)
             {
                 return Ok(result.Data);
             }
@@ -49,8 +50,8 @@ namespace okeafurniture.WEB.Controllers.Api
                 return BadRequest(result.Message);
             }
         }
-        
-        [HttpGet, Route("get/all/categories/{id}", Name ="GetItemsByCategory"), Authorize]
+
+        [HttpGet, Route("get/all/categories/{id}", Name = "GetItemsByCategory"), Authorize]
         public IActionResult GetItemsByCategories(int id)
         {
             var result = _repo.GetByCategory(id);
@@ -65,57 +66,65 @@ namespace okeafurniture.WEB.Controllers.Api
             }
         }
 
-        [HttpPost, Route("add", Name ="AddItem"), Authorize]
-        public IActionResult AddItem(Item item)
+        [HttpPost, Route("add", Name = "AddItem"), Authorize]
+        public IActionResult AddItem(ItemModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var existingItems = _repo.GetAll().Data;
-            if (existingItems.Any(i => i.ItemName == item.ItemName))
+            if (existingItems.Any(i => i.ItemName == model.ItemName))
             {
                 return BadRequest(new { Message = "That item already exists in the catalog." });
             }
 
-            if (ModelState.IsValid)
+            var result = _repo.Insert(model.MapToItem());
+
+            if (result.Success)
             {
-                var result = _repo.Insert(item);
-                
-                if(result.Success)
-                {
-                    return CreatedAtRoute(nameof(GetItem), new { id = item.ItemId }, item);
-                }
-                else
-                {
-                    return BadRequest(result.Message);
-                }
+                return CreatedAtRoute(nameof(GetItem), new { id = result.Data.ItemId }, result.Data.MapToModel());
             }
-            return BadRequest(ModelState);
+            else
+            {
+                return BadRequest(result.Message);
+            }
         }
 
-        [HttpPut, Route("edit", Name ="EditItem"), Authorize]
-        public IActionResult EditItem(Item item)
+        [HttpPut, Route("edit", Name = "EditItem"), Authorize]
+        public IActionResult EditItem(ItemModel model)
         {
-            Item existingitem = _repo.Get(item.ItemId).Data;
-
-            existingitem.ItemName = item.ItemName;
-            existingitem.ItemDescription = item.ItemDescription;
-            existingitem.UnitPrice = item.UnitPrice;
-
-            if(ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var result = _repo.Update(existingitem);
-
-                if(result.Success)
-                {
-                    return Ok();
-                }
-                else
-                {
-                    return BadRequest(result.Message);
-                }
+                return BadRequest(ModelState);
             }
-            return BadRequest(ModelState);
+
+            Response<Item> response = _repo.Get(model.ItemId);
+            if (!response.Success)
+            {
+                return NotFound($"Item {model.ItemId} not found");
+            }
+
+            var itemToUpdate = response.Data;
+
+            itemToUpdate.ItemName = model.ItemName;
+            itemToUpdate.ItemDescription = model.ItemDescription;
+            itemToUpdate.UnitPrice = model.UnitPrice;
+            itemToUpdate.ImageName = model.ImageName;
+
+            Response updateResponse = _repo.Update(itemToUpdate);
+            if (updateResponse.Success)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest(updateResponse.Message);
+            }
         }
 
-        [HttpDelete("delete/{id}", Name ="DeleteItem"), Authorize]
+        [HttpDelete("delete/{id}", Name = "DeleteItem"), Authorize]
         public IActionResult DeleteItem(int id)
         {
             if (!_repo.Get(id).Success)
