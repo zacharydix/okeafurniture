@@ -1,6 +1,7 @@
 # okeafurniture
 github for our okeafurniture project
 
+
 INSTRUCTIONS FOR RUNNING API SERVICE
 	-Ensure you have Docker installed
 		- use (docker --version) in powershell to confirm version
@@ -17,8 +18,6 @@ INSTRUCTIONS FOR RUNNING API SERVICE
 
 	-run the okea-sql-express using the following command
 		docker start okea-sql-express
-
-
 	-Navigate to Azure Data Studio
 		-If you do not have it installed, you can install it from their website
 	-Navigate to okeafurniture/SQL Scripts
