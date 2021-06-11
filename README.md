@@ -3,7 +3,7 @@ Welcome to the source code for OKEA Furniture Store! This project was built usin
 Entity Framework was used to ensure proper connections between entities when adding to the database.
 
 INSTRUCTIONS FOR RUNNING API SERVICE
-	
+
 	-Ensure you have Docker installed
 		- use (docker --version) in powershell to confirm version
 		- install docker from https://docs.docker.com/docker-for-windows/install-windows-home/ if not installed
