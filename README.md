@@ -3,6 +3,7 @@ github for our okeafurniture project
 
 
 INSTRUCTIONS FOR RUNNING API SERVICE
+	
 	-Ensure you have Docker installed
 		- use (docker --version) in powershell to confirm version
 		- install docker from https://docs.docker.com/docker-for-windows/install-windows-home/ if not installed
